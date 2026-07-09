@@ -6,8 +6,8 @@ import TypeformEmbed from '../components/TypeformEmbed';
 /**
  * Dedicated subcontractor application page.
  *
- * Embeds the Typeform application form and provides a clear back link
- * to the main marketing site.
+ * Embeds the Typeform application form fullscreen-style below a compact
+ * header, so the form itself is the primary focus of the page.
  */
 export default function SubcontractorPage({ content, logoSrc }) {
   // Ensure the page starts at the top when landing from another route
@@ -18,7 +18,7 @@ export default function SubcontractorPage({ content, logoSrc }) {
   const t = content.subcontractor;
 
   return (
-    <div className="min-h-screen bg-white text-brand-dark">
+    <div className="min-h-screen bg-white text-brand-dark flex flex-col">
       {/* Simple header for the page */}
       <header className="fixed top-0 left-0 right-0 z-50 h-16 glass border-b border-black/5">
         <div className="h-full max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
@@ -43,12 +43,12 @@ export default function SubcontractorPage({ content, logoSrc }) {
         </div>
       </header>
 
-      <main className="pt-16">
-        {/* Page intro */}
-        <section className="py-16 md:py-24 px-6 md:px-12 bg-brand-navy text-center">
+      <main className="pt-16 flex-1 flex flex-col">
+        {/* Page intro — compact banner */}
+        <section className="py-10 md:py-14 px-6 md:px-12 bg-brand-navy text-center">
           <div className="max-w-3xl mx-auto">
             <span className="eyebrow text-brand-cyan">{t.eyebrow}</span>
-            <h1 className="heading-2 font-display text-white mb-5">
+            <h1 className="heading-2 font-display text-white mb-4">
               {t.title}
             </h1>
             <p className="body-large text-white/85 max-w-2xl mx-auto">
@@ -57,27 +57,14 @@ export default function SubcontractorPage({ content, logoSrc }) {
           </div>
         </section>
 
-        {/* Embedded form */}
-        <section className="px-4 md:px-6 py-8 md:py-12 max-w-5xl mx-auto">
+        {/* Embedded form — fills remaining viewport */}
+        <section className="flex-1 w-full">
           <TypeformEmbed url={t.formUrl} title={t.title} />
-
-          {/* Mobile fallback link below the form */}
-          <p className="mt-6 text-center body-small text-brand-muted sm:hidden">
-            {t.formFallback}{' '}
-            <a
-              href={t.formUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand-cyan hover:text-brand-navy transition-colors"
-            >
-              {t.openExternal}
-            </a>
-          </p>
         </section>
       </main>
 
       {/* Minimal footer */}
-      <footer className="border-t border-black/5 py-8 px-6 md:px-12">
+      <footer className="border-t border-black/5 py-6 px-6 md:px-12 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="body-small text-brand-muted">{content.footer.legal}</p>
           <Link
@@ -89,6 +76,19 @@ export default function SubcontractorPage({ content, logoSrc }) {
           </Link>
         </div>
       </footer>
+
+      {/* Mobile fallback link */}
+      <p className="py-4 text-center body-small text-brand-muted bg-white sm:hidden">
+        {t.formFallback}{' '}
+        <a
+          href={t.formUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-brand-cyan hover:text-brand-navy transition-colors"
+        >
+          {t.openExternal}
+        </a>
+      </p>
     </div>
   );
 }

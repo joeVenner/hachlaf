@@ -1,18 +1,18 @@
 /**
- * Responsive Typeform iframe embed.
+ * Responsive Typeform iframe embed that fills its container.
  *
- * Uses Typeform's public embed URL with a fallback link for browsers
- * where iframe loading fails or for users who prefer a separate tab.
+ * Uses absolute positioning so the iframe always stretches to the full
+ * width and height of its parent, even when the parent only has a
+ * min-height. Includes a fallback link for mobile or iframe failures.
  */
 export default function TypeformEmbed({ url, title }) {
   return (
-    <div className="w-full min-h-[70vh] md:min-h-[75vh] bg-brand-light card-sharp overflow-hidden">
+    <div className="relative w-full min-h-[80vh] md:min-h-[calc(100vh-4rem)] bg-brand-light card-sharp overflow-hidden">
       <iframe
         src={url}
         title={title}
-        width="100%"
-        height="100%"
-        style={{ minHeight: '70vh', border: 'none' }}
+        className="absolute inset-0 w-full h-full"
+        style={{ border: 'none' }}
         allow="camera; microphone; autoplay; encrypted-media; fullscreen; geolocation"
         loading="lazy"
       />
