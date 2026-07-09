@@ -29,6 +29,12 @@
 - **Why:** Tailwind v4 prefers theme tokens in CSS rather than the v3 JavaScript config. Keeping the config file with a valid `content` array preserves compatibility with the Vite setup.
 - **Impact:** `tailwind.config.js`, `src/index.css`.
 
+## [2026-07-09] Subcontractor Application Page
+- **What changed:** Added a new `/sous-traitant` route with an embedded Typeform application form (`https://xmwrsj3pauh.typeform.com/to/ZmdBeKUQ`). Installed `react-router-dom` and refactored the single-page app into a router with `HomePage` and `SubcontractorPage`. Added a "Devenir sous-traitant" nav link, footer link, and a secondary CTA in the bottom call-to-action section.
+- **Why:** The company wants subcontractors to apply directly through the site. Embedding the form keeps users on the Hachlaf domain while Typeform handles the form logic.
+- **Impact:** `src/App.jsx`, `src/pages/*`, `src/components/GlassmorphismNav.jsx`, `src/components/Footer.jsx`, `src/components/CTASection.jsx`, `src/data/content.js`, `package.json`.
+- **Reference:** `feature/skanska-design-system-rebuild`.
+
 ## [2026-07-09] ESLint Configuration
 - **What changed:** Added `.eslintrc.cjs` because the project had `eslint` plugins in `package.json` but no config file, causing `npm run lint` to fail.
 - **Why:** The lint script is part of the pre-commit quality gate, so a working ESLint config is required for CI and local verification.

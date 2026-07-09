@@ -8,6 +8,7 @@
 - **Animation:** Framer Motion
 - **Icons:** Lucide React
 - **Carousel:** Swiper.js
+- **Routing:** react-router-dom
 - **Linting:** ESLint 8 with React, Hooks, and Refresh plugins
 
 ## Getting Started
@@ -24,11 +25,14 @@ npm run preview  # preview production build locally
 
 ```
 src/
-  App.jsx                  # wires all sections and language state
+  App.jsx                  # react-router wiring and language state
   main.jsx                 # React root entry
   index.css                # Tailwind v4 theme, typography, utilities
   data/
     content.js             # bilingual content + image asset mapping
+  pages/
+    HomePage.jsx           # marketing homepage
+    SubcontractorPage.jsx  # embedded Typeform application page
   components/
     GlassmorphismNav.jsx   # fixed header, blur, scroll transition
     Hero.jsx               # full-screen parallax hero
@@ -74,6 +78,13 @@ src/
 - The site is bilingual (FR/EN). All copy and asset paths live in `src/data/content.js`.
 - Stats are configured as integers with an optional suffix; `StatsSnapshot` animates them on scroll.
 - Project data feeds both the carousel and the modal.
+
+## Routing
+- The app uses `react-router-dom` with two routes:
+  - `/` → marketing homepage
+  - `/sous-traitant` → embedded Typeform subcontractor application
+- In-page anchors on the homepage still work via `#section-id`.
+- `GlassmorphismNav` and `Footer` handle both anchor links and `Link` routes.
 
 ## Git Conventions
 - Work on feature branches; do not commit directly to `main`.
