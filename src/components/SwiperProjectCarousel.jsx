@@ -1,12 +1,11 @@
 import { useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, FreeMode } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 import { ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
 
 // Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/free-mode';
 
 /**
  * Auto-rotating project carousel using Swiper.js.
@@ -59,12 +58,11 @@ export default function SwiperProjectCarousel({ projects, onSelectProject }) {
         {/* Carousel */}
         <div className="relative">
           <Swiper
-            modules={[Autoplay, Navigation, FreeMode]}
+            modules={[Autoplay, Navigation]}
             spaceBetween={24}
-            slidesPerView={"auto"}
+            slidesPerView={1}
             loop={true}
             speed={700}
-            freeMode={false}
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
