@@ -44,19 +44,6 @@ export default function SubcontractorPage({ content, logoSrc }) {
       </header>
 
       <main className="pt-16 flex-1 flex flex-col">
-        {/* Page intro — compact banner */}
-        <section className="py-10 md:py-14 px-6 md:px-12 bg-brand-navy text-center">
-          <div className="max-w-3xl mx-auto">
-            <span className="eyebrow text-brand-cyan">{t.eyebrow}</span>
-            <h1 className="heading-2 font-display text-white mb-4">
-              {t.title}
-            </h1>
-            <p className="body-large text-white/85 max-w-2xl mx-auto">
-              {t.body}
-            </p>
-          </div>
-        </section>
-
         {/* Embedded form — fills remaining viewport */}
         <section className="flex-1 w-full">
           <TypeformEmbed url={t.formUrl} title={t.title} />
