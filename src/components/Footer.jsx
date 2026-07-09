@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
 
 /**
@@ -39,12 +40,21 @@ export default function Footer({ footer, logoSrc }) {
             <ul className="space-y-3">
               {footer.links.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="body-main text-brand-muted hover:text-brand-navy transition-colors"
-                  >
-                    {link.label}
-                  </a>
+                  {link.to ? (
+                    <Link
+                      to={link.to}
+                      className="body-main text-brand-muted hover:text-brand-navy transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="body-main text-brand-muted hover:text-brand-navy transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

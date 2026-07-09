@@ -1,0 +1,94 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import TypeformEmbed from '../components/TypeformEmbed';
+
+/**
+ * Dedicated subcontractor application page.
+ *
+ * Embeds the Typeform application form and provides a clear back link
+ * to the main marketing site.
+ */
+export default function SubcontractorPage({ content, logoSrc }) {
+  // Ensure the page starts at the top when landing from another route
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const t = content.subcontractor;
+
+  return (
+    <div className="min-h-screen bg-white text-brand-dark">
+      {/* Simple header for the page */}
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 glass border-b border-black/5">
+        <div className="h-full max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src={logoSrc}
+              alt="Hachlaf Akhawayne"
+              className="h-10 w-auto object-contain"
+            />
+            <span className="font-display font-bold text-lg text-brand-navy">
+              Hachlaf.
+            </span>
+          </Link>
+
+          <Link
+            to="/"
+            className="hidden sm:inline-flex items-center gap-2 font-display text-sm font-semibold text-brand-navy hover:text-brand-cyan transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            {t.backLabel}
+          </Link>
+        </div>
+      </header>
+
+      <main className="pt-16">
+        {/* Page intro */}
+        <section className="py-16 md:py-24 px-6 md:px-12 bg-brand-navy text-center">
+          <div className="max-w-3xl mx-auto">
+            <span className="eyebrow text-brand-cyan">{t.eyebrow}</span>
+            <h1 className="heading-2 font-display text-white mb-5">
+              {t.title}
+            </h1>
+            <p className="body-large text-white/85 max-w-2xl mx-auto">
+              {t.body}
+            </p>
+          </div>
+        </section>
+
+        {/* Embedded form */}
+        <section className="px-4 md:px-6 py-8 md:py-12 max-w-5xl mx-auto">
+          <TypeformEmbed url={t.formUrl} title={t.title} />
+
+          {/* Mobile fallback link below the form */}
+          <p className="mt-6 text-center body-small text-brand-muted sm:hidden">
+            {t.formFallback}{' '}
+            <a
+              href={t.formUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-cyan hover:text-brand-navy transition-colors"
+            >
+              {t.openExternal}
+            </a>
+          </p>
+        </section>
+      </main>
+
+      {/* Minimal footer */}
+      <footer className="border-t border-black/5 py-8 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="body-small text-brand-muted">{content.footer.legal}</p>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 font-display text-sm font-semibold text-brand-navy hover:text-brand-cyan transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            {t.backLabel}
+          </Link>
+        </div>
+      </footer>
+    </div>
+  );
+}

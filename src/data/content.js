@@ -26,6 +26,7 @@ export const site = {
         { label: 'Références', id: 'projects' },
         { label: 'À Propos', id: 'about' },
         { label: 'Contact', id: 'contact' },
+        { label: 'Devenir sous-traitant', to: '/sous-traitant' },
       ],
       cta: 'Devis gratuit',
     },
@@ -250,6 +251,20 @@ export const site = {
       title: 'Prêt à concrétiser votre projet ?',
       body: 'Notre équipe vous accompagne à chaque étape pour transformer vos idées en réalisations durables et de qualité.',
       button: 'Contactez-nous',
+      subcontractor: {
+        label: 'Devenir sous-traitant',
+        to: '/sous-traitant',
+      },
+    },
+    subcontractor: {
+      navLabel: 'Devenir sous-traitant',
+      eyebrow: 'RECRUTEMENT',
+      title: 'Devenir sous-traitant Hachlaf',
+      body: 'Vous êtes une entreprise spécialisée dans le génie civil, le terrassement, l\'électricité, la construction métallique ou la location d\'engins ? Rejoignez notre réseau de partenaires et collaborez avec nous sur nos chantiers au Maroc.',
+      formUrl: 'https://xmwrsj3pauh.typeform.com/to/ZmdBeKUQ',
+      backLabel: 'Retour à l\'accueil',
+      formFallback: 'Si le formulaire ne s\'affiche pas, ouvrez-le dans un nouvel onglet :',
+      openExternal: 'Ouvrir le formulaire',
     },
     contact: {
       title: 'Contact & Informations',
@@ -269,6 +284,7 @@ export const site = {
         { label: 'Références', href: '#projects' },
         { label: 'À Propos', href: '#about' },
         { label: 'Contact', href: '#contact' },
+        { label: 'Devenir sous-traitant', to: '/sous-traitant' },
       ],
       linksLabel: 'Liens utiles',
       contact: [
@@ -291,6 +307,7 @@ export const site = {
         { label: 'References', id: 'projects' },
         { label: 'About', id: 'about' },
         { label: 'Contact', id: 'contact' },
+        { label: 'Become a subcontractor', to: '/sous-traitant' },
       ],
       cta: 'Free quote',
     },
@@ -515,6 +532,20 @@ export const site = {
       title: 'Ready to make your project a reality?',
       body: 'Our team supports you at every stage to transform your ideas into sustainable, quality achievements.',
       button: 'Contact us',
+      subcontractor: {
+        label: 'Become a subcontractor',
+        to: '/sous-traitant',
+      },
+    },
+    subcontractor: {
+      navLabel: 'Become a subcontractor',
+      eyebrow: 'RECRUITMENT',
+      title: 'Become a Hachlaf Subcontractor',
+      body: 'Are you a company specialized in civil engineering, earthworks, electrical work, steel construction, or equipment rental? Join our partner network and collaborate with us on construction sites across Morocco.',
+      formUrl: 'https://xmwrsj3pauh.typeform.com/to/ZmdBeKUQ',
+      backLabel: 'Back to home',
+      formFallback: 'If the form does not display, open it in a new tab:',
+      openExternal: 'Open form',
     },
     contact: {
       title: 'Contact & Information',
@@ -534,6 +565,7 @@ export const site = {
         { label: 'References', href: '#projects' },
         { label: 'About', href: '#about' },
         { label: 'Contact', href: '#contact' },
+        { label: 'Become a subcontractor', to: '/sous-traitant' },
       ],
       linksLabel: 'Quick links',
       contact: [
