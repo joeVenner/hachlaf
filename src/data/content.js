@@ -270,12 +270,16 @@ export const site = {
         { label: 'À Propos', href: '#about' },
         { label: 'Contact', href: '#contact' },
       ],
+      linksLabel: 'Liens utiles',
       contact: [
         { label: 'Siège', value: '186, Hay Riad 2 — Midelt' },
         { label: 'Tél.', value: '05 35 36 03 41' },
         { label: 'E-mail', value: 'h.hamza@stehachlaf.com' },
       ],
+      contactLabel: 'Contact',
       legal: 'Copyright @ 2026 , All Right Reserved.',
+      privacyLabel: 'Confidentialité',
+      termsLabel: "Conditions d'utilisation",
     },
   },
 
@@ -531,12 +535,16 @@ export const site = {
         { label: 'About', href: '#about' },
         { label: 'Contact', href: '#contact' },
       ],
+      linksLabel: 'Quick links',
       contact: [
         { label: 'Headquarters', value: '186, Hay Riad 2 — Midelt' },
         { label: 'Phone', value: '05 35 36 03 41' },
         { label: 'Email', value: 'h.hamza@stehachlaf.com' },
       ],
+      contactLabel: 'Contact',
       legal: 'Copyright @ 2026 , All Right Reserved.',
+      privacyLabel: 'Privacy',
+      termsLabel: 'Terms of Service',
     },
   },
 };
