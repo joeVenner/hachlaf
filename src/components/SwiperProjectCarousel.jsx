@@ -37,7 +37,7 @@ export default function SwiperProjectCarousel({ projects, onSelectProject }) {
             </p>
           </div>
 
-          <{/* Custom navigation */}
+          {/* Custom navigation */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => swiperRef.current?.slidePrev()}
