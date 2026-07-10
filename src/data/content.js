@@ -39,49 +39,46 @@ export const site = {
       ctaSecondary: 'Demander un devis',
       ctaSubcontractor: 'Devenir sous-traitant',
     },
-    // ── Domaines d'activité ── stacked macro-sectors ──
+    // ── Domaines d'activité ── premium stacked parallax sectors ──
     domaines: {
       eyebrow: 'NOS DOMAINES D\'ACTIVITÉ',
       title: 'Une expertise multi-sectorielle',
       items: [
         {
-          title: 'Énergie & Environnement',
-          desc: 'Centrales thermiques, parcs solaires, éoliens, STEP, stations de dessalement, traitement des eaux et barrages.',
+          number: '01',
+          category: 'ÉNERGIE & ENVIRONNEMENT',
+          title: 'Construire une énergie plus durable.',
+          description:
+            'Nous réalisons des infrastructures énergétiques et environnementales à grande échelle, des centrales et parcs solaires aux stations de dessalement, réseaux hydrauliques et ouvrages de retenue.',
+          tags: ['Énergie', 'Eau & Environnement', 'Infrastructures durables'],
+          detail: 'Projets à grande échelle',
+          cta: 'Découvrir ce domaine',
           image: '/images/generated/solar_noor_midelt.jpg',
-          sectors: ['Énergie', 'Eau & Environnement'],
         },
         {
-          title: 'Industrie & Infrastructure',
-          desc: 'Usines métallurgiques, complexes phosphatiers et chimiques, routes, ponts, plateformes industrielles et ouvrages civils.',
+          number: '02',
+          category: 'INDUSTRIE & INFRASTRUCTURE',
+          title: 'Des infrastructures pensées pour durer.',
+          description:
+            'Nous accompagnons les projets industriels les plus exigeants, des complexes métallurgiques et phosphatiers aux routes, ports, plateformes industrielles et ouvrages civils stratégiques.',
+          tags: ['Industrie', 'Infrastructure', 'Génie civil'],
+          detail: 'Expertise multidisciplinaire',
+          cta: 'Découvrir ce domaine',
           image: '/images/generated/metallurgy_mibladen.jpg',
-          sectors: ['Industrie', 'Infrastructure'],
         },
         {
-          title: 'Éducation & Résidentiel',
-          desc: 'Universités, résidences, bâtiments techniques et projets tertiaires de grande envergure.',
+          number: '03',
+          category: 'ÉDUCATION & RÉSIDENTIEL',
+          title: 'Créer des lieux qui façonnent l\'avenir.',
+          description:
+            'Nous concevons et réalisons des universités, résidences, bâtiments techniques et projets tertiaires de grande envergure, avec une attention particulière portée à la qualité, à l\'usage et à la durabilité.',
+          tags: ['Éducation', 'Résidentiel', 'Bâtiments techniques'],
+          detail: 'Conception & réalisation',
+          cta: 'Découvrir ce domaine',
           image: '/images/generated/university_rabat.jpg',
-          sectors: ['Éducation', 'Résidentiel'],
         },
       ],
     },
-    // ── Parallax banners ──
-    parallaxBanners: [
-      {
-        image: '/images/generated/thermal_safi.jpg',
-        title: 'Énergie',
-        subtitle: 'Centrales thermiques, solaires et éoliennes',
-      },
-      {
-        image: '/images/generated/hydro_step.jpg',
-        title: 'Hydraulique',
-        subtitle: 'Stations de transfert et barrages',
-      },
-      {
-        image: '/images/generated/phosphate_jorf.jpg',
-        title: 'Industrie',
-        subtitle: 'Complexes phosphatiers et métallurgiques',
-      },
-    ],
     // ── Nos offres ──
     offres: {
       ctaLabel: "En savoir plus",
@@ -326,42 +323,40 @@ export const site = {
       title: 'Multi-sector expertise',
       items: [
         {
-          title: 'Energy & Environment',
-          desc: 'Thermal plants, solar farms, wind farms, pumped storage, desalination stations, water treatment and dams.',
+          number: '01',
+          category: 'ENERGY & ENVIRONMENT',
+          title: 'Building more sustainable energy.',
+          description:
+            'We deliver large-scale energy and environmental infrastructure, from power and solar plants to desalination stations, hydraulic networks and retention structures.',
+          tags: ['Energy', 'Water & Environment', 'Sustainable infrastructure'],
+          detail: 'Large-scale projects',
+          cta: 'Discover this field',
           image: '/images/generated/solar_noor_midelt.jpg',
-          sectors: ['Energy', 'Water & Environment'],
         },
         {
-          title: 'Industry & Infrastructure',
-          desc: 'Metallurgical plants, phosphate and chemical complexes, roads, bridges, industrial platforms and civil works.',
+          number: '02',
+          category: 'INDUSTRY & INFRASTRUCTURE',
+          title: 'Infrastructure built to last.',
+          description:
+            'We support the most demanding industrial projects, from metallurgical and phosphate complexes to roads, ports, industrial platforms and strategic civil works.',
+          tags: ['Industry', 'Infrastructure', 'Civil engineering'],
+          detail: 'Multidisciplinary expertise',
+          cta: 'Discover this field',
           image: '/images/generated/metallurgy_mibladen.jpg',
-          sectors: ['Industry', 'Infrastructure'],
         },
         {
-          title: 'Education & Residential',
-          desc: 'Universities, residences, technical buildings and large-scale tertiary projects.',
+          number: '03',
+          category: 'EDUCATION & RESIDENTIAL',
+          title: 'Creating places that shape the future.',
+          description:
+            'We design and deliver universities, residences, technical buildings and large-scale tertiary projects, with particular attention to quality, usage and sustainability.',
+          tags: ['Education', 'Residential', 'Technical buildings'],
+          detail: 'Design & build',
+          cta: 'Discover this field',
           image: '/images/generated/university_rabat.jpg',
-          sectors: ['Education', 'Residential'],
         },
       ],
     },
-    parallaxBanners: [
-      {
-        image: '/images/generated/thermal_safi.jpg',
-        title: 'Energy',
-        subtitle: 'Thermal, solar and wind power plants',
-      },
-      {
-        image: '/images/generated/hydro_step.jpg',
-        title: 'Hydraulics',
-        subtitle: 'Pumped storage and dams',
-      },
-      {
-        image: '/images/generated/phosphate_jorf.jpg',
-        title: 'Industry',
-        subtitle: 'Phosphate and metallurgical complexes',
-      },
-    ],
     offres: {
       ctaLabel: "Learn more",
       eyebrow: 'OUR OFFERINGS',
