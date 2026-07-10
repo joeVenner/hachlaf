@@ -128,7 +128,7 @@ export default function DomainesSection({ domaines }) {
         stackTl.fromTo(
           card1,
           { yPercent: 0, scale: 1 },
-          { yPercent: -4.5, scale: 0.95, duration: 2.7, ease: 'none' },
+          { yPercent: -4, scale: 0.975, duration: 2.7, ease: 'none' },
           1.5
         );
         stackTl.fromTo(
@@ -141,14 +141,14 @@ export default function DomainesSection({ domaines }) {
         // Card 3 enters (4.8 → 7.5).
         stackTl.fromTo(
           card1,
-          { yPercent: -4.5, scale: 0.95 },
-          { yPercent: -9, scale: 0.95, duration: 2.7, ease: 'none' },
+          { yPercent: -4, scale: 0.975 },
+          { yPercent: -8, scale: 0.95, duration: 2.7, ease: 'none' },
           4.8
         );
         stackTl.fromTo(
           card2,
           { yPercent: 0, scale: 1 },
-          { yPercent: -2.25, scale: 0.975, duration: 2.7, ease: 'none' },
+          { yPercent: -4, scale: 0.975, duration: 2.7, ease: 'none' },
           4.8
         );
         stackTl.fromTo(
@@ -288,7 +288,7 @@ export default function DomainesSection({ domaines }) {
               className={`domain-card domain-card-${i + 1}`}
             >
               {/* Full-bleed background image -------------------------------- */}
-              <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute -inset-[2px] overflow-hidden">
                 <img
                   src={card.image}
                   alt={card.title}
@@ -366,7 +366,7 @@ export default function DomainesSection({ domaines }) {
               marginBottom: i !== items.length - 1 ? '24px' : undefined,
             }}
           >
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -inset-[2px] overflow-hidden">
               <img
                 src={card.image}
                 alt={card.title}

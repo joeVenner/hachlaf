@@ -52,11 +52,19 @@ body {
 
 /* Tight section title used for the Domaines parallax heading so the first card stays in the first viewport. */
 .domaines-title {
-  font-size: clamp(3.625rem, 5.8vw, 6rem);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 6.2vw, 6.75rem);
   line-height: 0.96;
   font-weight: 800;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.045em;
   color: var(--color-brand-navy);
+  max-width: none;
+}
+
+@media (min-width: 1200px) {
+  .domains-title {
+    white-space: nowrap;
+  }
 }
 
 /* Domaines pinned composition — title + shared card stage fixed together */
@@ -120,6 +128,7 @@ body {
   margin-right: auto;
   overflow: hidden;
   z-index: 10;
+  background: transparent;
 }
 
 .domain-card {
@@ -131,7 +140,7 @@ body {
   overflow: hidden;
   box-shadow: 0 8px 28px rgba(8, 25, 54, 0.05);
   border: 1px solid rgba(12, 39, 82, 0.06);
-  background-color: #fff;
+  background: transparent;
   will-change: transform;
   opacity: 1;
   visibility: visible;
@@ -164,7 +173,7 @@ body {
   margin-right: auto;
   border-radius: 0;
   overflow: hidden;
-  background-color: #fff;
+  background: transparent;
   box-shadow: 0 10px 30px rgba(9, 24, 50, 0.06);
   border: 1px solid rgba(12, 39, 82, 0.06);
 }

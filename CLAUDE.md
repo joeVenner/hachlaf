@@ -129,8 +129,11 @@ src/
   GSAP ScrollTrigger (`start: 'top top'`, `end: '+=260%'`, `pinSpacing: true`).
   Inside the pinned area:
   - A `.domains-header` stays fixed at the top with the eyebrow (`.domains-eyebrow`)
-    and large navy title (`.domains-title`, `clamp(58px, 5.8vw, 96px)`, weight
-    800) visible throughout the entire stacking sequence.
+    and large navy title (`.domains-title`, `clamp(64px, 6.2vw, 108px)`, weight
+    800, `font-family: var(--font-display)`, `letter-spacing: -0.045em`)
+    visible throughout the entire stacking sequence. The title uses the same
+    display font as the rest of the site and is set to `white-space: nowrap`
+    on viewports ≥1200px.
   - A `.domains-stage` holds three absolutely positioned cards (`.domain-card-1`,
     `.domain-card-2`, `.domain-card-3`) that stack on top of each other as the
     user scrolls.
@@ -140,11 +143,11 @@ src/
   `visibility: visible`) and moves with the card.
 - Stacking timeline (scroll-linked, scrubbed, total 10 units):
   - 0%–15%: title + Card 1 visible, Cards 2 and 3 wait below the stage.
-  - 15%–42%: Card 2 slides up and stacks over Card 1; Card 1 scales to 0.95 and
-    shifts up to reveal the layer behind.
+  - 15%–42%: Card 2 slides up and stacks over Card 1; Card 1 scales to 0.975 and
+    shifts up `-4%` to reveal a subtle 4px stacked edge.
   - 42%–48%: hold Card 2.
-  - 48%–75%: Card 3 slides up and stacks over Card 2; previous cards shrink and
-    shift further to show all three layers.
+  - 48%–75%: Card 3 slides up and stacks over Card 2; previous cards shift to
+    final offsets of approximately `-8px` for Card 1 and `-4px` for Card 2.
   - 75%–90%: complete three-card stack is held on screen.
   - 90%–100%: pin releases and the next section begins.
 - Card design is unchanged: 90vw width, sharp corners, very subtle shadow
@@ -157,6 +160,9 @@ src/
   `.domains-pin` height is `calc(100vh - var(--navbar-height))` with a
   `margin-top` of the same value. Header occupies ~19% of the available height;
   the card stage occupies the rest.
+- `.domains-stage` and `.domain-card` have `background: transparent` and the card
+  image container uses a `-2px` overscan (`-inset-[2px]`) to prevent any gray or
+  white strip from appearing at the top edge of the cards during transforms.
 - Mobile (`< 768px`) and `prefers-reduced-motion` disable pinning and render
   cards in normal document flow with a light fade-in per card.
 - Data model (`content.domaines.items`): `number`, `category`, `title`,
