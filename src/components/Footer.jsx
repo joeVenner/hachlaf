@@ -12,7 +12,7 @@ import { Phone, Mail, MapPin } from 'lucide-react';
  */
 export default function Footer({ footer, logoSrc }) {
   return (
-    <footer id="contact" className="bg-white">
+    <footer className="relative z-10 bg-white">
       <div className="site-container py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* About */}
