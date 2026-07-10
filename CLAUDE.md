@@ -124,16 +124,23 @@ src/
 
 ## Domaines section
 - `DomainesSection` renders **3 stacked parallax sector cards** as a single
-  cinematic scroll experience.
-- Each card is a large rounded image-led tile (≈90vw, 60–70vh desktop,
-  min-height 560px, max-width 1500px) with a dark cinematic gradient overlay,
-  frosted-glass tags, and editorial typography.
+  architectural scroll experience.
+- Each card is a wide, sharp-cornered image-led tile (90vw desktop,
+  64–68vh height, min-height 520px, max-height 720px, max-width 1800px) with a
+  very subtle shadow, a thin navy-tinted border, and a left-to-right cinematic
+  gradient overlay that keeps text crisp without dulling the image.
+- The section header uses the `.domaines-title` utility so the eyebrow, title
+  and the first card are visible together in the initial desktop viewport.
 - Scroll behaviour is driven by **GSAP ScrollTrigger** on top of CSS sticky
-  positioning: image scale 1.08→1 + vertical parallax, staggered content reveals,
-  and a subtle 01/02/03 progress indicator on the right.
-- The cards naturally stack as the user scrolls; higher `z-index` cards slide
-  over previous ones without heavy scroll-jacking.
-- `prefers-reduced-motion` disables parallax/scale and keeps simple fade-ins.
+  positioning (`top: 96px`): only the background image parallaxes
+  (`scale 1.06→1`, `yPercent -3→3`, scrubbed). Content visibility is separated
+  from scroll progress:
+  - First card content is visible by default (no opacity/translate/blur in CSS).
+  - Cards 2 and 3 reveal once on enter (`start: 'top 82%'`) with a short fade +
+    10px translate, then stay readable.
+- A subtle 01/02/03 progress indicator sits on the right.
+- `prefers-reduced-motion` disables parallax/scale and keeps all content visible
+  immediately with no transitions.
 - Data model (`content.domaines.items`): `number`, `category`, `title`,
   `description`, `tags`, `detail`, `cta`, `image`.
 
