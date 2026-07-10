@@ -39,3 +39,20 @@
 - **What changed:** Added `.eslintrc.cjs` because the project had `eslint` plugins in `package.json` but no config file, causing `npm run lint` to fail.
 - **Why:** The lint script is part of the pre-commit quality gate, so a working ESLint config is required for CI and local verification.
 - **Impact:** `.eslintrc.cjs`.
+
+## [2026-07-10] Fixed Hero Background with Crossfade Slideshow
+- **What changed:** Converted the hero from a scrolling parallax image to a fixed-position full-viewport background layer. It now crossfades between 3 high-quality generated images on a 6-second timer. The page content sits in a `relative z-10 bg-white` container that slides up over the hero, and a `h-screen` spacer reserves the initial viewport.
+- **Why:** The requested behavior was "the section below goes up, not the image goes up." A fixed background with content scrolling over it gives that cinematic reveal effect while keeping the images fully visible.
+- **Impact:** `src/components/Hero.jsx`, `src/pages/HomePage.jsx`, `src/components/SuffolkNav.jsx` (wordmark-only logo), `src/data/content.js`.
+- **Edge case:** The hero text and CTAs still use Framer Motion entrance animations, so the fixed layer must not clip or intercept pointer events.
+
+## [2026-07-10] Global 90/5/5 Content Width
+- **What changed:** Standardized every section's inner container to `max-w-[90rem] mx-auto px-[5%]` (wrapped in the `.site-container` utility). Full-bleed backgrounds are still allowed, but text and grids align to the 90% column. Applied to CTA, Footer, ParallaxBanners, SubcontractorPage, and all existing sections.
+- **Why:** The design brief asked for consistent side margins across the whole project. A single utility class prevents drift and makes future sections consistent by default.
+- **Impact:** `src/index.css`, `src/components/CTASection.jsx`, `src/components/Footer.jsx`, `src/components/ParallaxBanners.jsx`, `src/pages/SubcontractorPage.jsx`, plus pre-existing sections already using the same pattern.
+
+## [2026-07-10] Client Showcase with Correct Partner Assets
+- **What changed:** Replaced the mismatched partner logo files in `content.js` with the correct downloaded assets (ONEE, MASEN, OCP, Abdelmoumen, NOOR, Safi, Jorf, Hachlaf). Redesigned `PartnersCarousel` from an infinite marquee into a clean 4-column grid of white `card-sharp` cards with `object-contain` images and centered partner labels.
+- **Why:** The old section used unrelated screenshots and thumbnail sizes, which looked unprofessional. Framing them as named client/project cards with consistent padding makes the showcase readable.
+- **Impact:** `src/data/content.js`, `src/components/PartnersCarousel.jsx`.
+
