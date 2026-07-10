@@ -47,6 +47,7 @@ export const site = {
         { label: 'Offres', id: 'offres' },
         { label: 'Références', id: 'projects' },
         { label: 'Contact', id: 'contact' },
+        { label: 'Sous-traitant', to: '/sous-traitant' },
       ],
       cta: 'Devis gratuit',
     },
@@ -330,6 +331,7 @@ export const site = {
         { label: 'Domaines', href: '#domaines' },
         { label: 'Références', href: '#projects' },
         { label: 'Contact', href: '#contact' },
+        { label: 'Devenir sous-traitant', to: '/sous-traitant' },
       ],
       servicesLabel: 'Services',
       servicesLinks: [
@@ -377,6 +379,7 @@ export const site = {
         { label: 'Offerings', id: 'offres' },
         { label: 'References', id: 'projects' },
         { label: 'Contact', id: 'contact' },
+        { label: 'Subcontractor', to: '/sous-traitant' },
       ],
       cta: 'Free quote',
     },
@@ -643,6 +646,7 @@ export const site = {
         { label: 'Services', href: '#offres' },
         { label: 'Projects', href: '#projects' },
         { label: 'Contact', href: '#contact' },
+        { label: 'Become a subcontractor', to: '/sous-traitant' },
       ],
       servicesLabel: 'Services',
       servicesLinks: [
