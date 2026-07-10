@@ -122,12 +122,13 @@ export const site = {
         },
       ],
     },
-    // ── Références / Projets ── (Skanska-style)
+    // ── Références / Projets ── compact editorial showcase
     projects: {
       eyebrow: 'EXPLOREZ NOS RÉFÉRENCES',
       title: 'Des projets d\'envergure à travers le Maroc',
-      subtitle: 'Découvrez les grands chantiers énergétiques et d\'infrastructure que nous avons contribué à bâtir.',
-      viewDetails: 'Découvrir nos références',
+      subtitle: 'Découvrez une sélection de projets industriels, énergétiques et d\'infrastructure réalisés à travers le Royaume.',
+      cta: 'Découvrir toutes nos références',
+      viewDetails: 'Découvrir le projet',
       closeLabel: 'Fermer',
       scopeLabel: 'Périmètre d\'intervention',
       items: [
@@ -139,6 +140,7 @@ export const site = {
           description:
             'Contribution au complexe solaire NOOR Midelt — terrassement, infrastructures et raccordements électriques sur un site énergétique stratégique.',
           scope: ['Préparation des sols', 'Ouvrages civils', 'Réseaux électriques', 'Support logistique'],
+          supporting: true,
         },
         {
           title: 'Le parc éolien',
@@ -148,6 +150,7 @@ export const site = {
           description:
             'Parc éolien à Boujdour : terrassement, fondations et installation électrique dans un environnement côtier exigeant.',
           scope: ['Terrassement côtier', 'Fondations spéciales', 'Réseaux électriques', 'Logistique marine'],
+          supporting: true,
         },
         {
           title: 'La centrale thermique',
@@ -157,6 +160,7 @@ export const site = {
           description:
             'Centrale thermique de Safi : génie civil, terrassement et installations électriques pour une infrastructure de production d\'énergie.',
           scope: ['Génie civil', 'Terrassement', 'Installations électriques', 'HSE'],
+          supporting: true,
         },
         {
           title: 'STEP Abdelmoumen',
@@ -182,8 +186,11 @@ export const site = {
           type: 'DESSALEMENT',
           image: '/images/generated/desalination_casa.jpg',
           description:
-            'Station de dessalement à Casablanca : génie civil, terrassement et raccordements pour cette infrastructure hydraulique majeure.',
+            'Une infrastructure hydraulique majeure intégrant génie civil, terrassement et raccordements techniques pour répondre durablement aux besoins en eau de la région.',
           scope: ['Génie civil', 'Terrassement', 'Raccordements', 'Sécurité'],
+          featured: true,
+          status: 'Projet majeur',
+          expertise: 'Eau & Infrastructure',
         },
         {
           title: 'Une usine métallurgique',
@@ -402,8 +409,9 @@ export const site = {
     projects: {
       eyebrow: 'EXPLORE OUR REFERENCES',
       title: 'Major projects across Morocco',
-      subtitle: 'Discover the large-scale energy and infrastructure projects we have helped build.',
-      viewDetails: 'Discover our references',
+      subtitle: 'Discover a selection of industrial, energy and infrastructure projects delivered across the Kingdom.',
+      cta: 'Discover all our references',
+      viewDetails: 'Discover the project',
       closeLabel: 'Close',
       scopeLabel: 'Scope of work',
       items: [
@@ -414,6 +422,7 @@ export const site = {
           image: '/images/generated/solar_noor_midelt.jpg',
           description: 'Contribution to the NOOR Midelt solar complex — earthworks, infrastructure and electrical connections on a strategic energy site.',
           scope: ['Soil preparation', 'Civil works', 'Electrical networks', 'Logistics support'],
+          supporting: true,
         },
         {
           title: 'Wind Farm',
@@ -422,6 +431,7 @@ export const site = {
           image: '/images/generated/wind_boujdour.jpg',
           description: 'Boujdour wind farm: earthworks, foundations and electrical installation in a demanding coastal environment.',
           scope: ['Coastal earthworks', 'Special foundations', 'Electrical networks', 'Marine logistics'],
+          supporting: true,
         },
         {
           title: 'Thermal Power Plant',
@@ -430,6 +440,7 @@ export const site = {
           image: '/images/generated/thermal_safi.jpg',
           description: 'Safi thermal power plant: civil engineering, earthworks and electrical installations for energy production infrastructure.',
           scope: ['Civil engineering', 'Earthworks', 'Electrical installations', 'HSE'],
+          supporting: true,
         },
         {
           title: 'STEP Abdelmoumen',
@@ -452,8 +463,11 @@ export const site = {
           location: 'Casablanca',
           type: 'DESALINATION',
           image: '/images/generated/desalination_casa.jpg',
-          description: 'Desalination station in Casablanca: civil engineering, earthworks and connections for this major hydraulic infrastructure.',
+          description: 'A major hydraulic infrastructure integrating civil engineering, earthworks and technical connections to sustainably meet the region\'s water needs.',
           scope: ['Civil engineering', 'Earthworks', 'Connections', 'Safety'],
+          featured: true,
+          status: 'Major project',
+          expertise: 'Water & Infrastructure',
         },
         {
           title: 'Metallurgical Plant',

@@ -1,173 +1,230 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 /**
- * Skanska-style projects section.
+ * Compact editorial projects showcase.
  *
- * - Featured project in a 2fr + 1fr grid: large image on the left, text block on the right.
- * - Three smaller project cards below, aligned to the same 3-column logic.
- * - Auto-rotation, manual arrows, dot indicators, and modal trigger are preserved.
+ * - Single-screen section (≈90–100vh desktop, max-h ~950px) with normal flow.
+ * - Two-column header: large title + description/CTA.
+ * - Featured project: fixed image column + bottom-aligned text column.
+ * - Three supporting project cards below in a single row.
+ * - Optional discreet prev/next controls rotate only the featured project.
  */
 export default function SkanskaProjects({ projects, onSelectProject }) {
-  const [activeIndex, setActiveIndex] = useState(0);
   const items = projects.items;
 
-  // Auto-rotate every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % items.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [items.length]);
+  // Three cards that remain visible at all times.
+  const supportingItems = useMemo(
+    () => items.filter((p) => p.supporting),
+    [items]
+  );
 
-  const featured = items[activeIndex];
-  // Get 3 items after the featured one (looping)
-  const smallCards = [];
-  for (let i = 1; i <= 3; i++) {
-    smallCards.push(items[(activeIndex + i) % items.length]);
-  }
+  // Featured project pool: everything outside the static supporting trio.
+  const featuredPool = useMemo(
+    () => items.filter((p) => !p.supporting),
+    [items]
+  );
+
+  const defaultFeaturedIndex = useMemo(() => {
+    const flagged = featuredPool.findIndex((p) => p.featured);
+    return flagged >= 0 ? flagged : 0;
+  }, [featuredPool]);
+
+  const [activeIndex, setActiveIndex] = useState(defaultFeaturedIndex);
+  const featured = featuredPool[activeIndex] || featuredPool[0];
 
   const goTo = (delta) => {
     setActiveIndex((prev) => {
+      const count = featuredPool.length;
+      if (count <= 1) return prev;
       let next = prev + delta;
-      if (next < 0) next = items.length - 1;
-      if (next >= items.length) next = 0;
+      if (next < 0) next = count - 1;
+      if (next >= count) next = 0;
       return next;
     });
   };
 
+  const hasControls = featuredPool.length > 1;
+
   return (
-    <section id="projects" className="py-24 md:py-32 bg-white">
+    <section
+      id="projects"
+      className="bg-white py-16 pb-12 md:py-20 md:pb-16 lg:pt-24 lg:pb-20"
+      aria-labelledby="projects-heading"
+    >
       <div className="site-container">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 md:mb-16">
-          <div>
-            <span className="eyebrow">{projects.eyebrow}</span>
-            <h2 className="heading-2 font-display text-brand-navy max-w-2xl">
-              {projects.title}
-            </h2>
-          </div>
-          <div className="flex items-center gap-6 mt-6 lg:mt-0">
-            <p className="body-main text-brand-muted max-w-md hidden lg:block">
-              {projects.subtitle}
-            </p>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => goTo(-1)}
-                className="w-10 h-10 flex items-center justify-center border border-brand-navy/20 hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all"
-                aria-label="Previous project"
+        <div className="max-w-[1500px] mx-auto">
+          {/* Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.75fr)] gap-8 lg:gap-14 items-end mb-8 md:mb-10 lg:mb-12">
+            {/* Left: label + title */}
+            <div>
+              <span className="eyebrow">{projects.eyebrow}</span>
+              <h2
+                id="projects-heading"
+                className="font-display font-extrabold text-brand-navy leading-[0.98] tracking-tight max-w-[720px]"
+                style={{ fontSize: 'clamp(2.25rem, 4.2vw + 0.5rem, 4.25rem)' }}
               >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => goTo(1)}
-                className="w-10 h-10 flex items-center justify-center border border-brand-navy/20 hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all"
-                aria-label="Next project"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+                {projects.title}
+              </h2>
+            </div>
+
+            {/* Right: description, controls, CTA */}
+            <div className="flex flex-col gap-5 lg:pb-1">
+              <p className="body-main text-brand-muted max-w-md leading-relaxed">
+                {projects.subtitle}
+              </p>
+
+              <div className="flex items-center justify-between gap-4">
+                <button
+                  onClick={() => onSelectProject(featured)}
+                  className="group inline-flex items-center gap-2 font-display font-bold text-sm text-brand-navy hover:text-brand-orange transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-sm"
+                >
+                  <span>{projects.cta}</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+                </button>
+
+                {hasControls && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => goTo(-1)}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-brand-navy/15 text-brand-navy hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                      aria-label="Projet précédent"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => goTo(1)}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-brand-navy/15 text-brand-navy hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                      aria-label="Projet suivant"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Featured project: 2/3 image + 1/3 text */}
-        <motion.div
-          key={featured.title + '-featured'}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
-        >
-          {/* Featured image */}
-          <button
-            onClick={() => onSelectProject(featured)}
-            className="group relative w-full aspect-[3/4] overflow-hidden card-sharp text-left md:col-span-2"
-          >
-            <img
-              src={featured.image}
-              alt={featured.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.05]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-          </button>
+          {/* Featured project */}
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2.1fr)_minmax(280px,0.9fr)] gap-6 lg:gap-8 mb-8 md:mb-10 lg:mb-12">
+            <AnimatePresence mode="wait">
+              <motion.article
+                key={featured.title}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="contents"
+              >
+                {/* Featured image */}
+                <button
+                  onClick={() => onSelectProject(featured)}
+                  className="group relative w-full h-[320px] md:h-[380px] lg:h-[420px] overflow-hidden rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                  aria-label={`Voir le projet ${featured.title}`}
+                >
+                  <img
+                    src={featured.image}
+                    alt={`${featured.type} — ${featured.title}`}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                    loading="eager"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500" />
+                </button>
 
-          {/* Featured text block */}
-          <div className="flex flex-col justify-center md:col-span-1">
-            <span className="text-brand-cyan font-display text-xs font-bold tracking-[0.2em] uppercase mb-3">
-              {featured.type}
-            </span>
-            <h3 className="heading-3 md:heading-2 font-display text-brand-navy mb-4">
-              {featured.title}
-            </h3>
-            <p className="body-large text-brand-muted mb-2">
-              {featured.location}
-            </p>
-            <p className="body-main text-brand-dark/80 mb-8">
-              {featured.description}
-            </p>
-            <button
-              onClick={() => onSelectProject(featured)}
-              className="link-circle group self-start"
-            >
-              <span className="text-brand-dark group-hover:text-brand-navy">
-                {projects.viewDetails}
-              </span>
-              <div className="link-circle-icon bg-brand-orange group-hover:bg-brand-navy">
-                <ArrowRight className="w-4 h-4" />
-              </div>
-            </button>
+                {/* Featured info — aligned toward the bottom of the image */}
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex flex-col justify-end h-full lg:min-h-[420px] pt-2 lg:pt-0"
+                >
+                  <span className="text-brand-cyan font-display text-xs font-bold tracking-[0.2em] uppercase mb-3">
+                    {featured.type}
+                  </span>
+
+                  <h3
+                    className="font-display font-bold text-brand-navy mb-3"
+                    style={{ fontSize: 'clamp(1.75rem, 2.8vw + 0.5rem, 2.75rem)' }}
+                  >
+                    {featured.title}
+                  </h3>
+
+                  <p className="body-large text-brand-dark/85 mb-1">
+                    {featured.location}
+                  </p>
+
+                  <p className="body-main text-brand-muted leading-relaxed mb-5 line-clamp-3">
+                    {featured.description}
+                  </p>
+
+                  {(featured.status || featured.expertise) && (
+                    <p className="text-xs text-brand-muted font-medium tracking-wide mb-6">
+                      {featured.status}
+                      {featured.status && featured.expertise && ' · '}
+                      {featured.expertise}
+                    </p>
+                  )}
+
+                  <button
+                    onClick={() => onSelectProject(featured)}
+                    className="group/cta inline-flex items-center gap-3 self-start font-display font-bold text-sm text-brand-navy hover:text-brand-orange transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-sm"
+                  >
+                    <span>{projects.viewDetails}</span>
+                    <span className="w-8 h-8 flex items-center justify-center rounded-full bg-brand-orange text-white transition-all duration-500 group-hover/cta:bg-brand-navy group-hover/cta:translate-x-1">
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </button>
+                </motion.div>
+              </motion.article>
+            </AnimatePresence>
           </div>
-        </motion.div>
 
-        {/* 3 small cards below */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {smallCards.map((project, i) => (
-            <motion.button
-              key={project.title + i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              onClick={() => onSelectProject(project)}
-              className="group flex flex-col text-left"
-            >
-              <div className="relative aspect-[16/9] overflow-hidden card-sharp">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/20 transition-colors duration-300" />
-              </div>
-              <div className="pt-5 pb-3">
-                <span className="text-brand-muted text-xs font-bold tracking-[0.15em] uppercase">
-                  {project.type}
-                </span>
-                <h3 className="text-xl md:text-2xl font-display font-medium text-brand-navy mt-1 group-hover:text-brand-navy transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-brand-muted mt-1 line-clamp-2">
-                  {project.location}
-                </p>
-              </div>
-            </motion.button>
-          ))}
-        </div>
+          {/* Supporting projects */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+            {supportingItems.map((project) => (
+              <article key={project.title}>
+                <button
+                  onClick={() => onSelectProject(project)}
+                  className="group w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-md"
+                  aria-label={`Voir le projet ${project.title}`}
+                >
+                  <div className="relative w-full h-[200px] md:h-[170px] lg:h-[190px] overflow-hidden rounded-md mb-4">
+                    <img
+                      src={project.image}
+                      alt={`${project.type} — ${project.title}`}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                  </div>
 
-        {/* Dot indicators */}
-        <div className="flex items-center justify-center gap-2 mt-10">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveIndex(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                i === activeIndex
-                  ? 'bg-brand-orange w-6'
-                  : 'bg-brand-muted/30 hover:bg-brand-muted/60'
-              }`}
-              aria-label={`Go to project ${i + 1}`}
-            />
-          ))}
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <span className="text-brand-cyan font-display text-xs font-bold tracking-[0.18em] uppercase">
+                        {project.type}
+                      </span>
+                      <h4
+                        className="font-display font-bold text-brand-navy mt-1 group-hover:text-brand-orange transition-colors duration-300"
+                        style={{ fontSize: 'clamp(1.125rem, 1.4vw + 0.5rem, 1.5rem)' }}
+                      >
+                        {project.title}
+                      </h4>
+                      <p className="body-small text-brand-muted mt-1">
+                        {project.location}
+                      </p>
+                    </div>
+
+                    <span className="mt-1 w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full border border-brand-navy/15 text-brand-navy group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-white transition-all duration-300">
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </button>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
