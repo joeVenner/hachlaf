@@ -62,3 +62,9 @@
 - **Impact:** `src/components/DomainesSection.jsx`, `src/pages/HomePage.jsx`, `src/data/content.js`, `src/components/ParallaxBanners.jsx` (deleted), `package.json`, `package-lock.json`.
 - **Edge case:** `gsap.matchMedia()` is used to separate reduced-motion, mobile, and desktop behaviour so animations degrade gracefully without re-renders. All ScrollTriggers and tweens are cleaned up via `gsap.context()` revert on unmount.
 
+## [2026-07-10] Compact Editorial Projects Section
+- **What changed:** Redesigned `SkanskaProjects` from a tall 2/3+1/3 featured row with auto-rotating carousel into a compact, single-viewport editorial showcase. Added a two-column header (title + description/CTA), a fixed-height featured project row (image + bottom-aligned info), and three static supporting cards underneath. Updated `content.js` with `featured`, `supporting`, `status`, and `expertise` flags; the default featured project is the Casablanca desalination station and the static supporting trio is NOOR solar, Boujdour wind, and Safi thermal.
+- **Why:** The previous layout used an oversized featured image that dominated the page and pushed supporting content below the fold. The new layout communicates project scale while keeping the whole section scannable without scrolling on desktop, matching the requested architectural/editorial premium feel.
+- **Impact:** `src/components/SkanskaProjects.jsx`, `src/data/content.js`, `CLAUDE.md`.
+- **Edge case:** `AnimatePresence` is used only inside a fixed-height featured container so crossfading featured projects does not cause layout shifts. The three supporting cards remain mounted and do not re-render on carousel changes, preserving lazy-loading benefits and avoiding visual churn.
+

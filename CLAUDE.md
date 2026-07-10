@@ -39,7 +39,7 @@ src/
     Hero.jsx               # scrollable hero content layer (headline + CTAs)
     DomainesSection.jsx    # 3 stacked parallax sector cards (GSAP + sticky)
     OffresSection.jsx      # 5 service/offering cards
-    SkanskaProjects.jsx    # 2/3+1/3 featured project + 3 small cards
+    SkanskaProjects.jsx    # compact editorial project showcase: 1 featured + 3 supporting
     StatsSnapshot.jsx      # animated count-up counters
     PartnersCarousel.jsx   # client logo showcase (grid, not carousel)
     CTASection.jsx         # bottom call-to-action + contact form
@@ -121,10 +121,20 @@ src/
   `description`, `tags`, `detail`, `cta`, `image`.
 
 ## Projects section
-- `SkanskaProjects` uses a **2fr + 1fr featured row**: large image on the left,
-  text block on the right.
-- The featured row aligns visually with a **3-column** grid of smaller project cards below.
-- Auto-rotation (5s), manual arrows, dot indicators, and the project modal are preserved.
+- `SkanskaProjects` is a compact, editorial showcase designed to fit in a single desktop viewport.
+- **Header** is a two-column layout: large title + eyebrow on the left (≈55–60%);
+  description, portfolio CTA, and discreet prev/next controls on the right (≈30–35%).
+- **Featured project** sits in a `2.1fr + 0.9fr` row: a moderately sized image
+  (`h-[320–420px]`) on the left and project information bottom-aligned on the right.
+- **Three supporting project cards** are shown directly underneath in a single `1fr × 3` row.
+- The default featured project is the **Casablanca desalination station** (`featured: true`).
+- The three static supporting cards are **NOOR solar**, **Boujdour wind**, and **Safi thermal**
+  (`supporting: true`).
+- Optional prev/next controls rotate only the featured project through the non-supporting pool;
+  the supporting cards always remain visible.
+- Hover interactions are subtle: image scale `1 → 1.025`, overlay darkens slightly, arrow shifts right.
+- Clicking any project opens the existing `ProjectModal`.
+- `content.js` adds `featured`, `supporting`, `status`, and `expertise` fields to project items.
 
 ## CTA / Contact section
 - `CTASection` renders the bottom navy call-to-action and the contact form in a single section (`id="contact"`).
