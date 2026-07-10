@@ -2,13 +2,16 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 /**
- * Stacked parallax banners inside a single sharp-cornered card.
- * Three image rows share one card height, each with its own parallax + text overlay.
+ * Three separate 90%-wide parallax banner cards.
+ *
+ * Each banner is its own card inside the global site-container. They stack
+ * vertically with generous spacing, and each image parallax-scrolls independently
+ * while the card itself stays at 90% of the browser width.
  */
 export default function ParallaxBanners({ banners }) {
   return (
-    <section className="w-full bg-brand-light py-12 md:py-16">
-      <div className="site-container card-sharp h-[70vh] md:h-[55vh] flex flex-col gap-2 overflow-hidden">
+    <section className="w-full bg-white py-12 md:py-16">
+      <div className="site-container flex flex-col gap-6 md:gap-8">
         {banners.map((banner, i) => (
           <ParallaxBanner key={i} banner={banner} />
         ))}
@@ -30,7 +33,7 @@ function ParallaxBanner({ banner }) {
   return (
     <div
       ref={ref}
-      className="relative flex-1 min-h-0 w-full overflow-hidden"
+      className="relative card-sharp h-[45vh] md:h-[55vh] w-full overflow-hidden"
     >
       {/* Parallax image */}
       <motion.div style={{ y }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
@@ -47,11 +50,11 @@ function ParallaxBanner({ banner }) {
       {/* Content */}
       <motion.div
         style={{ opacity }}
-        className="relative z-10 h-full flex flex-col justify-end pb-4 md:pb-6"
+        className="relative z-10 h-full flex flex-col justify-end pb-6 md:pb-8"
       >
-        <div className="w-full px-4 md:px-6">
+        <div className="w-full px-5 md:px-8">
           <span className="eyebrow text-brand-cyan mb-2">{banner.title}</span>
-          <h2 className="heading-4 md:heading-3 font-display text-white max-w-3xl">
+          <h2 className="heading-3 md:heading-2 font-display text-white max-w-3xl">
             {banner.subtitle}
           </h2>
         </div>

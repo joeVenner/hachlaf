@@ -7,7 +7,7 @@ import { Check } from 'lucide-react';
  */
 export default function AboutSection({ about }) {
   return (
-    <section id="about" className="py-24 md:py-32 bg-brand-light">
+    <section id="about" className="py-24 md:py-32 bg-white">
       <div className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16 md:mb-24">
           {/* Image */}
