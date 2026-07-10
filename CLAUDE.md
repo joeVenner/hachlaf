@@ -126,19 +126,30 @@ src/
 - `DomainesSection` renders **3 stacked parallax sector cards** as a single
   architectural scroll experience.
 - Each card is a wide, sharp-cornered image-led tile (90vw desktop,
-  64–68vh height, min-height 520px, max-height 720px, max-width 1800px) with a
-  very subtle shadow, a thin navy-tinted border, and a left-to-right cinematic
+  68–70vh height, min-height 560px/600px, max-height 780px, max-width 1800px) with
+  a very subtle shadow, a thin navy-tinted border, and a left-to-right cinematic
   gradient overlay that keeps text crisp without dulling the image.
 - The section header uses the `.domaines-title` utility so the eyebrow, title
-  and the first card are visible together in the initial desktop viewport.
-- Scroll behaviour is driven by **GSAP ScrollTrigger** on top of CSS sticky
-  positioning (`top: 96px`): only the background image parallaxes
-  (`scale 1.06→1`, `yPercent -3→3`, scrubbed). Content visibility is separated
-  from scroll progress:
+  and the first card are visible together in the initial desktop viewport. The
+  header sits in normal document flow with comfortable top padding
+  (`pt-28 md:pt-36 lg:pt-44`) and scrolls away naturally after the first card
+  becomes sticky.
+- Cards stack via **CSS `position: sticky`** with a generous top offset based on
+  `--navbar-height + 88px` plus a 16px progressive offset for each card. This keeps
+  the title visible briefly before it scrolls out of view, and prevents cards
+  from sticking too close to the navbar. GSAP ScrollTrigger is used only for
+  image-only parallax (`scale 1.06→1`, `yPercent -3→3`, scrubbed), content
+  entrance of cards 2/3 (`start: 'top 82%'`, one-time), and the progress
+  indicator. There is no GSAP pinning or excessive pinSpacing.
+- Content visibility is separated from scroll progress:
   - First card content is visible by default (no opacity/translate/blur in CSS).
-  - Cards 2 and 3 reveal once on enter (`start: 'top 82%'`) with a short fade +
-    10px translate, then stay readable.
+  - Cards 2 and 3 reveal once on enter with a short fade + 10px translate, then
+    stay readable.
+- Each card wrapper uses a controlled min-height (`118vh` per card, `82vh` for
+  the last) to avoid large blank areas at the end of the section.
 - A subtle 01/02/03 progress indicator sits on the right.
+- Mobile (`< 768px`) disables sticky stacking and uses normal document flow with
+  a one-time fade-in per card.
 - `prefers-reduced-motion` disables parallax/scale and keeps all content visible
   immediately with no transitions.
 - Data model (`content.domaines.items`): `number`, `category`, `title`,

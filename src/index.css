@@ -52,8 +52,8 @@ body {
 
 /* Tight section title used for the Domaines parallax heading so the first card stays in the first viewport. */
 .domaines-title {
-  font-size: clamp(2.25rem, 5.5vw, 5.75rem);
-  line-height: 0.98;
+  font-size: clamp(3.5rem, 5.2vw, 5.5rem);
+  line-height: 0.96;
   font-weight: 800;
   letter-spacing: -0.015em;
 }
