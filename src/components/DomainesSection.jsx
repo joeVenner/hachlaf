@@ -7,9 +7,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 /**
  * Domaines d'activité — premium stacked parallax section.
  *
- * Three cinematic full-bleed sector cards stack on top of each other as the
- * user scrolls. GSAP ScrollTrigger drives image parallax/scale and staggered
- * content entrances; Framer Motion handles the section header reveal.
+ * Three wide, sharp-cornered sector cards stack lightly as the user scrolls.
+ * Background images parallax with scroll progress; text is visible immediately
+ * (first card) or revealed once on enter (subsequent cards), and never fades
+ * out again while the card remains in view.
  */
 export default function DomainesSection({ domaines }) {
   const { eyebrow, title, items } = domaines;
@@ -37,130 +38,101 @@ export default function DomainesSection({ domaines }) {
       return () => {};
     });
 
-    // Mobile: light fade-in only, no heavy parallax or pinning behaviour.
-    mm.add(
-      '(max-width: 767px) and (prefers-reduced-motion: no-preference)',
-      () => {
-        const ctx = gsap.context(() => {
-          cardRefs.current.forEach((card) => {
-            if (!card) return;
-            gsap.fromTo(
-              card.querySelectorAll('[data-animate]'),
-              { opacity: 0, y: 28 },
-              {
-                opacity: 1,
-                y: 0,
-                stagger: 0.08,
-                ease: 'power2.out',
-                scrollTrigger: {
-                  trigger: card,
-                  start: 'top 85%',
-                  end: 'top 55%',
-                  scrub: 0.4,
-                },
-              }
-            );
-          });
-        }, wrapper);
-        return () => ctx.revert();
-      }
-    );
+    // All other clients: image parallax only; content reveals once on enter.
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const ctx = gsap.context(() => {
+        // Track overall section progress for the 01/02/03 indicator.
+        ScrollTrigger.create({
+          trigger: wrapper,
+          start: 'top center',
+          end: 'bottom center',
+          onUpdate: (self) => setProgress(self.progress),
+        });
 
-    // Desktop: full cinematic parallax, pinning and staggered reveals.
-    mm.add(
-      '(min-width: 768px) and (prefers-reduced-motion: no-preference)',
-      () => {
-        const ctx = gsap.context(() => {
-          ScrollTrigger.create({
-            trigger: wrapper,
-            start: 'top center',
-            end: 'bottom center',
-            onUpdate: (self) => setProgress(self.progress),
-          });
+        cardRefs.current.forEach((card, i) => {
+          if (!card) return;
+          const image = card.querySelector('.card-image');
+          const contentItems = card.querySelectorAll('[data-animate]');
 
-          cardRefs.current.forEach((card, i) => {
-            if (!card) return;
-            const image = card.querySelector('.card-image');
-            const contentItems = card.querySelectorAll('[data-animate]');
+          // Cinematic image parallax + scale-out (scrubbed, image only).
+          gsap.fromTo(
+            image,
+            { scale: 1.06, yPercent: -3 },
+            {
+              scale: 1,
+              yPercent: 3,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+              },
+            }
+          );
 
-            // Cinematic image parallax + scale-out.
-            gsap.fromTo(
-              image,
-              { scale: 1.08, yPercent: -7 },
-              {
-                scale: 1,
-                yPercent: 7,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: card,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: 0.6,
-                },
-              }
-            );
-
-            // Staggered content entrance as each card arrives.
+          // Content: subtle one-time fade-in when the card enters the viewport.
+          // The first card has no [data-animate] elements — it is already visible.
+          if (contentItems.length > 0) {
             gsap.fromTo(
               contentItems,
-              { opacity: 0, y: 48 },
+              { opacity: 0, y: 10 },
               {
                 opacity: 1,
                 y: 0,
-                stagger: 0.09,
+                duration: 0.5,
+                stagger: 0.06,
                 ease: 'power2.out',
                 scrollTrigger: {
                   trigger: card,
-                  start: 'top 75%',
-                  end: 'top 30%',
-                  scrub: 0.5,
+                  start: 'top 82%',
+                  toggleActions: 'play none none none',
                 },
               }
             );
+          }
 
-            // Update the progress indicator to the card currently in centre view.
-            ScrollTrigger.create({
-              trigger: card,
-              start: 'top 60%',
-              end: 'bottom 40%',
-              onUpdate: (self) => {
-                if (self.progress > 0.5) {
-                  setActiveIndex(i);
-                }
-              },
-            });
+          // Update the progress indicator to the card currently in centre view.
+          ScrollTrigger.create({
+            trigger: card,
+            start: 'top 60%',
+            end: 'bottom 40%',
+            onUpdate: (self) => {
+              if (self.progress > 0.5) {
+                setActiveIndex(i);
+              }
+            },
           });
-
-        }, wrapper);
-        return () => ctx.revert();
-      }
-    );
+        });
+      }, wrapper);
+      return () => ctx.revert();
+    });
 
     return () => {
       mm.revert();
     };
   }, [items.length]);
 
+  // Only cards after the first get the scroll-enter reveal attribute.
+  const animateAttr = (i) => (i === 0 ? {} : { 'data-animate': true });
+
   return (
     <section id="domaines" className="relative bg-white">
       {/* Section header ----------------------------------------------------- */}
-      <div className="site-container pt-24 md:pt-32 pb-12 md:pb-20">
+      <div className="site-container pt-16 md:pt-20 lg:pt-24 pb-6 md:pb-8 lg:pb-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10% 0px' }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="eyebrow text-brand-cyan mb-4">{eyebrow}</span>
-          <h2 className="heading-2 font-display text-brand-navy">{title}</h2>
+          <span className="eyebrow text-brand-cyan mb-3 md:mb-4">{eyebrow}</span>
+          <h2 className="domaines-title font-display text-brand-navy">{title}</h2>
         </motion.div>
       </div>
 
       {/* Stacked parallax cards --------------------------------------------- */}
-      <div
-        ref={wrapperRef}
-        className="relative md:h-[300vh]"
-      >
+      <div ref={wrapperRef} className="relative md:h-[260vh]">
         {/* Minimal vertical progress indicator ----------------------------- */}
         <div className="absolute right-[3%] top-0 bottom-0 z-[60] pointer-events-none hidden md:flex">
           <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center gap-5">
@@ -187,10 +159,12 @@ export default function DomainesSection({ domaines }) {
           <div
             key={card.number}
             ref={(el) => { cardRefs.current[i] = el; }}
-            className="md:sticky md:top-0 relative min-h-[70vh] md:min-h-screen w-full flex items-center justify-center py-6 md:py-10 lg:py-14"
+            className={`md:sticky md:top-24 relative w-full flex justify-center ${
+              i !== items.length - 1 ? 'pb-7 md:pb-10 lg:pb-14' : ''
+            }`}
             style={{ zIndex: i + 1 }}
           >
-            <article className="domaines-parallax-card relative w-[94vw] md:w-[90vw] max-w-[1500px] h-[72vh] md:h-[62vh] lg:h-[64vh] min-h-[560px] max-h-[820px] rounded-[24px] md:rounded-[28px] lg:rounded-[32px] overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
+            <article className="relative w-[94vw] md:w-[92vw] lg:w-[90vw] max-w-[1800px] h-[74vh] md:h-[66vh] lg:h-[66vh] min-h-[560px] md:min-h-[520px] max-h-[720px] overflow-hidden shadow-[0_10px_30px_rgba(9,24,50,0.06)] border border-[rgba(12,39,82,0.06)]">
               {/* Full-bleed background image with parallax transform ---------- */}
               <div className="absolute inset-0 overflow-hidden">
                 <img
@@ -206,12 +180,21 @@ export default function DomainesSection({ domaines }) {
                 />
               </div>
 
-              {/* Cinematic gradient overlay --------------------------------- */}
+              {/* Cinematic left-to-right gradient overlay --------------------- */}
               <div
                 className="absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(90deg, rgba(7,16,32,0.86) 0%, rgba(7,16,32,0.58) 42%, rgba(7,16,32,0.12) 78%, rgba(7,16,32,0.18) 100%)',
+                    'linear-gradient(90deg, rgba(5,15,32,0.82) 0%, rgba(5,15,32,0.56) 38%, rgba(5,15,32,0.14) 72%, rgba(5,15,32,0.05) 100%)',
+                }}
+              />
+
+              {/* Subtle bottom gradient for text stability ------------------ */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'linear-gradient(0deg, rgba(5,15,32,0.35) 0%, rgba(5,15,32,0) 45%)',
                 }}
               />
 
@@ -220,7 +203,7 @@ export default function DomainesSection({ domaines }) {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    'radial-gradient(circle at 35% 75%, transparent 0%, rgba(7,16,32,0.28) 100%)',
+                    'radial-gradient(circle at 35% 75%, transparent 0%, rgba(5,15,32,0.24) 100%)',
                 }}
               />
 
@@ -234,43 +217,43 @@ export default function DomainesSection({ domaines }) {
 
               {/* Inner border ------------------------------------------------- */}
               <div
-                className="absolute inset-0 pointer-events-none rounded-[inherit]"
+                className="absolute inset-0 pointer-events-none"
                 style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
               />
 
               {/* Card content ------------------------------------------------- */}
               <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-16 xl:p-20">
-                <div className="max-w-[520px] lg:max-w-[620px]">
+                <div className="max-w-[560px]">
                   <span
-                    data-animate
+                    {...animateAttr(i)}
                     className="block font-display text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] leading-none text-white/10 mb-0 md:-mb-2"
                   >
                     {card.number}
                   </span>
 
                   <span
-                    data-animate
+                    {...animateAttr(i)}
                     className="block text-[11px] md:text-xs font-display font-bold uppercase tracking-[0.22em] text-white/70 mb-3 md:mb-4"
                   >
                     {card.category}
                   </span>
 
                   <h3
-                    data-animate
+                    {...animateAttr(i)}
                     className="font-display text-white text-[2rem] md:text-[3rem] lg:text-[clamp(2.75rem,4.2vw,5.25rem)] leading-[1] tracking-[-0.02em] font-extrabold mb-4 md:mb-5 lg:mb-6"
                   >
                     {card.title}
                   </h3>
 
                   <p
-                    data-animate
+                    {...animateAttr(i)}
                     className="text-white/80 text-base md:text-lg lg:text-[1.25rem] leading-[1.55] max-w-[540px] mb-5 md:mb-6 line-clamp-4"
                   >
                     {card.description}
                   </p>
 
                   <div
-                    data-animate
+                    {...animateAttr(i)}
                     className="flex flex-wrap gap-2 md:gap-2.5 mb-5 md:mb-6"
                   >
                     {card.tags.map((tag) => (
@@ -283,7 +266,7 @@ export default function DomainesSection({ domaines }) {
                     ))}
                   </div>
 
-                  <div data-animate className="flex items-center gap-4 md:gap-6">
+                  <div {...animateAttr(i)} className="flex items-center gap-4 md:gap-6">
                     <a
                       href="#contact"
                       className="group inline-flex items-center gap-2 text-white font-display font-bold text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
