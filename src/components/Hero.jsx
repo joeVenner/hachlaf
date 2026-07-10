@@ -25,7 +25,7 @@ export default function Hero({ hero, heroImages }) {
   return (
     <section
       id="top"
-      className="fixed inset-0 h-screen w-full overflow-hidden z-0"
+      className="fixed inset-0 h-screen w-full overflow-hidden z-0 bg-brand-navy"
     >
       {/* Crossfade background slideshow */}
       <div className="absolute inset-0">

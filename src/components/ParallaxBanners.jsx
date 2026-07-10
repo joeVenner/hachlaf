@@ -2,15 +2,17 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 /**
- * Full-width parallax scrolling banners — like Skanska.
- * Each banner is a full-width image with text overlay that parallax-scrolls.
+ * Stacked parallax banners inside a single sharp-cornered card.
+ * Three image rows share one card height, each with its own parallax + text overlay.
  */
 export default function ParallaxBanners({ banners }) {
   return (
-    <section className="relative">
-      {banners.map((banner, i) => (
-        <ParallaxBanner key={i} banner={banner} />
-      ))}
+    <section className="w-full bg-brand-light py-12 md:py-16">
+      <div className="site-container card-sharp h-[70vh] md:h-[55vh] flex flex-col gap-2 overflow-hidden">
+        {banners.map((banner, i) => (
+          <ParallaxBanner key={i} banner={banner} />
+        ))}
+      </div>
     </section>
   );
 }
@@ -28,7 +30,7 @@ function ParallaxBanner({ banner }) {
   return (
     <div
       ref={ref}
-      className="relative h-[50vh] md:h-[65vh] w-full overflow-hidden"
+      className="relative flex-1 min-h-0 w-full overflow-hidden"
     >
       {/* Parallax image */}
       <motion.div style={{ y }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
@@ -40,16 +42,16 @@ function ParallaxBanner({ banner }) {
       </motion.div>
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/80 via-brand-navy/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/85 via-brand-navy/35 to-transparent" />
 
       {/* Content */}
       <motion.div
         style={{ opacity }}
-        className="relative z-10 h-full flex flex-col justify-center"
+        className="relative z-10 h-full flex flex-col justify-end pb-4 md:pb-6"
       >
-        <div className="site-container w-full">
-          <span className="eyebrow text-brand-cyan mb-3">{banner.title}</span>
-          <h2 className="heading-3 md:heading-2 font-display text-white max-w-3xl">
+        <div className="w-full px-4 md:px-6">
+          <span className="eyebrow text-brand-cyan mb-2">{banner.title}</span>
+          <h2 className="heading-4 md:heading-3 font-display text-white max-w-3xl">
             {banner.subtitle}
           </h2>
         </div>

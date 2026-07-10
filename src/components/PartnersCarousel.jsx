@@ -4,7 +4,7 @@
  */
 export default function PartnersCarousel({ partners }) {
   return (
-    <section className="py-20 md:py-28 bg-brand-light">
+    <section className="py-20 md:py-28 bg-white">
       <div className="site-container">
         <div className="text-center mb-12 md:mb-16">
           <span className="eyebrow">{partners.eyebrow}</span>

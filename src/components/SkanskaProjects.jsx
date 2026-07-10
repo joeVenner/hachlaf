@@ -38,7 +38,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
   };
 
   return (
-    <section id="projects" className="py-24 md:py-32 bg-white">
+    <section id="projects" className="py-24 md:py-32 bg-brand-light">
       <div className="site-container">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 md:mb-16">
