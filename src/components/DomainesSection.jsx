@@ -6,8 +6,8 @@ import { motion } from 'framer-motion';
  */
 export default function DomainesSection({ domaines }) {
   return (
-    <section id="domaines" className="py-24 md:py-32">
-      <div className="max-w-[90rem] mx-auto px-[5%]">
+    <section id="domaines" className="py-24 md:py-32 bg-white">
+      <div className="site-container">
         <span className="eyebrow">{domaines.eyebrow}</span>
         <h2 className="heading-2 font-display text-brand-navy mb-12 md:mb-16">
           {domaines.title}

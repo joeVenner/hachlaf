@@ -48,7 +48,7 @@ export default function HomePage({ lang, setLang }) {
       />
 
       {/* Spacer for the fixed hero so it occupies the initial viewport */}
-      <div className="h-screen" aria-hidden="true" />
+      <div className="h-screen bg-white" aria-hidden="true" />
 
       <main className="relative z-10 bg-white">
         {/* 1. Hero */}

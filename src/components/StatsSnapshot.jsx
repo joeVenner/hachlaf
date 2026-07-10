@@ -7,8 +7,8 @@ import { motion, useInView } from 'framer-motion';
  */
 export default function StatsSnapshot({ stats }) {
   return (
-    <section className="py-24 md:py-32">
-      <div className="max-w-[90rem] mx-auto px-[5%]">
+    <section className="py-24 md:py-32 bg-white">
+      <div className="site-container">
         <div className="relative rounded-none overflow-hidden shadow-[0_20px_50px_rgba(20,50,117,0.15)] group">
           {/* Animated Background Layers */}
           <div className="absolute inset-0 z-0 bg-[#1e4496] overflow-hidden">

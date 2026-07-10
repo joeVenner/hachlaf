@@ -9,7 +9,7 @@ import { ArrowRight, Briefcase } from 'lucide-react';
 export default function CTASection({ cta }) {
   return (
     <section className="py-24 md:py-32 bg-brand-navy text-center">
-      <div className="max-w-[90rem] mx-auto px-[5%]">
+      <div className="site-container">
         <div className="max-w-3xl mx-auto">
           <h2 className="heading-2 font-display text-white mb-6">
             {cta.title}

@@ -23,11 +23,11 @@ export default function StickyServices({ services, ctaLabel, ctaHref = '#project
     <section
       id="services"
       ref={containerRef}
-      className="relative bg-white py-12 md:py-24 px-6 md:px-12"
+      className="relative bg-white py-12 md:py-24"
       style={{ height: `${count * 100}vh` }}
     >
       {/* Pinned sticky panel */}
-      <div className="sticky top-24 md:top-32 h-[75vh] min-h-[600px] max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(20,50,117,0.15)] group">
+      <div className="site-container sticky top-24 md:top-32 h-[75vh] min-h-[600px] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(20,50,117,0.15)] group">
         {/* Background images with crossfade */}
         {services.items.map((item, index) => (
           <StickyImage

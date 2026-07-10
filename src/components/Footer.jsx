@@ -13,7 +13,7 @@ import { Phone, Mail, MapPin } from 'lucide-react';
 export default function Footer({ footer, logoSrc }) {
   return (
     <footer id="contact" className="bg-white">
-      <div className="max-w-[90rem] mx-auto px-[5%] py-16 md:py-20">
+      <div className="site-container py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* About */}
           <div className="md:col-span-5">
@@ -100,7 +100,7 @@ export default function Footer({ footer, logoSrc }) {
 
       {/* Bottom bar */}
       <div className="border-t border-black/5">
-        <div className="max-w-[90rem] mx-auto px-[5%] py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="site-container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="body-small text-brand-muted text-center md:text-left">
             {footer.legal}
           </p>

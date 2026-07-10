@@ -32,9 +32,9 @@ export default function SuffolkNav({ nav, lang, setLang }) {
   const hoverColor = 'hover:text-brand-cyan';
 
   return (
-    <header className="fixed top-3 md:top-4 left-0 right-0 z-50 px-3 sm:px-6 lg:px-10 xl:px-20">
+    <header className="fixed top-3 md:top-4 left-0 right-0 z-50 site-container">
       <div
-        className={`h-[3.5rem] lg:h-16 relative z-20 px-3 sm:px-5 lg:px-11 transition-all duration-300 ease-in-out flex items-center justify-between rounded-sm backdrop-blur-[1.56rem] ${
+        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-sm backdrop-blur-[1.56rem] ${
           solid
             ? 'bg-white/90 shadow-lg'
             : 'bg-black/20'

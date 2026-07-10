@@ -11,8 +11,8 @@ import { ArrowRight } from 'lucide-react';
  */
 export default function ServiceCards({ serviceCards }) {
   return (
-    <section className="py-24 md:py-32 px-6 md:px-12 bg-brand-light">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 md:py-32 bg-brand-light">
+      <div className="site-container">
         <span className="eyebrow">{serviceCards.eyebrow}</span>
         <h2 className="heading-2 font-display text-brand-navy mb-12 md:mb-16">
           {serviceCards.title}

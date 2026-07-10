@@ -8,7 +8,7 @@ import { ArrowRight } from 'lucide-react';
 export default function OffresSection({ offres }) {
   return (
     <section id="offres" className="py-24 md:py-32 bg-white">
-      <div className="max-w-[90rem] mx-auto px-[5%]">
+      <div className="site-container">
         <span className="eyebrow">{offres.eyebrow}</span>
         <h2 className="heading-2 font-display text-brand-navy mb-12 md:mb-16">
           {offres.title}

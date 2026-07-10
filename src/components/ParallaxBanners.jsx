@@ -45,9 +45,9 @@ function ParallaxBanner({ banner }) {
       {/* Content */}
       <motion.div
         style={{ opacity }}
-        className="relative z-10 h-full flex flex-col justify-center px-[5%]"
+        className="relative z-10 h-full flex flex-col justify-center"
       >
-        <div className="max-w-[90rem] mx-auto w-full">
+        <div className="site-container w-full">
           <span className="eyebrow text-brand-cyan mb-3">{banner.title}</span>
           <h2 className="heading-3 md:heading-2 font-display text-white max-w-3xl">
             {banner.subtitle}

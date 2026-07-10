@@ -21,7 +21,7 @@ export default function SubcontractorPage({ content, logoSrc }) {
     <div className="min-h-screen bg-white text-brand-dark flex flex-col">
       {/* Simple header for the page */}
       <header className="fixed top-0 left-0 right-0 z-50 h-16 glass border-b border-black/5">
-        <div className="h-full max-w-[90rem] mx-auto px-[5%] flex items-center justify-between">
+        <div className="site-container h-full flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
             <img
               src={logoSrc}
@@ -52,7 +52,7 @@ export default function SubcontractorPage({ content, logoSrc }) {
 
       {/* Minimal footer */}
       <footer className="border-t border-black/5 py-6 bg-white">
-        <div className="max-w-[90rem] mx-auto px-[5%] flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="site-container flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="body-small text-brand-muted">{content.footer.legal}</p>
           <Link
             to="/"

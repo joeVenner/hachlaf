@@ -8,8 +8,8 @@ import { motion } from 'framer-motion';
  */
 export default function PartnersSection({ partners }) {
   return (
-    <section className="py-24 md:py-32 px-6 md:px-12 bg-white">
-      <div className="max-w-7xl mx-auto text-center">
+    <section className="py-24 md:py-32 bg-white">
+      <div className="site-container text-center">
         <span className="eyebrow">{partners.eyebrow}</span>
         <h2 className="heading-2 font-display text-brand-navy mb-16 md:mb-20">
           {partners.title}

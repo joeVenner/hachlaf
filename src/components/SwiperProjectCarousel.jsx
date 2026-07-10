@@ -16,8 +16,8 @@ export default function SwiperProjectCarousel({ projects, onSelectProject }) {
   }
 
   return (
-    <section id="projects" className="py-24 md:py-32 px-6 md:px-12 bg-white">
-      <div className="max-w-[90rem] mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24">
+    <section id="projects" className="py-24 md:py-32 bg-white">
+      <div className="site-container flex flex-col lg:flex-row gap-16 lg:gap-24">
         
         {/* Left Side: Text */}
         <div className="lg:w-1/3 flex flex-col justify-start pt-4">

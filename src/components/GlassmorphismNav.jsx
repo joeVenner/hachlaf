@@ -31,7 +31,7 @@ export default function GlassmorphismNav({ nav, lang, setLang }) {
         solid ? 'glass' : 'bg-transparent'
       }`}
     >
-      <div className="h-full max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between relative">
+      <div className="site-container h-full flex items-center justify-between relative">
         {/* Left Nav */}
         <nav className="hidden lg:flex items-center gap-6 flex-1">
           {nav.links.slice(0, Math.ceil(nav.links.length / 2)).map((link) => (
