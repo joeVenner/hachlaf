@@ -220,6 +220,124 @@ body {
   padding-right: 5%;
 }
 
+/* Charcoal body text for high readability */
+.text-charcoal {
+  color: #4a4a4a;
+}
+
+/* Stacked sticky cards — full-viewport cards that slide over each other */
+.stacked-section {
+  position: relative;
+  height: 300vh;
+}
+
+.stacked-card {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Contact form fields */
+.input-field,
+.textarea-field {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-brand-dark);
+  background-color: #ffffff;
+  border: 1px solid var(--color-brand-muted);
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field::placeholder,
+.textarea-field::placeholder {
+  color: var(--color-brand-muted);
+  opacity: 0.8;
+}
+
+.input-field:focus,
+.textarea-field:focus {
+  border-color: var(--color-brand-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 163, 224, 0.15);
+}
+
+.textarea-field {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+/* Dark-themed form fields for the navy CTA/contact section */
+.input-field-dark,
+.textarea-field-dark {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.input-field-dark::placeholder,
+.textarea-field-dark::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.input-field-dark:focus,
+.textarea-field-dark:focus {
+  border-color: var(--color-brand-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 163, 224, 0.25);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Outline button variant for dark backgrounds */
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 1.5px solid #ffffff;
+  border-radius: 999px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-outline-light:hover {
+  background: #ffffff;
+  color: var(--color-brand-navy);
+}
+
+/* WhatsApp send button */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  width: 100%;
+  background-color: #25d366;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 999px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-whatsapp:hover {
+  background-color: #1ebe5d;
+  transform: translateY(-2px);
+}
+
 /* Section eyebrow label */
 .eyebrow {
   display: inline-block;

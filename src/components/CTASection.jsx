@@ -76,14 +76,14 @@ export default function CTASection({ cta, contact }) {
           </div>
         </div>
 
-        {/* Contact form card */}
+        {/* Contact form */}
         <motion.div
           id="contact-form"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10% 0px' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-2xl mx-auto bg-white p-6 md:p-8 shadow-lg"
+          className="max-w-2xl mx-auto"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -91,7 +91,7 @@ export default function CTASection({ cta, contact }) {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-2">
-                <label htmlFor="contact-name" className="text-sm font-display font-bold uppercase tracking-wider text-brand-navy">
+                <label htmlFor="contact-name" className="text-sm font-display font-bold uppercase tracking-wider text-white/90">
                   {contact.nameLabel}
                 </label>
                 <input
@@ -100,13 +100,13 @@ export default function CTASection({ cta, contact }) {
                   value={form.name}
                   onChange={update('name')}
                   required
-                  className="input-field"
+                  className="input-field input-field-dark"
                   placeholder={contact.nameLabel}
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="contact-company" className="text-sm font-display font-bold uppercase tracking-wider text-brand-navy">
+                <label htmlFor="contact-company" className="text-sm font-display font-bold uppercase tracking-wider text-white/90">
                   {contact.companyLabel}
                 </label>
                 <input
@@ -115,14 +115,14 @@ export default function CTASection({ cta, contact }) {
                   value={form.company}
                   onChange={update('company')}
                   required
-                  className="input-field"
+                  className="input-field input-field-dark"
                   placeholder={contact.companyLabel}
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="contact-message" className="text-sm font-display font-bold uppercase tracking-wider text-brand-navy">
+              <label htmlFor="contact-message" className="text-sm font-display font-bold uppercase tracking-wider text-white/90">
                 {contact.messageLabel}
               </label>
               <textarea
@@ -131,13 +131,13 @@ export default function CTASection({ cta, contact }) {
                 onChange={update('message')}
                 required
                 rows={4}
-                className="textarea-field"
+                className="textarea-field textarea-field-dark"
                 placeholder={contact.messageLabel}
               />
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 font-medium" role="alert">
+              <p className="text-sm text-red-400 font-medium" role="alert">
                 {error}
               </p>
             )}
@@ -155,7 +155,7 @@ export default function CTASection({ cta, contact }) {
               <button
                 type="button"
                 onClick={sendEmail}
-                className="btn-outline-dark w-full justify-center"
+                className="btn-outline-light w-full justify-center"
               >
                 <Mail className="w-5 h-5" />
                 {contact.emailButton}
