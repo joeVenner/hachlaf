@@ -7,7 +7,7 @@ import { Menu, X, ArrowRight } from 'lucide-react';
  *
  * Handles both in-page anchor links (#id) and React Router routes (/path).
  */
-export default function GlassmorphismNav({ nav, logoSrc, lang, setLang }) {
+export default function GlassmorphismNav({ nav, lang, setLang }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
@@ -27,41 +27,49 @@ export default function GlassmorphismNav({ nav, logoSrc, lang, setLang }) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${
-        solid ? 'glass border-b border-black/5 shadow-sm' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-500 ${
+        solid ? 'glass' : 'bg-transparent'
       }`}
     >
-      <div className="h-full max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 flex-shrink-0">
-          <img
-            src={logoSrc}
-            alt="Hachlaf Akhawayne"
-            className="h-10 w-auto object-contain"
-          />
-          <span
-            className={`font-display font-bold text-lg tracking-tight transition-colors ${
-              solid ? 'text-brand-navy' : 'text-white'
-            }`}
-          >
-            Hachlaf.
-          </span>
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {nav.links.map((link) => (
+      <div className="h-full max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between relative">
+        {/* Left Nav */}
+        <nav className="hidden lg:flex items-center gap-6 flex-1">
+          {nav.links.slice(0, Math.ceil(nav.links.length / 2)).map((link) => (
             <NavLink
               key={link.id || link.to}
               link={link}
-              className={`font-display text-[15px] font-semibold tracking-wide transition-colors ${textColor} ${hoverColor}`}
+              className={`font-display text-[14px] font-semibold tracking-wide transition-colors uppercase ${textColor} ${hoverColor}`}
               onClick={() => setMobileOpen(false)}
             />
           ))}
         </nav>
 
-        {/* Right actions */}
-        <div className="hidden lg:flex items-center gap-4">
+        {/* Center Logo */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
+          <Link to="/" className="pointer-events-auto flex items-center justify-center">
+            <span
+              className={`font-display font-extrabold text-xl tracking-wider uppercase transition-colors ${
+                solid ? 'text-brand-navy' : 'text-white'
+              }`}
+            >
+              HACHLAF.
+            </span>
+          </Link>
+        </div>
+
+        {/* Right Nav & Actions */}
+        <div className="hidden lg:flex items-center justify-end gap-6 flex-1">
+          <nav className="flex items-center gap-6">
+            {nav.links.slice(Math.ceil(nav.links.length / 2)).map((link) => (
+              <NavLink
+                key={link.id || link.to}
+                link={link}
+                className={`font-display text-[14px] font-semibold tracking-wide transition-colors uppercase ${textColor} ${hoverColor}`}
+                onClick={() => setMobileOpen(false)}
+              />
+            ))}
+          </nav>
+
           <div
             className={`flex items-center rounded-full p-1 border ${
               solid ? 'border-brand-muted/30' : 'border-white/30'
@@ -96,29 +104,27 @@ export default function GlassmorphismNav({ nav, logoSrc, lang, setLang }) {
               FR
             </button>
           </div>
-
-          <Link to="/#contact" className="btn-primary text-sm py-2.5 px-5">
-            {nav.cta}
-          </Link>
         </div>
 
         {/* Mobile menu button */}
-        <button
-          className="lg:hidden p-2 -mr-2"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-        >
-          {mobileOpen ? (
-            <X className={`w-6 h-6 ${solid ? 'text-brand-navy' : 'text-white'}`} />
-          ) : (
-            <Menu className={`w-6 h-6 ${solid ? 'text-brand-navy' : 'text-white'}`} />
-          )}
-        </button>
+        <div className="lg:hidden flex-1 flex justify-end">
+          <button
+            className="p-2 -mr-2 relative z-50"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          >
+            {mobileOpen ? (
+              <X className={`w-6 h-6 ${solid ? 'text-brand-navy' : 'text-white'}`} />
+            ) : (
+              <Menu className={`w-6 h-6 ${solid ? 'text-brand-navy' : 'text-white'}`} />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="lg:hidden absolute top-16 left-0 right-0 glass border-b border-black/5 shadow-lg">
+        <div className="lg:hidden absolute top-20 left-0 right-0 glass border border-black/5 shadow-lg rounded-lg mx-4">
           <nav className="flex flex-col px-4 py-5 gap-4">
             {nav.links.map((link) => (
               <NavLink
