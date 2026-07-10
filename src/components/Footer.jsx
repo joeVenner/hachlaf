@@ -13,7 +13,7 @@ import { Phone, Mail, MapPin } from 'lucide-react';
 export default function Footer({ footer, logoSrc }) {
   return (
     <footer className="relative z-10 bg-white">
-      <div className="site-container py-16 md:py-20">
+      <div className="site-container py-10 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* About */}
           <div className="md:col-span-5">
@@ -34,7 +34,7 @@ export default function Footer({ footer, logoSrc }) {
 
           {/* Links */}
           <div className="md:col-span-3 md:col-start-7">
-            <h4 className="font-display text-sm font-bold uppercase tracking-[0.15em] text-brand-navy mb-6">
+            <h4 className="font-display text-sm font-bold uppercase tracking-[0.15em] text-brand-navy mb-4">
               {footer.linksLabel}
             </h4>
             <ul className="space-y-3">
@@ -62,10 +62,10 @@ export default function Footer({ footer, logoSrc }) {
 
           {/* Contact */}
           <div className="md:col-span-3">
-            <h4 className="font-display text-sm font-bold uppercase tracking-[0.15em] text-brand-navy mb-6">
+            <h4 className="font-display text-sm font-bold uppercase tracking-[0.15em] text-brand-navy mb-4">
               {footer.contactLabel}
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-2">
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-brand-orange mt-1 flex-shrink-0" />
                 <span className="body-main text-brand-muted">
@@ -100,7 +100,7 @@ export default function Footer({ footer, logoSrc }) {
 
       {/* Bottom bar */}
       <div className="border-t border-black/5">
-        <div className="site-container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="site-container py-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="body-small text-brand-muted text-center md:text-left">
             {footer.legal}
           </p>

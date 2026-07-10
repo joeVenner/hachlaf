@@ -5,6 +5,7 @@ import { Mail, MessageCircle } from 'lucide-react';
 /**
  * Contact form section.
  *
+ * Layout: title block on the left, form on the right.
  * Collects name, company and message, then lets the visitor send the inquiry
  * either via WhatsApp click-to-chat or a pre-filled email (mailto:).
  *
@@ -50,16 +51,16 @@ export default function ContactSection({ contact }) {
   };
 
   return (
-    <section id="contact" className="relative py-24 md:py-32 bg-white">
+    <section id="contact" className="relative py-16 md:py-20 bg-white">
       <div className="site-container">
-        <div className="max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10% 0px' }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center mb-12"
+            className="lg:sticky lg:top-24"
           >
             <span className="eyebrow">{contact.eyebrow}</span>
             <h2 className="heading-2 font-display text-brand-navy mb-4">
@@ -68,6 +69,26 @@ export default function ContactSection({ contact }) {
             <p className="body-large text-brand-muted">
               {contact.subtitle}
             </p>
+
+            {/* Direct contact info */}
+            <div className="mt-8 space-y-4">
+              <a
+                href={`https://wa.me/${contact.whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block body-small text-brand-muted hover:text-brand-navy transition-colors"
+              >
+                <span className="block font-display font-bold text-brand-navy text-xs uppercase tracking-wider mb-1">WhatsApp</span>
+                +{contact.whatsappNumber}
+              </a>
+              <a
+                href={`mailto:${contact.emailAddress}`}
+                className="block body-small text-brand-muted hover:text-brand-navy transition-colors"
+              >
+                <span className="block font-display font-bold text-brand-navy text-xs uppercase tracking-wider mb-1">Email</span>
+                {contact.emailAddress}
+              </a>
+            </div>
           </motion.div>
 
           {/* Form card */}
@@ -76,13 +97,13 @@ export default function ContactSection({ contact }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10% 0px' }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-white p-8 md:p-12 shadow-lg"
+            className="bg-brand-light p-6 md:p-8"
           >
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="space-y-6"
+              className="space-y-5"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
                   <label htmlFor="contact-name" className="text-sm font-display font-bold uppercase tracking-wider text-brand-navy">
                     {contact.nameLabel}
@@ -123,7 +144,7 @@ export default function ContactSection({ contact }) {
                   value={form.message}
                   onChange={update('message')}
                   required
-                  rows={5}
+                  rows={4}
                   className="textarea-field"
                   placeholder={contact.messageLabel}
                 />
@@ -135,7 +156,7 @@ export default function ContactSection({ contact }) {
                 </p>
               )}
 
-              <div className="flex flex-col sm:flex-row items-stretch gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row items-stretch gap-3 pt-1">
                 <button
                   type="button"
                   onClick={sendWhatsApp}
@@ -155,26 +176,6 @@ export default function ContactSection({ contact }) {
                 </button>
               </div>
             </form>
-
-            {/* Direct contact info */}
-            <div className="mt-10 pt-8 border-t border-brand-muted/20 grid grid-cols-1 sm:grid-cols-2 gap-4 text-center sm:text-left">
-              <a
-                href={`https://wa.me/${contact.whatsappNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="body-small text-brand-muted hover:text-brand-navy transition-colors"
-              >
-                <span className="block font-display font-bold text-brand-navy text-xs uppercase tracking-wider mb-1">WhatsApp</span>
-                +{contact.whatsappNumber}
-              </a>
-              <a
-                href={`mailto:${contact.emailAddress}`}
-                className="body-small text-brand-muted hover:text-brand-navy transition-colors"
-              >
-                <span className="block font-display font-bold text-brand-navy text-xs uppercase tracking-wider mb-1">Email</span>
-                {contact.emailAddress}
-              </a>
-            </div>
           </motion.div>
         </div>
       </div>
