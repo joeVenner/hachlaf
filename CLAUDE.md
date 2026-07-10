@@ -124,34 +124,41 @@ src/
 
 ## Domaines section
 - `DomainesSection` renders **3 stacked parallax sector cards** as a single
-  architectural scroll experience.
-- Each card is a wide, sharp-cornered image-led tile (90vw desktop,
-  68–70vh height, min-height 560px/600px, max-height 780px, max-width 1800px) with
-  a very subtle shadow, a thin navy-tinted border, and a left-to-right cinematic
-  gradient overlay that keeps text crisp without dulling the image.
-- The section header uses the `.domaines-title` utility so the eyebrow, title
-  and the first card are visible together in the initial desktop viewport. The
-  header sits in normal document flow with comfortable top padding
-  (`pt-28 md:pt-36 lg:pt-44`) and scrolls away naturally after the first card
-  becomes sticky.
-- Cards stack via **CSS `position: sticky`** with a generous top offset based on
-  `--navbar-height + 88px` plus a 16px progressive offset for each card. This keeps
-  the title visible briefly before it scrolls out of view, and prevents cards
-  from sticking too close to the navbar. GSAP ScrollTrigger is used only for
-  image-only parallax (`scale 1.06→1`, `yPercent -3→3`, scrubbed), content
-  entrance of cards 2/3 (`start: 'top 82%'`, one-time), and the progress
-  indicator. There is no GSAP pinning or excessive pinSpacing.
-- Content visibility is separated from scroll progress:
-  - First card content is visible by default (no opacity/translate/blur in CSS).
-  - Cards 2 and 3 reveal once on enter with a short fade + 10px translate, then
-    stay readable.
-- Each card wrapper uses a controlled min-height (`118vh` per card, `82vh` for
-  the last) to avoid large blank areas at the end of the section.
-- A subtle 01/02/03 progress indicator sits on the right.
-- Mobile (`< 768px`) disables sticky stacking and uses normal document flow with
-  a one-time fade-in per card.
-- `prefers-reduced-motion` disables parallax/scale and keeps all content visible
-  immediately with no transitions.
+  pinned composition on desktop.
+- The section is built around a `.domains-pin` container that is pinned by one
+  GSAP ScrollTrigger (`start: 'top top'`, `end: '+=260%'`, `pinSpacing: true`).
+  Inside the pinned area:
+  - A `.domains-header` stays fixed at the top with the eyebrow (`.domains-eyebrow`)
+    and large navy title (`.domains-title`, `clamp(58px, 5.8vw, 96px)`, weight
+    800) visible throughout the entire stacking sequence.
+  - A `.domains-stage` holds three absolutely positioned cards (`.domain-card-1`,
+    `.domain-card-2`, `.domain-card-3`) that stack on top of each other as the
+    user scrolls.
+- All three cards are always mounted in the DOM. Card 1 starts visible, Cards 2
+  and 3 start below the stage (`yPercent: 105` and `110`) and slide up into the
+  shared stage during the timeline. Card content is always visible (`opacity: 1`,
+  `visibility: visible`) and moves with the card.
+- Stacking timeline (scroll-linked, scrubbed, total 10 units):
+  - 0%–15%: title + Card 1 visible, Cards 2 and 3 wait below the stage.
+  - 15%–42%: Card 2 slides up and stacks over Card 1; Card 1 scales to 0.95 and
+    shifts up to reveal the layer behind.
+  - 42%–48%: hold Card 2.
+  - 48%–75%: Card 3 slides up and stacks over Card 2; previous cards shrink and
+    shift further to show all three layers.
+  - 75%–90%: complete three-card stack is held on screen.
+  - 90%–100%: pin releases and the next section begins.
+- Card design is unchanged: 90vw width, sharp corners, very subtle shadow
+  (`0 8px 28px rgba(8,25,54,0.05)`), thin navy-tinted border, left-to-right
+  cinematic gradient overlay, and bottom gradient for text stability.
+- Only the background image inside each card has a subtle internal parallax
+  (`scale 1.05→1`, `yPercent -2→2`). The card containers themselves move only
+  for the intentional stacking animation.
+- The pinned composition fits below the navbar using `--navbar-height: 72px`;
+  `.domains-pin` height is `calc(100vh - var(--navbar-height))` with a
+  `margin-top` of the same value. Header occupies ~19% of the available height;
+  the card stage occupies the rest.
+- Mobile (`< 768px`) and `prefers-reduced-motion` disable pinning and render
+  cards in normal document flow with a light fade-in per card.
 - Data model (`content.domaines.items`): `number`, `category`, `title`,
   `description`, `tags`, `detail`, `cta`, `image`.
 

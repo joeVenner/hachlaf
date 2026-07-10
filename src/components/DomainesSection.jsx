@@ -1,61 +1,56 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 /**
- * Domaines d'activité — premium stacked parallax section.
+ * Domaines d'activité — pinned three-card stacking composition.
  *
- * The section title and first card appear together in the initial viewport.
- * Each card then becomes sticky at a generous top offset so the title remains
- * visible briefly before scrolling away naturally. Only the background image
- * parallaxes; card containers and text stay stable.
+ * A single pinned composition contains the section header (label + title) and a
+ * shared card stage. All three cards are always mounted in the DOM. During the
+ * pinned scroll sequence the title remains fixed and visible while Card 2 and
+ * Card 3 slide up from below the stage and stack over the previous cards.
+ *
+ * Mobile and reduced-motion clients render the cards in normal document flow.
  */
 export default function DomainesSection({ domaines }) {
   const { eyebrow, title, items } = domaines;
   const sectionRef = useRef(null);
-  const headerRef = useRef(null);
+  const pinRef = useRef(null);
   const cardRefs = useRef([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const mobileCardRefs = useRef([]);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const header = headerRef.current;
-    if (!section || !header) return;
+    const pin = pinRef.current;
+    if (!section || !pin) return;
 
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
 
-    // Reduced motion: keep content readable, no parallax effects.
+    // Reduced motion: normal document flow, all content visible immediately.
     mm.add('(prefers-reduced-motion: reduce)', () => {
-      cardRefs.current.forEach((card) => {
-        if (!card) return;
-        gsap.set(card.querySelectorAll('[data-animate]'), {
-          opacity: 1,
-          y: 0,
-        });
-      });
+      gsap.set(cardRefs.current.filter(Boolean), { clearProps: 'all' });
       return () => {};
     });
 
-    // Mobile: simple reveal, no sticky stacking.
+    // Mobile: normal document flow with light fade-in per card.
     mm.add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
       const ctx = gsap.context(() => {
-        cardRefs.current.forEach((card) => {
+        mobileCardRefs.current.forEach((card) => {
           if (!card) return;
           gsap.fromTo(
-            card.querySelectorAll('[data-animate]'),
-            { opacity: 0, y: 10 },
+            card,
+            { opacity: 0, y: 24 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.5,
-              stagger: 0.06,
+              duration: 0.6,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: card,
-                start: 'top 82%',
+                start: 'top 85%',
                 toggleActions: 'play none none none',
               },
             }
@@ -65,62 +60,124 @@ export default function DomainesSection({ domaines }) {
       return () => ctx.revert();
     });
 
-    // Desktop/Tablet: sticky stacking with image-only parallax.
+    // Desktop/Tablet: one pinned composition with a shared stacking stage.
     mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
       const ctx = gsap.context(() => {
-        cardRefs.current.forEach((card, i) => {
-          if (!card) return;
-          const image = card.querySelector('.card-image');
-          const contentItems = card.querySelectorAll('[data-animate]');
+        const [card1, card2, card3] = cardRefs.current;
+        const cards = [card1, card2, card3].filter(Boolean);
 
-          // Image-only parallax (scrubbed).
+        // Initial states: all cards mounted and visible, only Card 1 in view.
+        gsap.set(cards, {
+          opacity: 1,
+          visibility: 'visible',
+          scale: 1,
+          yPercent: 0,
+        });
+        if (card2) gsap.set(card2, { yPercent: 105 });
+        if (card3) gsap.set(card3, { yPercent: 110 });
+
+        // Subtle internal image parallax (image only, not the card container).
+        cards.forEach((card) => {
+          const image = card.querySelector('.card-image');
+          if (!image) return;
           gsap.fromTo(
             image,
-            { scale: 1.06, yPercent: -3 },
+            { scale: 1.05, yPercent: -2 },
             {
               scale: 1,
-              yPercent: 3,
+              yPercent: 2,
               ease: 'none',
               scrollTrigger: {
-                trigger: card,
-                start: 'top bottom',
-                end: 'bottom top',
+                trigger: section,
+                start: 'top top',
+                end: 'bottom bottom',
                 scrub: true,
               },
             }
           );
+        });
 
-          // Content reveal once on enter for cards 2 and 3.
-          if (contentItems.length > 0) {
-            gsap.fromTo(
-              contentItems,
-              { opacity: 0, y: 10 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                stagger: 0.06,
-                ease: 'power2.out',
-                scrollTrigger: {
-                  trigger: card,
-                  start: 'top 82%',
-                  toggleActions: 'play none none none',
-                },
-              }
-            );
-          }
-
-          // Active indicator for this card.
-          ScrollTrigger.create({
-            trigger: card,
-            start: 'top 60%',
-            end: 'bottom 40%',
-            onUpdate: (self) => {
-              if (self.progress > 0.5) {
-                setActiveIndex(i);
-              }
+        // Main stacking timeline.
+        // Total duration = 10 units mapped to end: '+=260%'.
+        // 0–1.5  : hold title + Card 1
+        // 1.5–4.2: Card 2 slides up and stacks over Card 1
+        // 4.2–4.8: hold Card 2
+        // 4.8–7.5: Card 3 slides up and stacks over Card 2
+        // 7.5–9.0: hold complete three-card stack
+        // 9.0–10.0: release padding (pin ends at timeline end)
+        const stackTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: '+=260%',
+            pin: pin,
+            pinSpacing: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onLeaveBack: () => {
+              // Reset card positions when scrolling back to the top.
+              gsap.set(card1, { yPercent: 0, scale: 1 });
+              if (card2) gsap.set(card2, { yPercent: 105, scale: 1 });
+              if (card3) gsap.set(card3, { yPercent: 110, scale: 1 });
             },
-          });
+          },
+        });
+
+        // Card 2 enters (1.5 → 4.2).
+        stackTl.fromTo(
+          card1,
+          { yPercent: 0, scale: 1 },
+          { yPercent: -4.5, scale: 0.95, duration: 2.7, ease: 'none' },
+          1.5
+        );
+        stackTl.fromTo(
+          card2,
+          { yPercent: 105, scale: 1 },
+          { yPercent: 0, scale: 1, duration: 2.7, ease: 'power1.inOut' },
+          1.5
+        );
+
+        // Card 3 enters (4.8 → 7.5).
+        stackTl.fromTo(
+          card1,
+          { yPercent: -4.5, scale: 0.95 },
+          { yPercent: -9, scale: 0.95, duration: 2.7, ease: 'none' },
+          4.8
+        );
+        stackTl.fromTo(
+          card2,
+          { yPercent: 0, scale: 1 },
+          { yPercent: -2.25, scale: 0.975, duration: 2.7, ease: 'none' },
+          4.8
+        );
+        stackTl.fromTo(
+          card3,
+          { yPercent: 110, scale: 1 },
+          { yPercent: 0, scale: 1, duration: 2.7, ease: 'power1.inOut' },
+          4.8
+        );
+
+        // Hold the completed stack before release.
+        stackTl.to({}, { duration: 1.0 });
+
+        // Refresh ScrollTrigger once all images have loaded so measurements are
+        // based on rendered dimensions.
+        const images = section.querySelectorAll('.domains-stage img');
+        let loadedCount = 0;
+        const onImageLoad = () => {
+          loadedCount += 1;
+          if (loadedCount >= images.length) {
+            ScrollTrigger.refresh();
+          }
+        };
+        images.forEach((img) => {
+          if (img.complete) {
+            onImageLoad();
+          } else {
+            img.addEventListener('load', onImageLoad);
+            img.addEventListener('error', onImageLoad);
+          }
         });
       }, section);
 
@@ -132,191 +189,231 @@ export default function DomainesSection({ domaines }) {
     };
   }, [items.length]);
 
-  const animateAttr = (i) => (i === 0 ? {} : { 'data-animate': true });
+  const renderCardContent = (card, isMobile) => {
+    const padding = isMobile ? 'p-6' : 'p-6 md:p-10 lg:p-16 xl:p-20';
+    const numberSize = isMobile
+      ? 'text-[3.5rem]'
+      : 'text-[3.5rem] md:text-[5rem] lg:text-[6.5rem]';
+    const categorySize = isMobile
+      ? 'text-[11px]'
+      : 'text-[11px] md:text-xs';
+    const titleSize = isMobile
+      ? 'text-[2rem]'
+      : 'text-[2rem] md:text-[3rem] lg:text-[clamp(2.75rem,4.2vw,5.25rem)]';
+    const bodySize = isMobile
+      ? 'text-base'
+      : 'text-base md:text-lg lg:text-[1.25rem]';
+    const tagSize = isMobile
+      ? 'text-[10px] px-3 py-1.5'
+      : 'text-[10px] md:text-[11px] px-3 py-1.5 md:px-4 md:py-2';
+    const ctaSize = isMobile ? 'text-sm' : 'text-sm md:text-base';
+    const detailDisplay = isMobile ? 'inline-block' : 'hidden md:inline-block';
 
-  return (
-    <section id="domaines" ref={sectionRef} className="relative bg-white">
-      {/* Section header — visible in normal flow, not pinned ---------------- */}
-      <div
-        ref={headerRef}
-        className="site-container relative z-10 pt-28 md:pt-36 lg:pt-44 pb-8 md:pb-10"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10% 0px' }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <span className="eyebrow text-brand-cyan mb-3 md:mb-4">{eyebrow}</span>
-          <h2 className="domaines-title font-display text-brand-navy">{title}</h2>
-        </motion.div>
-      </div>
+    return (
+      <div className={`absolute inset-0 flex flex-col justify-end ${padding}`}>
+        <div className="max-w-[560px]">
+          <span className={`block font-display ${numberSize} leading-none text-white/10 mb-0 md:-mb-2`}>
+            {card.number}
+          </span>
 
-      {/* Stacked parallax cards --------------------------------------------- */}
-      <div className="relative">
-        {/* Minimal vertical progress indicator ----------------------------- */}
-        <div className="absolute right-[3%] top-0 bottom-0 z-[60] pointer-events-none hidden md:flex">
-          <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center gap-5">
-            {items.map((card, i) => (
+          <span className={`block ${categorySize} font-display font-bold uppercase tracking-[0.22em] text-white/70 mb-3 md:mb-4`}>
+            {card.category}
+          </span>
+
+          <h3 className={`font-display text-white ${titleSize} leading-[1] tracking-[-0.02em] font-extrabold mb-4 md:mb-5 lg:mb-6`}>
+            {card.title}
+          </h3>
+
+          <p className={`text-white/80 ${bodySize} leading-[1.55] max-w-[540px] mb-5 md:mb-6 line-clamp-4`}>
+            {card.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 md:gap-2.5 mb-5 md:mb-6">
+            {card.tags.map((tag) => (
               <span
-                key={card.number}
-                className={`font-display text-xs tracking-[0.2em] transition-colors duration-300 ${
-                  i === activeIndex ? 'text-white' : 'text-white/40'
-                }`}
+                key={tag}
+                className={`${tagSize} rounded-full font-display font-bold uppercase tracking-wider text-white/90 bg-white/[0.08] border border-white/[0.14] backdrop-blur-md`}
               >
-                {card.number}
+                {tag}
               </span>
             ))}
           </div>
+
+          <div className="flex items-center gap-4 md:gap-6">
+            <a
+              href="#contact"
+              className={`group inline-flex items-center gap-2 text-white font-display font-bold ${ctaSize} focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
+            >
+              <span className="relative">
+                {card.cta}
+                <span className="absolute left-0 -bottom-0.5 w-0 h-px bg-white/70 transition-all duration-300 ease-out group-hover:w-full" />
+              </span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
+            </a>
+
+            {card.detail && (
+              <span className={`${detailDisplay} text-white/50 text-xs lg:text-sm font-body`}>
+                {card.detail}
+              </span>
+            )}
+          </div>
         </div>
+      </div>
+    );
+  };
 
-        {items.map((card, i) => {
-          const isLast = i === items.length - 1;
-          const stickyTop = `calc(var(--navbar-height, 72px) + ${88 + i * 16}px)`;
+  return (
+    <section id="domaines" ref={sectionRef} className="domains-section bg-white">
+      <div ref={pinRef} className="domains-pin">
+        {/* Fixed header inside the pinned composition ------------------------ */}
+        <header className="domains-header">
+          <motion.div
+            className="w-full h-full flex flex-col justify-end"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-5% 0px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="domains-eyebrow">{eyebrow}</span>
+            <h2 className="domains-title">{title}</h2>
+          </motion.div>
+        </header>
 
-          return (
-            <div
+        {/* Shared stage that contains the three stacked cards ---------------- */}
+        <div className="domains-stage">
+          {items.map((card, i) => (
+            <article
               key={card.number}
               ref={(el) => { cardRefs.current[i] = el; }}
-              className={`relative md:sticky w-full flex justify-center ${
-                isLast ? 'pb-10 md:pb-14' : ''
-              }`}
-              style={{
-                zIndex: 20 + i,
-                minHeight: isLast ? '82vh' : '118vh',
-                top: stickyTop,
-              }}
+              className={`domain-card domain-card-${i + 1}`}
             >
-              <article className="relative w-[94vw] md:w-[92vw] lg:w-[90vw] max-w-[1800px] h-[76vh] md:h-[68vh] lg:h-[70vh] min-h-[600px] md:min-h-[560px] lg:min-h-[600px] max-h-[780px] overflow-hidden shadow-[0_10px_30px_rgba(9,24,50,0.06)] border border-[rgba(12,39,82,0.06)]">
-                {/* Full-bleed background image with parallax transform ---------- */}
-                <div className="absolute inset-0 overflow-hidden">
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="card-image absolute inset-0 w-full h-full object-cover will-change-transform"
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    style={{
-                      objectPosition:
-                        i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
-                    }}
-                  />
-                </div>
-
-                {/* Cinematic left-to-right gradient overlay --------------------- */}
-                <div
-                  className="absolute inset-0"
+              {/* Full-bleed background image -------------------------------- */}
+              <div className="absolute inset-0 overflow-hidden">
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="card-image absolute inset-0 w-full h-full object-cover will-change-transform"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
                   style={{
-                    background:
-                      'linear-gradient(90deg, rgba(5,15,32,0.82) 0%, rgba(5,15,32,0.56) 38%, rgba(5,15,32,0.14) 72%, rgba(5,15,32,0.05) 100%)',
+                    objectPosition:
+                      i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
                   }}
                 />
+              </div>
 
-                {/* Subtle bottom gradient for text stability ------------------ */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      'linear-gradient(0deg, rgba(5,15,32,0.35) 0%, rgba(5,15,32,0) 45%)',
-                  }}
-                />
+              {/* Cinematic left-to-right gradient overlay ------------------- */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(90deg, rgba(5,15,32,0.82) 0%, rgba(5,15,32,0.56) 38%, rgba(5,15,32,0.14) 72%, rgba(5,15,32,0.05) 100%)',
+                }}
+              />
 
-                {/* Soft vignette ------------------------------------------------ */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      'radial-gradient(circle at 35% 75%, transparent 0%, rgba(5,15,32,0.24) 100%)',
-                  }}
-                />
+              {/* Subtle bottom gradient for text stability ------------------ */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'linear-gradient(0deg, rgba(5,15,32,0.35) 0%, rgba(5,15,32,0) 45%)',
+                }}
+              />
 
-                {/* Subtle film-grain texture ---------------------------------- */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-[0.035] mix-blend-overlay"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                  }}
-                />
+              {/* Soft vignette -------------------------------------------- */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle at 35% 75%, transparent 0%, rgba(5,15,32,0.24) 100%)',
+                }}
+              />
 
-                {/* Inner border ------------------------------------------------- */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
-                />
+              {/* Subtle film-grain texture ---------------------------------- */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-[0.035] mix-blend-overlay"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                }}
+              />
 
-                {/* Card content ------------------------------------------------- */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-16 xl:p-20">
-                  <div className="max-w-[560px]">
-                    <span
-                      {...animateAttr(i)}
-                      className="block font-display text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] leading-none text-white/10 mb-0 md:-mb-2"
-                    >
-                      {card.number}
-                    </span>
+              {/* Inner border --------------------------------------------- */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
+              />
 
-                    <span
-                      {...animateAttr(i)}
-                      className="block text-[11px] md:text-xs font-display font-bold uppercase tracking-[0.22em] text-white/70 mb-3 md:mb-4"
-                    >
-                      {card.category}
-                    </span>
-
-                    <h3
-                      {...animateAttr(i)}
-                      className="font-display text-white text-[2rem] md:text-[3rem] lg:text-[clamp(2.75rem,4.2vw,5.25rem)] leading-[1] tracking-[-0.02em] font-extrabold mb-4 md:mb-5 lg:mb-6"
-                    >
-                      {card.title}
-                    </h3>
-
-                    <p
-                      {...animateAttr(i)}
-                      className="text-white/80 text-base md:text-lg lg:text-[1.25rem] leading-[1.55] max-w-[540px] mb-5 md:mb-6 line-clamp-4"
-                    >
-                      {card.description}
-                    </p>
-
-                    <div
-                      {...animateAttr(i)}
-                      className="flex flex-wrap gap-2 md:gap-2.5 mb-5 md:mb-6"
-                    >
-                      {card.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[10px] md:text-[11px] font-display font-bold uppercase tracking-wider text-white/90 bg-white/[0.08] border border-white/[0.14] backdrop-blur-md"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div {...animateAttr(i)} className="flex items-center gap-4 md:gap-6">
-                      <a
-                        href="#contact"
-                        className="group inline-flex items-center gap-2 text-white font-display font-bold text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
-                      >
-                        <span className="relative">
-                          {card.cta}
-                          <span className="absolute left-0 -bottom-0.5 w-0 h-px bg-white/70 transition-all duration-300 ease-out group-hover:w-full" />
-                        </span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
-                      </a>
-
-                      {card.detail && (
-                        <span className="hidden md:inline-block text-white/50 text-xs lg:text-sm font-body">
-                          {card.detail}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </div>
-          );
-        })}
+              {/* Card content — always visible ------------------------------ */}
+              {renderCardContent(card, false)}
+            </article>
+          ))}
+        </div>
       </div>
 
-      {/* Small clean tail spacing before the next section ------------------- */}
-      <div className="h-12 md:h-16 lg:h-20 bg-white" />
+      {/* Mobile normal-flow fallback --------------------------------------- */}
+      <div className="md:hidden domaines-mobile-flow">
+        <div className="domains-mobile-header">
+          <span className="domains-eyebrow">{eyebrow}</span>
+          <h2 className="domains-title">{title}</h2>
+        </div>
+
+        {items.map((card, i) => (
+          <article
+            key={`mobile-${card.number}`}
+            ref={(el) => { mobileCardRefs.current[i] = el; }}
+            className="domain-card-mobile"
+            style={{
+              marginBottom: i !== items.length - 1 ? '24px' : undefined,
+            }}
+          >
+            <div className="absolute inset-0 overflow-hidden">
+              <img
+                src={card.image}
+                alt={card.title}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                style={{
+                  objectPosition:
+                    i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
+                }}
+              />
+            </div>
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(90deg, rgba(5,15,32,0.82) 0%, rgba(5,15,32,0.56) 38%, rgba(5,15,32,0.14) 72%, rgba(5,15,32,0.05) 100%)',
+              }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'linear-gradient(0deg, rgba(5,15,32,0.35) 0%, rgba(5,15,32,0) 45%)',
+              }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'radial-gradient(circle at 35% 75%, transparent 0%, rgba(5,15,32,0.24) 100%)',
+              }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none opacity-[0.035] mix-blend-overlay"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
+            />
+            {renderCardContent(card, true)}
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
