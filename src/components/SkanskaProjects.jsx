@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 /**
- * Skanska-style projects section:
- * - One big project card (large image + title/description overlay) 
- * - 3 smaller cards below
- * - Auto-rotate or manual navigation
- * - 90% width layout
+ * Skanska-style projects section.
+ *
+ * - Featured project in a 2fr + 1fr grid: large image on the left, text block on the right.
+ * - Three smaller project cards below, aligned to the same 3-column logic.
+ * - Auto-rotation, manual arrows, dot indicators, and modal trigger are preserved.
  */
 export default function SkanskaProjects({ projects, onSelectProject }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -56,12 +56,14 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
               <button
                 onClick={() => goTo(-1)}
                 className="w-10 h-10 flex items-center justify-center border border-brand-navy/20 hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all"
+                aria-label="Previous project"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => goTo(1)}
                 className="w-10 h-10 flex items-center justify-center border border-brand-navy/20 hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all"
+                aria-label="Next project"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -69,39 +71,53 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
           </div>
         </div>
 
-        {/* Featured large card */}
+        {/* Featured project: 2/3 image + 1/3 text */}
         <motion.div
-          key={featured.title + '-big'}
+          key={featured.title + '-featured'}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="mb-4"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
         >
+          {/* Featured image */}
           <button
             onClick={() => onSelectProject(featured)}
-            className="group relative w-full aspect-[21/9] md:aspect-[21/8] overflow-hidden card-sharp text-left"
+            className="group relative w-full aspect-[3/4] overflow-hidden card-sharp text-left md:col-span-2"
           >
             <img
               src={featured.image}
               alt={featured.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.02]"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.05]"
             />
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/85 via-brand-navy/50 to-transparent" />
-
-            {/* Content */}
-            <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-14 lg:p-20">
-              <span className="text-brand-cyan font-display text-xs font-bold tracking-[0.2em] uppercase mb-3">
-                {featured.type}
-              </span>
-              <h3 className="heading-3 md:heading-2 font-display text-white mb-3 max-w-2xl">
-                {featured.title}
-              </h3>
-              <p className="body-large text-white/80 max-w-xl line-clamp-2">
-                {featured.description}
-              </p>
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
           </button>
+
+          {/* Featured text block */}
+          <div className="flex flex-col justify-center md:col-span-1">
+            <span className="text-brand-cyan font-display text-xs font-bold tracking-[0.2em] uppercase mb-3">
+              {featured.type}
+            </span>
+            <h3 className="heading-3 md:heading-2 font-display text-brand-navy mb-4">
+              {featured.title}
+            </h3>
+            <p className="body-large text-brand-muted mb-2">
+              {featured.location}
+            </p>
+            <p className="body-main text-brand-dark/80 mb-8">
+              {featured.description}
+            </p>
+            <button
+              onClick={() => onSelectProject(featured)}
+              className="link-circle group self-start"
+            >
+              <span className="text-brand-dark group-hover:text-brand-navy">
+                {projects.viewDetails}
+              </span>
+              <div className="link-circle-icon bg-brand-orange group-hover:bg-brand-navy">
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </button>
+          </div>
         </motion.div>
 
         {/* 3 small cards below */}
@@ -138,16 +154,6 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="mt-12 text-center lg:text-left">
-          <a href="#contact" className="link-circle group">
-            <span className="text-brand-dark group-hover:text-brand-navy">{projects.viewDetails}</span>
-            <div className="link-circle-icon bg-brand-orange group-hover:bg-brand-navy">
-              <ArrowRight className="w-4 h-4" />
-            </div>
-          </a>
-        </div>
-
         {/* Dot indicators */}
         <div className="flex items-center justify-center gap-2 mt-10">
           {items.map((_, i) => (
@@ -159,6 +165,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                   ? 'bg-brand-orange w-6'
                   : 'bg-brand-muted/30 hover:bg-brand-muted/60'
               }`}
+              aria-label={`Go to project ${i + 1}`}
             />
           ))}
         </div>
