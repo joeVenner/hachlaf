@@ -5,8 +5,7 @@ import { ArrowRight } from 'lucide-react';
 /**
  * Sticky text-on-image reveal section for the 5 service domains.
  *
- * As the user scrolls through a tall container, a pinned sticky panel
- * crossfades between full-bleed service images and their descriptions.
+ * Modified to act like a premium floating card instead of full-bleed screen.
  */
 export default function StickyServices({ services, ctaLabel, ctaHref = '#projects' }) {
   const containerRef = useRef(null);
@@ -24,11 +23,11 @@ export default function StickyServices({ services, ctaLabel, ctaHref = '#project
     <section
       id="services"
       ref={containerRef}
-      className="relative bg-brand-light"
-      style={{ height: `${count * 110}vh` }}
+      className="relative bg-white py-12 md:py-24 px-6 md:px-12"
+      style={{ height: `${count * 100}vh` }}
     >
       {/* Pinned sticky panel */}
-      <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
+      <div className="sticky top-24 md:top-32 h-[75vh] min-h-[600px] max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(20,50,117,0.15)] group">
         {/* Background images with crossfade */}
         {services.items.map((item, index) => (
           <StickyImage
@@ -41,28 +40,28 @@ export default function StickyServices({ services, ctaLabel, ctaHref = '#project
         ))}
 
         {/* Dark overlay for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/90 via-brand-navy/65 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/90 via-brand-navy/50 to-transparent z-10" />
 
         {/* Content */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-center px-6 md:px-12 lg:px-20">
-          <div className="relative max-w-3xl min-h-[420px] md:min-h-[360px]">
-            <span className="eyebrow text-brand-cyan">{services.eyebrow}</span>
+        <div className="absolute inset-0 z-20 flex flex-col justify-end p-8 md:p-16 lg:p-20 pb-20 md:pb-24">
+          <div className="relative max-w-3xl min-h-[220px]">
+            <span className="eyebrow text-brand-cyan mb-4">{services.eyebrow}</span>
 
             {services.items.map((item, index) => (
               <StickyText key={item.id} item={item} index={index} position={position} />
             ))}
-
-            <div className="absolute bottom-0 left-0">
-              <a href={ctaHref} className="btn-primary">
-                {ctaLabel}
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
+          </div>
+          
+          <div className="mt-8">
+            <a href={ctaHref} className="btn-primary">
+              {ctaLabel}
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
         </div>
 
         {/* Scroll progress indicator */}
-        <div className="absolute bottom-8 left-6 md:left-12 lg:left-20 z-20 w-32 h-1 bg-white/20">
+        <div className="absolute top-0 left-0 right-0 z-20 h-1.5 bg-white/20">
           <ProgressBar position={position} count={count} />
         </div>
       </div>
@@ -108,12 +107,12 @@ function StickyText({ item, index, position }) {
   return (
     <motion.div
       style={{ opacity, y }}
-      className="absolute top-14 md:top-16 left-0 right-0 max-w-3xl pr-6 pointer-events-none"
+      className="absolute top-12 left-0 right-0 max-w-3xl pr-6 pointer-events-none"
     >
-      <h2 className="heading-2 font-display text-white mb-6">
+      <h2 className="heading-2 font-display text-white mb-4">
         {item.title}
       </h2>
-      <p className="body-large text-white/90 leading-relaxed max-w-2xl">
+      <p className="body-main text-white/90 leading-relaxed max-w-2xl line-clamp-3 md:line-clamp-none">
         {item.fullDesc}
       </p>
     </motion.div>
@@ -125,7 +124,7 @@ function ProgressBar({ position, count }) {
   return (
     <motion.div
       style={{ width }}
-      className="h-full bg-brand-orange"
+      className="h-full bg-brand-cyan"
     />
   );
 }

@@ -5,7 +5,22 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: ['Outfit', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+      },
+      fontWeight: {
+        extrabold: '800',
+      },
+      backdropBlur: {
+        nav: '30px',
+      },
+      transitionDuration: {
+        '400': '400ms',
+        '1200': '1200ms',
+      },
+    },
   },
   plugins: [],
 }

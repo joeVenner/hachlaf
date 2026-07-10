@@ -2,13 +2,14 @@ import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 
 /**
- * About section with company description, image, and value cards.
+ * About section — sharp layout, 90% width (10% from both sides).
+ * Image + text side by side, then value cards below.
  */
 export default function AboutSection({ about }) {
   return (
-    <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16 md:mb-24">
+    <section id="about" className="py-24 md:py-32 bg-brand-light">
+      <div className="max-w-[90rem] mx-auto px-[5%]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16 md:mb-24">
           {/* Image */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -55,7 +56,7 @@ export default function AboutSection({ about }) {
         </div>
 
         {/* Value cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {about.values.map((value, index) => (
             <motion.div
               key={value.title}
@@ -63,7 +64,7 @@ export default function AboutSection({ about }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="p-6 bg-brand-light card-sharp group hover:bg-brand-navy transition-colors duration-300"
+              className="p-6 bg-white card-sharp group hover:bg-brand-navy transition-colors duration-300"
             >
               <div className="w-10 h-10 flex items-center justify-center bg-brand-navy/10 group-hover:bg-brand-orange mb-5 transition-colors duration-300">
                 <Check className="w-5 h-5 text-brand-navy group-hover:text-white transition-colors duration-300" />

@@ -1,22 +1,39 @@
 import { useState } from 'react';
-import { site, logoSrc, heroImage } from '../data/content';
+import { site, logoSrc } from '../data/content';
 
-import GlassmorphismNav from '../components/GlassmorphismNav';
+import SuffolkNav from '../components/SuffolkNav';
 import Hero from '../components/Hero';
-import StickyServices from '../components/StickyServices';
-import StatsSnapshot from '../components/StatsSnapshot';
-import SwiperProjectCarousel from '../components/SwiperProjectCarousel';
+import DomainesSection from '../components/DomainesSection';
+import ParallaxBanners from '../components/ParallaxBanners';
+import OffresSection from '../components/OffresSection';
+import SkanskaProjects from '../components/SkanskaProjects';
 import ProjectModal from '../components/ProjectModal';
-import ServiceCards from '../components/ServiceCards';
+import StatsSnapshot from '../components/StatsSnapshot';
 import AboutSection from '../components/AboutSection';
-import PartnersSection from '../components/PartnersSection';
+import PartnersCarousel from '../components/PartnersCarousel';
 import CTASection from '../components/CTASection';
 import Footer from '../components/Footer';
 
+const heroSlideshowImages = [
+  '/images/generated/solar_noor_midelt.jpg',
+  '/images/generated/hydro_step.jpg',
+  '/images/generated/phosphate_jorf.jpg',
+];
+
 /**
- * Hachlaf Akhawayne homepage.
+ * Hachlaf Akhawayne homepage — redesigned with Skanska/Suffolk inspiration.
  *
- * Built from the Skanska design system spec and real company content.
+ * Section order:
+ * 1. Hero (fixed background with crossfade slideshow)
+ * 2. Nos domaines d'activité (sharp cards)
+ * 3. Parallax scrolling banners
+ * 4. Nos offres (card style)
+ * 5. Projets (Skanska-style: 1 big + 3 small)
+ * 6. Stats snapshot
+ * 7. À propos (sharp, 90% width)
+ * 8. Partenaires (sliding carousel)
+ * 9. CTA
+ * 10. Footer
  */
 export default function HomePage({ lang, setLang }) {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -24,39 +41,51 @@ export default function HomePage({ lang, setLang }) {
 
   return (
     <div className="min-h-screen bg-white text-brand-dark">
-      <GlassmorphismNav
+      <SuffolkNav
         nav={t.nav}
-        logoSrc={logoSrc}
         lang={lang}
         setLang={setLang}
       />
 
-      <main>
-        <Hero hero={t.hero} heroImage={heroImage} lang={lang} />
+      {/* Spacer for the fixed hero so it occupies the initial viewport */}
+      <div className="h-screen" aria-hidden="true" />
 
-        <StickyServices
-          services={t.services}
-          ctaLabel={lang === 'en' ? 'Discover our references' : 'Découvrir nos références'}
-        />
+      <main className="relative z-10 bg-white">
+        {/* 1. Hero */}
+        <Hero hero={t.hero} heroImages={heroSlideshowImages} />
 
-        <StatsSnapshot stats={t.stats} />
+        {/* 2. Domaines d'activité */}
+        <DomainesSection domaines={t.domaines} />
 
-        <SwiperProjectCarousel
+        {/* 3. Parallax scrolling banners */}
+        <ParallaxBanners banners={t.parallaxBanners} />
+
+        {/* 4. Nos offres */}
+        <OffresSection offres={t.offres} />
+
+        {/* 5. Projets — Skanska-style */}
+        <SkanskaProjects
           projects={t.projects}
           onSelectProject={setSelectedProject}
         />
 
-        <ServiceCards serviceCards={t.serviceCards} />
+        {/* 6. Stats snapshot */}
+        <StatsSnapshot stats={t.stats} />
 
+        {/* 7. À propos */}
         <AboutSection about={t.about} />
 
-        <PartnersSection partners={t.partners} />
+        {/* 8. Partenaires carousel */}
+        <PartnersCarousel partners={t.partners} />
 
+        {/* 9. CTA */}
         <CTASection cta={t.cta} />
       </main>
 
+      {/* 10. Footer */}
       <Footer footer={t.footer} logoSrc={logoSrc} />
 
+      {/* Project modal */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}

@@ -1,131 +1,119 @@
-import { useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
+import { Autoplay, EffectFade } from 'swiper/modules';
+import { ArrowRight } from 'lucide-react';
 
-// Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
+import 'swiper/css/effect-fade';
 
 /**
- * Auto-rotating project carousel using Swiper.js.
- *
- * Skanska spec:
- * - horizontal Swiper with autoplay
- * - progress bar that fills over time
- * - sharp-corner cards (image + project name + location)
- * - hover zoom on image
- * - click opens the detail modal
+ * Auto-fading project grid carousel matching the modern reference layout.
  */
 export default function SwiperProjectCarousel({ projects, onSelectProject }) {
-  const [progress, setProgress] = useState(0);
-  const swiperRef = useRef(null);
+  // Chunk projects into groups of 3
+  const chunks = [];
+  for (let i = 0; i < projects.items.length; i += 3) {
+    chunks.push(projects.items.slice(i, i + 3));
+  }
 
   return (
-    <section id="projects" className="py-24 md:py-32 px-6 md:px-12 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <section id="projects" className="py-24 md:py-32 px-6 md:px-12 bg-white">
+      <div className="max-w-[90rem] mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24">
+        
+        {/* Left Side: Text */}
+        <div className="lg:w-1/3 flex flex-col justify-start pt-4">
+          <h2 className="heading-2 font-display text-brand-navy leading-tight mb-6">
+            {projects.title}
+          </h2>
+          <p className="body-large text-brand-dark max-w-md mb-8">
+            {projects.subtitle}
+          </p>
           <div>
-            <span className="eyebrow">{projects.eyebrow}</span>
-            <h2 className="heading-2 font-display text-brand-navy">
-              {projects.title}
-            </h2>
-            <p className="body-large text-brand-muted max-w-2xl mt-4">
-              {projects.subtitle}
-            </p>
-          </div>
-
-          {/* Custom navigation */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => swiperRef.current?.slidePrev()}
-              className="w-12 h-12 flex items-center justify-center border border-brand-navy/20 text-brand-navy hover:bg-brand-navy hover:text-white transition-colors"
-              aria-label="Previous project"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => swiperRef.current?.slideNext()}
-              className="w-12 h-12 flex items-center justify-center border border-brand-navy/20 text-brand-navy hover:bg-brand-navy hover:text-white transition-colors"
-              aria-label="Next project"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            <a href="#contact" className="link-circle group">
+              <span className="text-brand-dark group-hover:text-brand-navy">{projects.viewDetails || 'Discover our portfolio'}</span>
+              <div className="link-circle-icon bg-brand-cyan group-hover:bg-brand-navy">
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </a>
           </div>
         </div>
 
-        {/* Carousel */}
-        <div className="relative">
+        {/* Right Side: Auto-fading Grid */}
+        <div className="lg:w-2/3">
           <Swiper
-            modules={[Autoplay, Navigation]}
-            spaceBetween={24}
-            slidesPerView={1}
+            modules={[Autoplay, EffectFade]}
+            effect="fade"
+            fadeEffect={{ crossFade: true }}
+            allowTouchMove={false}
             loop={true}
-            speed={700}
+            speed={1200}
             autoplay={{
-              delay: 5000,
+              delay: 4500,
               disableOnInteraction: false,
-              pauseOnMouseEnter: true,
             }}
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
-            onAutoplayTimeLeft={(swiper, timeLeft, progressValue) => {
-              setProgress(1 - progressValue);
-            }}
-            onSlideChange={() => {
-              setProgress(0);
-            }}
-            breakpoints={{
-              320: { slidesPerView: 1.15, spaceBetween: 16 },
-              640: { slidesPerView: 2.2, spaceBetween: 20 },
-              1024: { slidesPerView: 3.2, spaceBetween: 24 },
-              1440: { slidesPerView: 3.5, spaceBetween: 24 },
-            }}
-            className="!pb-4"
+            className="w-full"
           >
-            {projects.items.map((project) => (
-              <SwiperSlide key={project.title + project.location} className="!w-[300px] sm:!w-[340px] lg:!w-[420px]">
-                <button
-                  onClick={() => onSelectProject(project)}
-                  className="group block w-full text-left card-sharp bg-brand-light"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            {chunks.map((chunk, i) => (
+              <SwiperSlide key={i}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+                  {/* First item is large (spans 2 columns) */}
+                  {chunk[0] && (
+                    <ProjectCard 
+                      project={chunk[0]} 
+                      onSelect={() => onSelectProject(chunk[0])}
+                      className="md:col-span-2 aspect-[16/9] md:aspect-[2.5/1]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                  </div>
-
-                  <div className="p-5 bg-brand-light group-hover:bg-brand-navy transition-colors duration-300">
-                    <span className="inline-block text-[11px] font-display font-bold uppercase tracking-[0.15em] text-brand-cyan mb-2">
-                      {project.type}
-                    </span>
-                    <h3 className="heading-4 font-display text-brand-navy group-hover:text-white transition-colors duration-300 mb-2">
-                      {project.title}
-                    </h3>
-                    <div className="flex items-center gap-1.5 text-brand-muted group-hover:text-white/70 transition-colors duration-300">
-                      <MapPin className="w-3.5 h-3.5" />
-                      <span className="body-small font-medium">{project.location}</span>
-                    </div>
-                  </div>
-                </button>
+                  )}
+                  {/* Second and third items are smaller */}
+                  {chunk[1] && (
+                    <ProjectCard 
+                      project={chunk[1]} 
+                      onSelect={() => onSelectProject(chunk[1])}
+                      className="aspect-[4/3]"
+                    />
+                  )}
+                  {chunk[2] && (
+                    <ProjectCard 
+                      project={chunk[2]} 
+                      onSelect={() => onSelectProject(chunk[2])}
+                      className="aspect-[4/3]"
+                    />
+                  )}
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
-
-          {/* Progress bar */}
-          <div className="mt-8 h-1 bg-brand-navy/10 overflow-hidden">
-            <div
-              className="h-full bg-brand-orange transition-[width] duration-100 ease-linear"
-              style={{ width: `${progress * 100}%` }}
-            />
-          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectCard({ project, onSelect, className = '' }) {
+  return (
+    <button
+      onClick={onSelect}
+      className="group flex flex-col text-left w-full h-full"
+    >
+      <div className={`w-full relative card-skanska ${className}`}>
+        <img
+          src={project.image}
+          alt={project.title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+      <div className="pt-5 pb-3 flex justify-between items-center">
+        <div>
+          <h3 className="text-xl md:text-2xl font-display font-medium text-brand-navy group-hover:text-brand-navy transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-sm font-medium text-brand-muted mt-1 uppercase tracking-wider">
+            {project.type}
+          </p>
+        </div>
+        <div className="w-8 h-8 rounded-full bg-brand-navy text-white flex items-center justify-center transform -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+          <ArrowRight className="w-4 h-4" />
+        </div>
+      </div>
+    </button>
   );
 }
