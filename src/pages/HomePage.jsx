@@ -5,7 +5,6 @@ import SuffolkNav from '../components/SuffolkNav';
 import Hero from '../components/Hero';
 import HeroBackground from '../components/HeroBackground';
 import DomainesSection from '../components/DomainesSection';
-import ParallaxBanners from '../components/ParallaxBanners';
 import OffresSection from '../components/OffresSection';
 import SkanskaProjects from '../components/SkanskaProjects';
 import ProjectModal from '../components/ProjectModal';
@@ -25,9 +24,8 @@ const heroSlideshowImages = [
  *
  * Section order:
  * 1. Hero (fixed background + scrollable content layer)
- * 2. Nos domaines d'activité (sharp cards)
- * 3. Parallax scrolling banners
- * 4. Nos offres (card style)
+ * 2. Nos domaines d'activité (premium stacked parallax cards)
+ * 3. Nos offres (card style)
  * 5. Projets (Skanska-style: 1 big + 3 small)
  * 6. Stats snapshot
  * 7. Partenaires (sliding carousel)
@@ -51,13 +49,10 @@ export default function HomePage({ lang, setLang }) {
       <Hero hero={t.hero} />
 
       <main className="relative z-10 bg-white">
-        {/* 2. Domaines d'activité — first white section covers the hero on scroll */}
+        {/* 2. Domaines d'activité — premium stacked parallax cards */}
         <DomainesSection domaines={t.domaines} />
 
-        {/* 3. Parallax scrolling banners */}
-        <ParallaxBanners banners={t.parallaxBanners} />
-
-        {/* 4. Nos offres */}
+        {/* 3. Nos offres */}
         <OffresSection offres={t.offres} />
 
         {/* 5. Projets — Skanska-style */}
