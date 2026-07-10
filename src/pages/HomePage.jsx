@@ -5,7 +5,6 @@ import SuffolkNav from '../components/SuffolkNav';
 import Hero from '../components/Hero';
 import HeroBackground from '../components/HeroBackground';
 import DomainesSection from '../components/DomainesSection';
-import ContactSection from '../components/ContactSection';
 import ParallaxBanners from '../components/ParallaxBanners';
 import OffresSection from '../components/OffresSection';
 import SkanskaProjects from '../components/SkanskaProjects';
@@ -32,9 +31,8 @@ const heroSlideshowImages = [
  * 5. Projets (Skanska-style: 1 big + 3 small)
  * 6. Stats snapshot
  * 7. Partenaires (sliding carousel)
- * 8. CTA
- * 9. Contact form
- * 10. Footer
+ * 8. CTA + contact form
+ * 9. Footer
  */
 export default function HomePage({ lang, setLang }) {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -74,14 +72,11 @@ export default function HomePage({ lang, setLang }) {
         {/* 7. Partenaires carousel */}
         <PartnersCarousel partners={t.partners} />
 
-        {/* 9. CTA */}
-        <CTASection cta={t.cta} />
+        {/* 8. CTA + contact form */}
+        <CTASection cta={t.cta} contact={t.contact} />
       </main>
 
-      {/* 10. Contact form */}
-      <ContactSection contact={t.contact} />
-
-      {/* 11. Footer */}
+      {/* 9. Footer */}
       <Footer footer={t.footer} logoSrc={logoSrc} />
 
       {/* Project modal */}

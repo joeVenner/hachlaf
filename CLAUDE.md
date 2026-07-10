@@ -43,7 +43,7 @@ src/
     SkanskaProjects.jsx    # 2/3+1/3 featured project + 3 small cards
     StatsSnapshot.jsx      # animated count-up counters
     PartnersCarousel.jsx   # client logo showcase (grid, not carousel)
-    CTASection.jsx         # bottom call-to-action
+    CTASection.jsx         # bottom call-to-action + contact form
     Footer.jsx             # 3-column footer
     # Legacy files still present but unused by current homepage:
     # GlassmorphismNav.jsx, StickyServices.jsx, SwiperProjectCarousel.jsx,
@@ -129,16 +129,17 @@ src/
 - The featured row aligns visually with a **3-column** grid of smaller project cards below.
 - Auto-rotation (5s), manual arrows, dot indicators, and the project modal are preserved.
 
-## Contact section
-- `ContactSection` renders a client-side contact form between the CTA and the footer.
-- It collects **name**, **company name**, and **message/request**.
+## CTA / Contact section
+- `CTASection` renders the bottom navy call-to-action and the contact form in a single section (`id="contact"`).
+- It displays the headline, subtitle, primary CTA button, optional subcontractor button, and a white form card below the buttons.
+- The form collects **name**, **company name**, and **message/request**.
 - Two send options:
   - **WhatsApp** — opens `https://wa.me/<number>?text=<message>` in a new tab.
   - **Email** — opens a `mailto:` link with a pre-filled subject and body.
 - The contact phone (`05 35 36 03 41`) is stored as `content.contact.whatsappNumber`
   in international format (`212535360341`) for WhatsApp.
 - The contact email (`h.hamza@stehachlaf.com`) is stored as `content.contact.emailAddress`.
-- The footer no longer carries `id="contact"`; the contact section owns the anchor.
+- The footer no longer carries `id="contact"`; the CTA/contact section owns the anchor.
 
 ## Git Conventions
 - Work on feature branches; do not commit directly to `main`.
