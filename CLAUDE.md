@@ -74,7 +74,7 @@ src/
 - Buttons and icon bubbles remain rounded/pill-shaped as CTAs.
 
 ### Layout width
-- All page content uses a global 90/5/5 container: `max-w-[90rem] mx-auto px-[5%]`.
+- All page content uses a global 90/5/5 container: `px-[5%]` (90% of the browser width, 5% margins from each edge).
 - Use the `.site-container` utility in `src/index.css` to enforce the rule.
 - Full-width backgrounds are allowed, but inner content must align to the 90% column.
 
