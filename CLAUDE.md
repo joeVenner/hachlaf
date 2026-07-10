@@ -34,7 +34,7 @@ src/
     HomePage.jsx           # marketing homepage
     SubcontractorPage.jsx  # embedded Typeform application page
   components/
-    SuffolkNav.jsx         # fixed Suffolk-style header (active)
+    SuffolkNav.jsx         # premium floating glassmorphism header
     HeroBackground.jsx     # fixed full-screen crossfade background (z-0)
     Hero.jsx               # scrollable hero content layer (headline + CTAs)
     DomainesSection.jsx    # 3 stacked parallax sector cards (GSAP + sticky)
@@ -98,12 +98,29 @@ src/
 - The hero is split into two independent layers:
   1. `HeroBackground` — a fixed-position full-viewport crossfade slideshow at `z-0`.
   2. `Hero` — a scrollable `h-screen` content layer at `z-[1]` containing the headline,
-     subtitle, CTAs, and scroll indicator.
+     subtitle, CTAs, trust stats and scroll indicator.
 - `HeroBackground` is rendered **outside** `<main>` so it sits behind everything.
 - `Hero` is rendered **before** `<main>` in normal page flow; it scrolls away naturally.
 - `<main class="relative z-10 bg-white">` starts right after the hero and slides up like
   a curtain, covering both the hero content and the fixed navy background.
 - No `h-screen` spacer is needed because the hero content itself occupies the initial viewport.
+- Content is **left-aligned** in a 650px max-width column so the construction image remains
+  visible on the right; the layout is vertically centered with generous spacing.
+- Headline is two lines: a fixed first line (`We Deliver` / `Nous livrons`) and a second
+  line that rotates one word every 4 seconds using Framer Motion `AnimatePresence`
+  with fade + `translateY` + `blur`.
+- `HeroBackground` uses a slow Ken Burns zoom (`scale(1)` → `scale(1.06)` over ~22s)
+  plus layered cinematic overlays: a dark black left-to-right gradient (~55–65%), a subtle
+  blue/gray tint, a soft vignette and a very light film-grain noise.
+- Trust stats are displayed horizontally beneath the CTAs with thin vertical separators.
+
+## Navbar
+- `SuffolkNav` is a premium floating glassmorphism bar:
+  - `background: rgba(20, 20, 20, 0.35)` on the hero, increasing to `0.55` once scrolled
+    or on the subcontractor page.
+  - `backdrop-filter: blur(18px)`.
+  - Thin white border at 8% opacity and a rounded-2xl frame.
+- Text and logo remain white in all states; the mobile menu uses the same dark glass style.
 
 ## Domaines section
 - `DomainesSection` renders **3 stacked parallax sector cards** as a single

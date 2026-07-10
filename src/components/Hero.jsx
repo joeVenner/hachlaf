@@ -1,168 +1,169 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-const SLIDE_INTERVAL = 6000;
-const CROSSFADE_DURATION = 1.5;
+const WORD_INTERVAL = 4000;
+const ROTATION_DELAY = 600;
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 /**
- * Fixed full-screen hero with a crossfading background slideshow.
+ * Premium left-aligned hero content layer.
  *
- * The hero layer stays pinned while the main page content scrolls over it,
- * creating a reveal effect between the homepage and the fixed background.
+ * The construction image stays visible on the right while the content sits on
+ * the left in a tight 650px column. Elements reveal in a staggered sequence,
+ * the second headline word rotates every 4 seconds, and trust stats sit
+ * beneath the CTAs with thin separators.
  */
-export default function Hero({ hero, heroImages }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-    }, SLIDE_INTERVAL);
-    return () => clearInterval(timer);
-  }, [heroImages.length]);
-
+export default function Hero({ hero }) {
   return (
     <section
       id="top"
-      className="fixed inset-0 h-screen w-full overflow-hidden z-0 bg-brand-navy"
+      className="relative z-[1] h-screen w-full flex items-center overflow-hidden"
     >
-      {/* Crossfade background slideshow */}
-      <div className="absolute inset-0">
-        {heroImages.map((src, index) => (
-          <motion.div
-            key={src}
-            className="absolute inset-0"
-            initial={false}
-            animate={{ opacity: currentIndex === index ? 1 : 0 }}
-            transition={{ duration: CROSSFADE_DURATION, ease: 'easeInOut' }}
-          >
-            <img
-              src={src}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-brand-navy/25 to-black/30" />
-
-      {/* Content */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="relative z-10 h-full flex flex-col items-center justify-center text-center"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="site-container w-full h-full flex flex-col justify-center py-24"
       >
-        <div className="site-container h-full flex flex-col items-center justify-center">
-          {/* Typing effect title */}
-          <TypingEffect words={hero.typingWords} />
+        <div className="max-w-[650px]">
+          {/* Top label */}
+          <motion.div variants={itemVariants} className="mb-8 md:mb-10">
+            <span className="block text-[11px] md:text-xs font-display font-semibold uppercase tracking-[0.22em] text-white/70 mb-2">
+              {hero.eyebrow}
+            </span>
+            <span className="block text-[11px] md:text-xs font-display font-medium uppercase tracking-[0.18em] text-white/50">
+              {hero.eyebrowSub}
+            </span>
+          </motion.div>
 
+          {/* Main title */}
+          <motion.div variants={itemVariants} className="mb-8 md:mb-10">
+            <h1 className="hero-headline text-white">
+              <span className="block">{hero.preTitle}</span>
+              <span className="block text-brand-orange">
+                <RotatingWord words={hero.rotatingWords} />
+              </span>
+            </h1>
+          </motion.div>
+
+          {/* Description */}
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.0, ease: [0.22, 1, 0.36, 1] }}
-            className="body-large text-white/90 max-w-2xl mt-6"
+            variants={itemVariants}
+            className="text-lg md:text-xl xl:text-[1.375rem] leading-[1.5] text-white/80 max-w-[560px] mb-10 md:mb-12"
           >
             {hero.subtitle}
           </motion.p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.3, ease: [0.22, 1, 0.36, 1] }}
-            className="body-main text-white/80 max-w-2xl mt-4 hidden md:block"
-          >
-            {hero.body}
-          </motion.p>
-
+          {/* Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-center gap-4 mt-10"
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row items-start gap-4 mb-12 md:mb-14"
           >
-            <a href="#projects" className="btn-primary">
+            <a href="#projects" className="btn-gold group">
               {hero.ctaPrimary}
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
-            <a href="#contact" className="btn-secondary">
+            <a href="#contact" className="btn-glass">
               {hero.ctaSecondary}
             </a>
-            <Link to="/sous-traitant" className="btn-secondary">
-              {hero.ctaSubcontractor}
-            </Link>
+          </motion.div>
+
+          {/* Trust stats */}
+          <motion.div variants={itemVariants}>
+            <div className="flex flex-wrap items-center">
+              {hero.heroStats.map((stat, index) => (
+                <div key={stat.label} className="flex items-center">
+                  <div className="px-5 sm:px-7 md:px-8 py-2 text-left">
+                    <div className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold text-white tracking-tight leading-none">
+                      {stat.value}
+                    </div>
+                    <div className="mt-1.5 text-[10px] sm:text-xs font-display font-semibold uppercase tracking-[0.16em] text-white/55">
+                      {stat.label}
+                    </div>
+                  </div>
+                  {index < hero.heroStats.length - 1 && (
+                    <div className="hidden sm:block h-8 md:h-10 w-px bg-white/20" />
+                  )}
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.a
-          href="#domaines"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3.2, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/80 hover:text-white transition-colors"
-        >
-          <div className="w-[1px] h-12 bg-white/30 overflow-hidden">
-            <motion.div
-              className="w-full h-1/3 bg-white"
-              animate={{ y: ['-100%', '300%'] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
-            />
-          </div>
-        </motion.a>
       </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.a
+        href="#domaines"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 hover:text-white/80 transition-colors"
+        aria-label="Scroll to domains"
+      >
+        <div className="w-5 h-8 rounded-full border border-white/30 flex items-start justify-center p-1">
+          <motion.div
+            className="w-1 h-1.5 rounded-full bg-current"
+            animate={{ y: [0, 8, 0], opacity: [1, 0.5, 1] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </div>
+      </motion.a>
     </section>
   );
 }
 
 /**
- * Typing effect: types each word character by character.
+ * Rotating word with luxury fade + slide + blur transition.
  */
-function TypingEffect({ words }) {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [charIndex, setCharIndex] = useState(0);
+function RotatingWord({ words }) {
+  const [index, setIndex] = useState(0);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const word = words[currentWordIndex];
-    let timeout;
-
-    if (!isDeleting && charIndex < word.length) {
-      // Type next char
-      timeout = setTimeout(() => {
-        setCurrentText(word.substring(0, charIndex + 1));
-        setCharIndex(charIndex + 1);
-      }, 100);
-    } else if (!isDeleting && charIndex === word.length) {
-      // Pause at end, then start deleting
-      timeout = setTimeout(() => {
-        setIsDeleting(true);
-      }, 2000);
-    } else if (isDeleting && charIndex > 0) {
-      // Delete char
-      timeout = setTimeout(() => {
-        setCurrentText(word.substring(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
-      }, 50);
-    } else if (isDeleting && charIndex === 0) {
-      // Move to next word
-      setIsDeleting(false);
-      setCurrentWordIndex((currentWordIndex + 1) % words.length);
-      setCurrentText('');
-      timeout = setTimeout(() => {}, 300);
-    }
-
+    const timeout = setTimeout(() => setReady(true), ROTATION_DELAY);
     return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, currentWordIndex, words]);
+  }, []);
+
+  useEffect(() => {
+    if (!ready) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, WORD_INTERVAL);
+    return () => clearInterval(interval);
+  }, [ready, words.length]);
 
   return (
-    <h1 className="heading-1 font-display text-white max-w-5xl drop-shadow-lg min-h-[1.2em]">
-      {currentText}
-      <span className="inline-block w-[3px] h-[0.9em] bg-brand-orange ml-1 animate-pulse align-middle" />
-    </h1>
+    <span className="hero-headline-rotator relative align-bottom">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={words[index]}
+          initial={{ opacity: 0, y: 18, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -14, filter: 'blur(8px)' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-block"
+        >
+          {words[index]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
 }

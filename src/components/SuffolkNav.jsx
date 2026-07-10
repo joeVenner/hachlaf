@@ -28,16 +28,16 @@ export default function SuffolkNav({ nav, lang, setLang }) {
   const leftLinks = nav.links.slice(0, half);
   const rightLinks = nav.links.slice(half);
 
-  const textColor = solid ? 'text-brand-navy' : 'text-white';
+  const textColor = 'text-white';
   const hoverColor = 'hover:text-brand-cyan';
 
   return (
     <header className="fixed top-3 md:top-4 left-0 right-0 z-50 site-container">
       <div
-        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-sm backdrop-blur-[1.56rem] ${
+        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-2xl border border-white/[0.08] backdrop-blur-[18px] ${
           solid
-            ? 'bg-white/90 shadow-lg'
-            : 'bg-black/20'
+            ? 'bg-[rgba(20,20,20,0.55)] shadow-lg'
+            : 'bg-[rgba(20,20,20,0.35)]'
         }`}
       >
         {/* LEFT NAV */}
@@ -59,11 +59,7 @@ export default function SuffolkNav({ nav, lang, setLang }) {
         {/* CENTER LOGO */}
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
           <Link to="/" className="pointer-events-auto">
-            <span
-              className={`font-display font-extrabold text-xl md:text-2xl tracking-wider uppercase transition-colors whitespace-nowrap ${
-                solid ? 'text-brand-navy' : 'text-white'
-              }`}
-            >
+            <span className="font-display font-extrabold text-xl md:text-2xl tracking-wider uppercase transition-colors whitespace-nowrap text-white">
               HACHLAF.
             </span>
           </Link>
@@ -87,15 +83,11 @@ export default function SuffolkNav({ nav, lang, setLang }) {
           </nav>
 
           {/* Lang switcher */}
-          <div className={`flex items-center ml-3 rounded-full p-0.5 border ${
-            solid ? 'border-brand-muted/30' : 'border-white/30'
-          }`}>
+          <div className="flex items-center ml-3 rounded-full p-0.5 border border-white/30">
             <button
               onClick={() => setLang('en')}
               className={`px-2 py-0.5 text-[10px] font-bold rounded-full transition-colors ${
-                lang === 'en'
-                  ? solid ? 'bg-brand-navy text-white' : 'bg-white text-brand-navy'
-                  : solid ? 'text-brand-muted' : 'text-white/70'
+                lang === 'en' ? 'bg-white text-brand-navy' : 'text-white/70'
               }`}
             >
               EN
@@ -103,9 +95,7 @@ export default function SuffolkNav({ nav, lang, setLang }) {
             <button
               onClick={() => setLang('fr')}
               className={`px-2 py-0.5 text-[10px] font-bold rounded-full transition-colors ${
-                lang === 'fr'
-                  ? solid ? 'bg-brand-navy text-white' : 'bg-white text-brand-navy'
-                  : solid ? 'text-brand-muted' : 'text-white/70'
+                lang === 'fr' ? 'bg-white text-brand-navy' : 'text-white/70'
               }`}
             >
               FR
@@ -115,7 +105,7 @@ export default function SuffolkNav({ nav, lang, setLang }) {
 
         {/* MOBILE HAMBURGER */}
         <button
-          className={`lg:hidden p-2 ${textColor}`}
+          className="lg:hidden p-2 text-white"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >
@@ -136,22 +126,22 @@ export default function SuffolkNav({ nav, lang, setLang }) {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div className="lg:hidden mt-2 bg-white/95 backdrop-blur-xl rounded-sm shadow-xl p-6">
+        <div className="lg:hidden mt-2 bg-[rgba(20,20,20,0.85)] backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl p-6">
           <nav className="flex flex-col gap-3">
             {nav.links.map((link) => (
               <NavLink
                 key={link.id || link.to}
                 link={link}
-                className="font-display text-sm font-semibold uppercase text-brand-navy hover:text-brand-cyan transition-colors py-2"
+                className="font-display text-sm font-semibold uppercase text-white hover:text-brand-cyan transition-colors py-2"
                 onClick={() => setMobileOpen(false)}
               />
             ))}
           </nav>
-          <div className="flex items-center gap-2 mt-4 pt-4 border-t border-brand-muted/20">
+          <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/20">
             <button
               onClick={() => setLang('en')}
               className={`px-3 py-1 text-xs font-bold rounded-full ${
-                lang === 'en' ? 'bg-brand-navy text-white' : 'text-brand-muted'
+                lang === 'en' ? 'bg-white text-brand-navy' : 'text-white/70'
               }`}
             >
               EN
@@ -159,7 +149,7 @@ export default function SuffolkNav({ nav, lang, setLang }) {
             <button
               onClick={() => setLang('fr')}
               className={`px-3 py-1 text-xs font-bold rounded-full ${
-                lang === 'fr' ? 'bg-brand-navy text-white' : 'text-brand-muted'
+                lang === 'fr' ? 'bg-white text-brand-navy' : 'text-white/70'
               }`}
             >
               FR
