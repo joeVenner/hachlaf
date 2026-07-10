@@ -35,13 +35,13 @@ src/
     SubcontractorPage.jsx  # embedded Typeform application page
   components/
     SuffolkNav.jsx         # fixed Suffolk-style header (active)
-    Hero.jsx               # fixed full-screen background slideshow hero
-    DomainesSection.jsx    # 5 domain cards
-    ParallaxBanners.jsx    # full-width parallax image banners
+    HeroBackground.jsx     # fixed full-screen crossfade background (z-0)
+    Hero.jsx               # scrollable hero content layer (headline + CTAs)
+    DomainesSection.jsx    # 3 macro-sector cards in a normal grid
+    ParallaxBanners.jsx    # 3 full-viewport sticky stacked parallax cards
     OffresSection.jsx      # 5 service/offering cards
-    SkanskaProjects.jsx    # featured + 3 small project cards
+    SkanskaProjects.jsx    # 2/3+1/3 featured project + 3 small cards
     StatsSnapshot.jsx      # animated count-up counters
-    AboutSection.jsx       # about + value cards
     PartnersCarousel.jsx   # client logo showcase (grid, not carousel)
     CTASection.jsx         # bottom call-to-action
     Footer.jsx             # 3-column footer
@@ -65,7 +65,7 @@ src/
 | Light BG | `#f5f5f5` |
 
 ### Typography
-- **Headings:** `Outfit`, weight 800 only (bold-only system).
+- **Headings:** `Outfit`, weight 800 by default (bold-only system).
 - **Body:** `Inter`, weights 300–700.
 - All heading sizes use `clamp()` for fluid scaling. Use the `.heading-1` … `.heading-5` utility classes in `src/index.css`.
 
@@ -96,10 +96,49 @@ src/
 - `SuffolkNav` and `Footer` handle both anchor links and `Link` routes.
 
 ## Hero behavior
-- The hero is a fixed-position full-viewport background layer (`z-0`).
-- It crossfades between 3 high-quality background images on a timer.
-- The rest of the page sits in a `relative z-10 bg-white` container that slides up over the hero.
-- `HomePage` adds a `h-screen` spacer so the hero occupies the initial viewport.
+- The hero is split into two independent layers:
+  1. `HeroBackground` — a fixed-position full-viewport crossfade slideshow at `z-0`.
+  2. `Hero` — a scrollable `h-screen` content layer at `z-[1]` containing the headline,
+     subtitle, CTAs, and scroll indicator.
+- `HeroBackground` is rendered **outside** `<main>` so it sits behind everything.
+- `Hero` is rendered **before** `<main>` in normal page flow; it scrolls away naturally.
+- `<main class="relative z-10 bg-white">` starts right after the hero and slides up like
+  a curtain, covering both the hero content and the fixed navy background.
+- No `h-screen` spacer is needed because the hero content itself occupies the initial viewport.
+
+## Domaines section
+- `DomainesSection` renders **3 macro-sector cards** in a normal scrolling grid
+  inside the global 90/5/5 container.
+- The 5 original domains are grouped into:
+  1. **Énergie & Environnement** (Energy + Water & Environment)
+  2. **Industrie & Infrastructure** (Industry + Infrastructure)
+  3. **Éducation & Résidentiel**
+- Each card is a `card-sharp` tile with an image, title, description, and optional
+  `sectors` chips.
+
+## Parallax banners
+- `ParallaxBanners` renders **3 full-viewport cards** inside a 300vh tall parent.
+- Each card is `position: sticky; top: 0; height: 100vh` with an escalating
+  `z-index`, so the next banner slides over the previous one while scrolling.
+- Each card has a full-bleed background image, dark gradient, and a title +
+  subtitle block.
+
+## Projects section
+- `SkanskaProjects` uses a **2fr + 1fr featured row**: large image on the left,
+  text block on the right.
+- The featured row aligns visually with a **3-column** grid of smaller project cards below.
+- Auto-rotation (5s), manual arrows, dot indicators, and the project modal are preserved.
+
+## Contact section
+- `ContactSection` renders a client-side contact form between the CTA and the footer.
+- It collects **name**, **company name**, and **message/request**.
+- Two send options:
+  - **WhatsApp** — opens `https://wa.me/<number>?text=<message>` in a new tab.
+  - **Email** — opens a `mailto:` link with a pre-filled subject and body.
+- The contact phone (`05 35 36 03 41`) is stored as `content.contact.whatsappNumber`
+  in international format (`212535360341`) for WhatsApp.
+- The contact email (`h.hamza@stehachlaf.com`) is stored as `content.contact.emailAddress`.
+- The footer no longer carries `id="contact"`; the contact section owns the anchor.
 
 ## Git Conventions
 - Work on feature branches; do not commit directly to `main`.
