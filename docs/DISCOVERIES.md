@@ -56,3 +56,9 @@
 - **Why:** The old section used unrelated screenshots and thumbnail sizes, which looked unprofessional. Framing them as named client/project cards with consistent padding makes the showcase readable.
 - **Impact:** `src/data/content.js`, `src/components/PartnersCarousel.jsx`.
 
+## [2026-07-10] Premium Stacked Parallax Domaines Section
+- **What changed:** Replaced the three-column `DomainesSection` grid and the separate `ParallaxBanners` section with a single premium stacked-parallax experience. Three large cinematic cards (≈90vw, 60–70vh desktop, min 560px) stack via CSS sticky positioning and are enhanced by GSAP ScrollTrigger: image scale 1.08→1 + vertical parallax, staggered content reveals, frosted-glass tags, a subtle 01/02/03 progress indicator, and `prefers-reduced-motion` fallbacks. The `domaines` data model was enriched with `number`, `category`, `description`, `tags`, `detail`, and `cta` fields in both locales.
+- **Why:** The brief asked for an Apple/Porsche/architecture-studio level of scroll-driven storytelling for the sector presentation. GSAP ScrollTrigger gives precise, performant transform-only animations, while sticky positioning keeps the interaction feeling native and avoids excessive scroll-jacking.
+- **Impact:** `src/components/DomainesSection.jsx`, `src/pages/HomePage.jsx`, `src/data/content.js`, `src/components/ParallaxBanners.jsx` (deleted), `package.json`, `package-lock.json`.
+- **Edge case:** `gsap.matchMedia()` is used to separate reduced-motion, mobile, and desktop behaviour so animations degrade gracefully without re-renders. All ScrollTriggers and tweens are cleaned up via `gsap.context()` revert on unmount.
+

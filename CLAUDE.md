@@ -5,7 +5,7 @@
 ## Stack
 - **Framework:** Vite 5 + React 18
 - **Styling:** Tailwind CSS v4 (CSS-first `@theme` config in `src/index.css`)
-- **Animation:** Framer Motion
+- **Animation:** Framer Motion + GSAP (ScrollTrigger for scroll-driven parallax)
 - **Icons:** Lucide React
 - **Carousel:** Swiper.js (legacy component still in tree)
 - **Routing:** react-router-dom
@@ -37,8 +37,7 @@ src/
     SuffolkNav.jsx         # fixed Suffolk-style header (active)
     HeroBackground.jsx     # fixed full-screen crossfade background (z-0)
     Hero.jsx               # scrollable hero content layer (headline + CTAs)
-    DomainesSection.jsx    # 3 macro-sector cards in a normal grid
-    ParallaxBanners.jsx    # 3 full-viewport sticky stacked parallax cards
+    DomainesSection.jsx    # 3 stacked parallax sector cards (GSAP + sticky)
     OffresSection.jsx      # 5 service/offering cards
     SkanskaProjects.jsx    # 2/3+1/3 featured project + 3 small cards
     StatsSnapshot.jsx      # animated count-up counters
@@ -107,21 +106,19 @@ src/
 - No `h-screen` spacer is needed because the hero content itself occupies the initial viewport.
 
 ## Domaines section
-- `DomainesSection` renders **3 macro-sector cards** in a normal scrolling grid
-  inside the global 90/5/5 container.
-- The 5 original domains are grouped into:
-  1. **Énergie & Environnement** (Energy + Water & Environment)
-  2. **Industrie & Infrastructure** (Industry + Infrastructure)
-  3. **Éducation & Résidentiel**
-- Each card is a `card-sharp` tile with an image, title, description, and optional
-  `sectors` chips.
-
-## Parallax banners
-- `ParallaxBanners` renders **3 full-viewport cards** inside a 300vh tall parent.
-- Each card is `position: sticky; top: 0; height: 100vh` with an escalating
-  `z-index`, so the next banner slides over the previous one while scrolling.
-- Each card has a full-bleed background image, dark gradient, and a title +
-  subtitle block.
+- `DomainesSection` renders **3 stacked parallax sector cards** as a single
+  cinematic scroll experience.
+- Each card is a large rounded image-led tile (≈90vw, 60–70vh desktop,
+  min-height 560px, max-width 1500px) with a dark cinematic gradient overlay,
+  frosted-glass tags, and editorial typography.
+- Scroll behaviour is driven by **GSAP ScrollTrigger** on top of CSS sticky
+  positioning: image scale 1.08→1 + vertical parallax, staggered content reveals,
+  and a subtle 01/02/03 progress indicator on the right.
+- The cards naturally stack as the user scrolls; higher `z-index` cards slide
+  over previous ones without heavy scroll-jacking.
+- `prefers-reduced-motion` disables parallax/scale and keeps simple fade-ins.
+- Data model (`content.domaines.items`): `number`, `category`, `title`,
+  `description`, `tags`, `detail`, `cta`, `image`.
 
 ## Projects section
 - `SkanskaProjects` uses a **2fr + 1fr featured row**: large image on the left,
