@@ -27,7 +27,6 @@ export const site = {
         { label: 'Domaines', id: 'domaines' },
         { label: 'Offres', id: 'offres' },
         { label: 'Références', id: 'projects' },
-        { label: 'À Propos', id: 'about' },
         { label: 'Contact', id: 'contact' },
       ],
       cta: 'Devis gratuit',
@@ -40,35 +39,28 @@ export const site = {
       ctaSecondary: 'Demander un devis',
       ctaSubcontractor: 'Devenir sous-traitant',
     },
-    // ── Domaines d'activité ──
+    // ── Domaines d'activité ── stacked macro-sectors ──
     domaines: {
       eyebrow: 'NOS DOMAINES D\'ACTIVITÉ',
       title: 'Une expertise multi-sectorielle',
       items: [
         {
-          title: 'Énergie',
-          desc: 'Centrales thermiques, parcs solaires, éoliens et STEP.',
+          title: 'Énergie & Environnement',
+          desc: 'Centrales thermiques, parcs solaires, éoliens, STEP, stations de dessalement, traitement des eaux et barrages.',
           image: '/images/generated/solar_noor_midelt.jpg',
+          sectors: ['Énergie', 'Eau & Environnement'],
         },
         {
-          title: 'Industrie',
-          desc: 'Usines métallurgiques, phosphatiers et complexes chimiques.',
+          title: 'Industrie & Infrastructure',
+          desc: 'Usines métallurgiques, complexes phosphatiers et chimiques, routes, ponts, plateformes industrielles et ouvrages civils.',
           image: '/images/generated/metallurgy_mibladen.jpg',
-        },
-        {
-          title: 'Infrastructure',
-          desc: 'Routes, ponts, plateformes industrielles et ouvrages civils.',
-          image: '/images/generated/genie_civil.jpg',
-        },
-        {
-          title: 'Eau & Environnement',
-          desc: 'Stations de dessalement, traitement des eaux et barrages.',
-          image: '/images/generated/desalination_casa.jpg',
+          sectors: ['Industrie', 'Infrastructure'],
         },
         {
           title: 'Éducation & Résidentiel',
-          desc: 'Universités, résidences et bâtiments techniques.',
+          desc: 'Universités, résidences, bâtiments techniques et projets tertiaires de grande envergure.',
           image: '/images/generated/university_rabat.jpg',
+          sectors: ['Éducation', 'Résidentiel'],
         },
       ],
     },
@@ -236,23 +228,6 @@ export const site = {
         { value: 5, suffix: '', label: 'Domaines d\'expertise' },
       ],
     },
-    // ── À propos ──
-    about: {
-      eyebrow: 'UN APERÇU DE NOTRE ENTREPRISE',
-      title: 'Hachlaf Akhawayne, votre partenaire de confiance',
-      image: '/images/generated/about_team.jpg',
-      body: [
-        'Fondée il y a plus de trois décennies, Hachlaf Akhawayne s\'est imposée comme un acteur majeur dans le secteur de la construction et des travaux publics au Maroc.',
-        'Reconnue pour son sérieux, sa réactivité et sa bonne réputation, l\'entreprise s\'appuie sur un réseau fiable de partenaires, de ressources qualifiées et d\'ingénieurs expérimentés.',
-        'Notre engagement : livrer chaque projet dans les délais, avec les plus hauts standards de qualité et de sécurité, du génie civil aux sites énergétiques les plus complexes.',
-      ],
-      values: [
-        { title: 'Qualité', desc: 'Standards rigoureux sur chaque chantier, contrôle continu et amélioration permanente.' },
-        { title: 'Sécurité', desc: 'Protocoles HSE stricts, formations régulières et zéro compromis sur la sécurité.' },
-        { title: 'Délais', desc: 'Une livraison dans les temps sur chaque projet grâce à une planification experte.' },
-        { title: 'Expertise', desc: 'Ingénieurs, techniciens et professionnels confirmés au cœur de notre exécution.' },
-      ],
-    },
     // ── Partenaires ──
     partners: {
       eyebrow: 'ILS NOUS FONT CONFIANCE',
@@ -278,6 +253,22 @@ export const site = {
         to: '/sous-traitant',
       },
     },
+    // ── Contact form section ──
+    contact: {
+      eyebrow: 'CONTACTEZ-NOUS',
+      title: 'Parlons de votre projet',
+      subtitle: 'Envoyez-nous votre demande par WhatsApp ou par email.',
+      nameLabel: 'Nom complet',
+      companyLabel: 'Nom de l\'entreprise',
+      messageLabel: 'Message / demande',
+      whatsappButton: 'Envoyer par WhatsApp',
+      emailButton: 'Envoyer par email',
+      requiredError: 'Veuillez remplir tous les champs.',
+      whatsappNumber: '212535360341',
+      emailAddress: 'h.hamza@stehachlaf.com',
+      emailSubject: 'Nouvelle demande depuis le site Hachlaf Akhawayne',
+    },
+
     // ── Footer ──
     footer: {
       description: 'Hachlaf Akhawayne — Votre partenaire de confiance pour tous vos travaux de construction, génie civil et énergie au Maroc.',
@@ -287,7 +278,6 @@ export const site = {
         { label: 'Domaines', href: '#domaines' },
         { label: 'Offres', href: '#offres' },
         { label: 'Références', href: '#projects' },
-        { label: 'À Propos', href: '#about' },
         { label: 'Devenir sous-traitant', to: '/sous-traitant' },
       ],
       contactLabel: 'Contact',
@@ -319,7 +309,6 @@ export const site = {
         { label: 'Domains', id: 'domaines' },
         { label: 'Offerings', id: 'offres' },
         { label: 'References', id: 'projects' },
-        { label: 'About', id: 'about' },
         { label: 'Contact', id: 'contact' },
       ],
       cta: 'Free quote',
@@ -337,29 +326,22 @@ export const site = {
       title: 'Multi-sector expertise',
       items: [
         {
-          title: 'Energy',
-          desc: 'Thermal plants, solar farms, wind farms and pumped storage.',
+          title: 'Energy & Environment',
+          desc: 'Thermal plants, solar farms, wind farms, pumped storage, desalination stations, water treatment and dams.',
           image: '/images/generated/solar_noor_midelt.jpg',
+          sectors: ['Energy', 'Water & Environment'],
         },
         {
-          title: 'Industry',
-          desc: 'Metallurgical plants, phosphate and chemical complexes.',
+          title: 'Industry & Infrastructure',
+          desc: 'Metallurgical plants, phosphate and chemical complexes, roads, bridges, industrial platforms and civil works.',
           image: '/images/generated/metallurgy_mibladen.jpg',
-        },
-        {
-          title: 'Infrastructure',
-          desc: 'Roads, bridges, industrial platforms and civil works.',
-          image: '/images/generated/genie_civil.jpg',
-        },
-        {
-          title: 'Water & Environment',
-          desc: 'Desalination stations, water treatment and dams.',
-          image: '/images/generated/desalination_casa.jpg',
+          sectors: ['Industry', 'Infrastructure'],
         },
         {
           title: 'Education & Residential',
-          desc: 'Universities, residences and technical buildings.',
+          desc: 'Universities, residences, technical buildings and large-scale tertiary projects.',
           image: '/images/generated/university_rabat.jpg',
+          sectors: ['Education', 'Residential'],
         },
       ],
     },
@@ -514,22 +496,6 @@ export const site = {
         { value: 5, suffix: '', label: 'Areas of expertise' },
       ],
     },
-    about: {
-      eyebrow: 'ABOUT OUR COMPANY',
-      title: 'Hachlaf Akhawayne, your trusted partner',
-      image: '/images/generated/about_team.jpg',
-      body: [
-        'Founded over three decades ago, Hachlaf Akhawayne has established itself as a major player in the construction and public works sector in Morocco.',
-        'Recognized for its reliability, responsiveness and strong reputation, the company relies on a dependable network of partners, qualified resources and experienced engineers.',
-        'Our commitment: deliver every project on time, with the highest standards of quality and safety, from civil engineering to the most complex energy sites.',
-      ],
-      values: [
-        { title: 'Quality', desc: 'Rigorous standards on every site, continuous monitoring and permanent improvement.' },
-        { title: 'Safety', desc: 'Strict HSE protocols, regular training and zero compromise on safety.' },
-        { title: 'Deadlines', desc: 'On-time delivery on every project through expert planning.' },
-        { title: 'Expertise', desc: 'Engineers, technicians and proven professionals at the heart of our execution.' },
-      ],
-    },
     partners: {
       eyebrow: 'THEY TRUST US',
       title: 'Our clients & partners',
@@ -553,6 +519,21 @@ export const site = {
         to: '/sous-traitant',
       },
     },
+    contact: {
+      eyebrow: 'CONTACT US',
+      title: "Let's talk about your project",
+      subtitle: 'Send us your request via WhatsApp or email.',
+      nameLabel: 'Full name',
+      companyLabel: 'Company name',
+      messageLabel: 'Message / request',
+      whatsappButton: 'Send via WhatsApp',
+      emailButton: 'Send via email',
+      requiredError: 'Please fill in all fields.',
+      whatsappNumber: '212535360341',
+      emailAddress: 'h.hamza@stehachlaf.com',
+      emailSubject: 'New inquiry from the Hachlaf Akhawayne website',
+    },
+
     footer: {
       description: 'Hachlaf Akhawayne — Your trusted partner for all your construction, civil engineering and energy projects in Morocco.',
       linksLabel: 'Navigation',
@@ -561,7 +542,6 @@ export const site = {
         { label: 'Domains', href: '#domaines' },
         { label: 'Offerings', href: '#offres' },
         { label: 'References', href: '#projects' },
-        { label: 'About', href: '#about' },
         { label: 'Become a subcontractor', to: '/sous-traitant' },
       ],
       contactLabel: 'Contact',
