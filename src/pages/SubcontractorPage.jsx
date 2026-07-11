@@ -20,7 +20,7 @@ export default function SubcontractorPage({ content, logoSrc }) {
   return (
     <div className="min-h-screen bg-white text-brand-dark flex flex-col">
       {/* Simple header for the page */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 glass border-b border-black/5">
+      <header className="relative z-[100] h-16 bg-white border-b border-black/5 shadow-sm flex-shrink-0">
         <div className="site-container h-full flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
             <img
@@ -43,15 +43,15 @@ export default function SubcontractorPage({ content, logoSrc }) {
         </div>
       </header>
 
-      <main className="pt-16 flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col">
         {/* Embedded form — fills remaining viewport */}
         <section className="flex-1 w-full">
-          <TypeformEmbed url={t.formUrl} title={t.title} />
+          <TypeformEmbed url={t.formUrl} liveId={t.formLiveId} title={t.title} />
         </section>
       </main>
 
       {/* Minimal footer */}
-      <footer className="border-t border-black/5 py-6 bg-white">
+      <footer className="relative z-[100] border-t border-black/5 py-4 bg-white flex-shrink-0">
         <div className="site-container flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="body-small text-brand-muted">{content.footer.legal}</p>
           <Link

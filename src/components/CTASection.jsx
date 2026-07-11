@@ -144,7 +144,7 @@ export default function CTASection({ contact }) {
 
             <motion.h2
               variants={contactItemVariants}
-              className="font-display text-white text-[clamp(3rem,5vw,5rem)] leading-[0.96] font-extrabold tracking-[-0.035em] mb-5"
+              className="font-display text-white text-3xl sm:text-4xl md:text-[clamp(3rem,5vw,5rem)] leading-[0.96] font-extrabold tracking-[-0.035em] mb-5"
             >
               {contact.titleNew}
             </motion.h2>
@@ -377,7 +377,7 @@ export default function CTASection({ contact }) {
                 <button
                   type="button"
                   onClick={sendWhatsApp}
-                  className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors duration-300"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 text-sm text-white/50 hover:text-white transition-colors duration-300"
                 >
                   <MessageCircle className="w-4 h-4" />
                   {contact.whatsappLinkText}

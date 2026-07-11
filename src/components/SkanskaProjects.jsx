@@ -7,57 +7,46 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
  *
  * - Single-screen section (≈90–100vh desktop, max-h ~950px) with normal flow.
  * - Two-column header: large title + description/CTA.
- * - Featured project: fixed image column + bottom-aligned text column.
- * - Three supporting project cards below in a single row.
- * - Optional discreet prev/next controls rotate only the featured project.
+ * - Featured project spans the first two columns, matching the width of the
+ *   first two supporting cards below.
+ * - All four visible project slots rotate together as a window.
  */
 export default function SkanskaProjects({ projects, onSelectProject }) {
   const items = projects.items;
 
-  // Three cards that remain visible at all times.
-  const supportingItems = useMemo(
-    () => items.filter((p) => p.supporting),
-    [items]
-  );
-
-  // Featured project pool: everything outside the static supporting trio.
-  const featuredPool = useMemo(
-    () => items.filter((p) => !p.supporting),
-    [items]
-  );
-
-  const defaultFeaturedIndex = useMemo(() => {
-    const flagged = featuredPool.findIndex((p) => p.featured);
+  const defaultStartIndex = useMemo(() => {
+    const flagged = items.findIndex((p) => p.featured);
     return flagged >= 0 ? flagged : 0;
-  }, [featuredPool]);
+  }, [items]);
 
-  const [activeIndex, setActiveIndex] = useState(defaultFeaturedIndex);
-  const featured = featuredPool[activeIndex] || featuredPool[0];
+  const [activeStart, setActiveStart] = useState(defaultStartIndex);
+  const visibleProjects = useMemo(() => {
+    if (items.length === 0) return [];
+    return Array.from({ length: Math.min(4, items.length) }, (_, offset) => (
+      items[(activeStart + offset) % items.length]
+    ));
+  }, [activeStart, items]);
+  const featured = visibleProjects[0] || items[0];
+  const supportingItems = visibleProjects.slice(1, 4);
 
   useEffect(() => {
-    setActiveIndex(defaultFeaturedIndex);
-  }, [defaultFeaturedIndex]);
+    setActiveStart(defaultStartIndex);
+  }, [defaultStartIndex]);
 
   useEffect(() => {
-    const count = featuredPool.length;
+    const count = items.length;
     if (count <= 1) return undefined;
 
     const timer = window.setInterval(() => {
-      setActiveIndex((prev) => {
-        let next = prev;
-        while (next === prev) {
-          next = Math.floor(Math.random() * count);
-        }
-        return next;
-      });
+      setActiveStart((prev) => (prev + 1) % count);
     }, 4500);
 
     return () => window.clearInterval(timer);
-  }, [featuredPool.length]);
+  }, [items.length]);
 
   const goTo = (delta) => {
-    setActiveIndex((prev) => {
-      const count = featuredPool.length;
+    setActiveStart((prev) => {
+      const count = items.length;
       if (count <= 1) return prev;
       let next = prev + delta;
       if (next < 0) next = count - 1;
@@ -66,7 +55,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
     });
   };
 
-  const hasControls = featuredPool.length > 1;
+  const hasControls = items.length > 1;
 
   return (
     <section
@@ -96,14 +85,14 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => goTo(-1)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full border border-brand-navy/15 text-brand-navy hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                    className="w-11 h-11 flex items-center justify-center rounded-full border border-brand-navy/15 text-brand-navy hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
                     aria-label="Projet précédent"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => goTo(1)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full border border-brand-navy/15 text-brand-navy hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                    className="w-11 h-11 flex items-center justify-center rounded-full border border-brand-navy/15 text-brand-navy hover:border-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
                     aria-label="Projet suivant"
                   >
                     <ChevronRight className="w-4 h-4" />
@@ -114,7 +103,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
           </div>
 
           {/* Featured project */}
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2.1fr)_minmax(280px,0.9fr)] gap-6 lg:gap-8 mb-8 md:mb-10 lg:mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-6 mb-8 md:mb-10 lg:mb-12">
             <AnimatePresence mode="wait">
               <motion.article
                 key={featured.title}
@@ -127,7 +116,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                 {/* Featured image */}
                 <button
                   onClick={() => onSelectProject(featured)}
-                  className="group relative w-full h-[320px] md:h-[380px] lg:h-[420px] overflow-hidden rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                  className="group relative w-full h-[320px] md:h-[380px] lg:h-[420px] lg:col-span-2 overflow-hidden rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
                   aria-label={`Voir le projet ${featured.title}`}
                 >
                   <img
@@ -176,10 +165,10 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
 
                   <button
                     onClick={() => onSelectProject(featured)}
-                    className="group/cta inline-flex items-center gap-3 self-start font-display font-bold text-sm text-brand-navy hover:text-brand-orange transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-sm"
+                    className="group/cta inline-flex min-h-[44px] items-center gap-3 self-start font-display font-bold text-sm text-brand-navy hover:text-brand-orange transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-sm"
                   >
                     <span>{projects.viewDetails}</span>
-                    <span className="w-8 h-8 flex items-center justify-center rounded-full bg-brand-orange text-white transition-all duration-500 group-hover/cta:bg-brand-navy group-hover/cta:translate-x-1">
+                    <span className="w-11 h-11 flex items-center justify-center rounded-full bg-brand-orange text-white transition-all duration-500 group-hover/cta:bg-brand-navy group-hover/cta:translate-x-1">
                       <ArrowRight className="w-4 h-4" />
                     </span>
                   </button>
@@ -191,7 +180,12 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
           {/* Supporting projects */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
             {supportingItems.map((project) => (
-              <article key={project.title}>
+              <motion.article
+                key={project.title}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <button
                   onClick={() => onSelectProject(project)}
                   className="group w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-md"
@@ -229,7 +223,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                     </span>
                   </div>
                 </button>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>

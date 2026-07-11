@@ -276,6 +276,14 @@ export const site = {
         to: '/sous-traitant',
       },
     },
+    subcontractor: {
+      title: 'Devenir sous-traitant',
+      backLabel: 'Retour au site',
+      formLiveId: '01KX3WCBYENVJ0NVB6KZR7VF6J',
+      formUrl: 'https://form.typeform.com/to/01KX3WCBYENVJ0NVB6KZR7VF6J',
+      formFallback: 'Le formulaire ne s\'affiche pas ?',
+      openExternal: 'Ouvrir le formulaire',
+    },
     // ── Contact form section ──
     contact: {
       eyebrow: 'CONTACTEZ-NOUS',
@@ -592,6 +600,14 @@ export const site = {
         label: 'Become a subcontractor',
         to: '/sous-traitant',
       },
+    },
+    subcontractor: {
+      title: 'Become a subcontractor',
+      backLabel: 'Back to site',
+      formLiveId: '01KX3WCBYENVJ0NVB6KZR7VF6J',
+      formUrl: 'https://form.typeform.com/to/01KX3WCBYENVJ0NVB6KZR7VF6J',
+      formFallback: 'Form not loading?',
+      openExternal: 'Open the form',
     },
     contact: {
       eyebrow: 'CONTACT US',

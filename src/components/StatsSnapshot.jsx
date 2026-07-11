@@ -9,11 +9,14 @@ export default function StatsSnapshot({ stats }) {
   return (
     <section className="py-24 md:py-32 bg-white">
       <div className="site-container">
-        <div className="relative rounded-none overflow-hidden shadow-[0_20px_50px_rgba(20,50,117,0.15)] group">
+        <div className="stats-wave-card relative rounded-none overflow-hidden shadow-[0_20px_50px_rgba(20,50,117,0.15)] group">
           {/* Animated Background Layers */}
           <div className="absolute inset-0 z-0 bg-[#1e4496] overflow-hidden">
-            <div className="absolute top-[-50%] right-[-10%] bottom-[-50%] left-[40%] bg-brand-navy transform -skew-x-[25deg] transition-transform duration-[3s] ease-out group-hover:translate-x-4" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/5 via-transparent to-black/20 animate-[pulse_8s_ease-in-out_infinite_alternate] mix-blend-overlay" />
+            <div className="stats-wave-slab absolute top-[-55%] right-[-12%] bottom-[-55%] left-[40%] bg-brand-navy transform -skew-x-[25deg]" />
+            <div className="stats-wave-ribbon stats-wave-ribbon-a" />
+            <div className="stats-wave-ribbon stats-wave-ribbon-b" />
+            <div className="stats-wave-grid" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/7 via-transparent to-black/20 animate-[pulse_8s_ease-in-out_infinite_alternate] mix-blend-overlay" />
           </div>
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 p-12 md:p-20 xl:p-24 items-start">

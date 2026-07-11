@@ -25,7 +25,7 @@ export default function HeroBackground({ heroImages }) {
   return (
     <section
       aria-hidden="true"
-      className="fixed inset-0 h-screen w-full overflow-hidden z-0 bg-brand-navy"
+      className="fixed inset-0 hero-viewport w-full overflow-hidden z-0 bg-brand-navy"
     >
       {/* Crossfade background slideshow with Ken Burns zoom */}
       <div className="absolute inset-0">
