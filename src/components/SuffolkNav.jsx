@@ -34,7 +34,7 @@ export default function SuffolkNav({ nav, lang, setLang }) {
   return (
     <header className="fixed top-3 md:top-4 left-0 right-0 z-50 site-container">
       <div
-        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-none border border-white/[0.08] backdrop-blur-[18px] ${
+        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-none border border-white/[0.08] md:backdrop-blur-[18px] ${
           solid
             ? 'bg-[rgba(20,20,20,0.55)] shadow-lg'
             : 'bg-[rgba(20,20,20,0.35)]'
@@ -83,7 +83,7 @@ export default function SuffolkNav({ nav, lang, setLang }) {
           </nav>
 
           {/* Lang switcher */}
-          <div className="flex items-center ml-4 mr-3 rounded-full p-0.5 border border-white/30">
+          <div className="flex items-center ml-3 mr-3 rounded-full p-0.5 border border-white/30">
             <button
               onClick={() => setLang('en')}
               className={`px-2 py-0.5 text-[10px] font-bold rounded-full transition-colors ${
@@ -105,7 +105,7 @@ export default function SuffolkNav({ nav, lang, setLang }) {
 
         {/* MOBILE HAMBURGER */}
         <button
-          className="lg:hidden p-2 text-white"
+          className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-white"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >
@@ -126,13 +126,13 @@ export default function SuffolkNav({ nav, lang, setLang }) {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div className="lg:hidden mt-2 bg-[rgba(20,20,20,0.85)] backdrop-blur-xl border border-white/10 rounded-none shadow-xl p-6">
+        <div className="lg:hidden mt-2 bg-[rgba(20,20,20,0.92)] md:backdrop-blur-xl border border-white/10 rounded-none shadow-xl p-6">
           <nav className="flex flex-col gap-3">
             {nav.links.map((link) => (
               <NavLink
                 key={link.id || link.to}
                 link={link}
-                className="font-display text-sm font-semibold uppercase text-white hover:text-brand-cyan transition-colors py-2"
+                className="font-display text-sm font-semibold uppercase text-white hover:text-brand-cyan transition-colors min-h-[44px] flex items-center py-2"
                 onClick={() => setMobileOpen(false)}
               />
             ))}

@@ -32,10 +32,12 @@ const itemVariants = {
  * beneath the CTAs with thin separators.
  */
 export default function Hero({ hero }) {
+  const eyebrowParts = hero.eyebrowSub.split('•').map((part) => part.trim());
+
   return (
     <section
       id="top"
-      className="relative z-[1] h-screen w-full flex items-center overflow-hidden"
+      className="relative z-[1] hero-viewport w-full flex items-center overflow-hidden"
     >
       <motion.div
         variants={containerVariants}
@@ -49,8 +51,17 @@ export default function Hero({ hero }) {
             <span className="block text-[11px] md:text-xs font-display font-semibold uppercase tracking-[0.22em] text-white/70 mb-2">
               {hero.eyebrow}
             </span>
-            <span className="block text-[11px] md:text-xs font-display font-medium uppercase tracking-[0.18em] text-white/50">
-              {hero.eyebrowSub}
+            <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] md:text-xs font-display font-medium uppercase tracking-[0.18em] text-white/50">
+              {eyebrowParts.map((part, index) => (
+                <span key={part} className="inline-flex items-center gap-x-2">
+                  {index > 0 && (
+                    <span className="hidden sm:inline text-white/35" aria-hidden="true">
+                      •
+                    </span>
+                  )}
+                  <span>{part}</span>
+                </span>
+              ))}
             </span>
           </motion.div>
 
@@ -77,11 +88,11 @@ export default function Hero({ hero }) {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-start gap-4 mb-12 md:mb-14"
           >
-            <a href="#projects" className="btn-gold group">
+            <a href="#projects" className="btn-gold group w-full sm:w-auto">
               {hero.ctaPrimary}
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
-            <a href="#contact" className="btn-glass">
+            <a href="#contact" className="btn-glass w-full sm:w-auto">
               {hero.ctaSecondary}
             </a>
           </motion.div>
@@ -95,7 +106,7 @@ export default function Hero({ hero }) {
                     <div className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold text-white tracking-tight leading-none">
                       {stat.value}
                     </div>
-                    <div className="mt-1.5 text-[10px] sm:text-xs font-display font-semibold uppercase tracking-[0.16em] text-white/55">
+                    <div className="mt-1.5 text-[11px] sm:text-xs font-display font-semibold uppercase tracking-[0.16em] text-white/55">
                       {stat.label}
                     </div>
                   </div>

@@ -201,8 +201,8 @@ export default function DomainesSection({ domaines }) {
       ? 'text-base'
       : 'text-base md:text-lg lg:text-[1.25rem]';
     const tagSize = isMobile
-      ? 'text-[10px] px-3 py-1.5'
-      : 'text-[10px] md:text-[11px] px-3 py-1.5 md:px-4 md:py-2';
+      ? 'text-[11px] sm:text-xs px-3 py-2 min-h-[44px] inline-flex items-center'
+      : 'text-[11px] sm:text-xs px-3 py-2 md:px-4 min-h-[44px] inline-flex items-center';
     const ctaSize = isMobile ? 'text-sm' : 'text-sm md:text-base';
     const detailDisplay = isMobile ? 'inline-block' : 'hidden md:inline-block';
 
@@ -239,7 +239,7 @@ export default function DomainesSection({ domaines }) {
           <div className="flex items-center gap-4 md:gap-6">
             <a
               href="#contact"
-              className={`group inline-flex items-center gap-2 text-white font-display font-bold ${ctaSize} focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
+              className={`group inline-flex min-h-[44px] items-center gap-2 text-white font-display font-bold ${ctaSize} focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
             >
               <span className="relative">
                 {card.cta}

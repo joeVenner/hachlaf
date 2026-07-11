@@ -135,7 +135,7 @@ export default function Footer({ footer, logoSrc }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.name}
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-brand-navy/5 text-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300"
+                    className="w-11 h-11 flex items-center justify-center rounded-full bg-brand-navy/5 text-brand-navy hover:bg-brand-navy hover:text-white transition-all duration-300"
                   >
                     <SocialIcon icon={social.icon} className="w-4 h-4" />
                   </a>

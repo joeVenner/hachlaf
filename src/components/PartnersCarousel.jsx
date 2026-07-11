@@ -22,9 +22,9 @@ export default function PartnersCarousel({ partners }) {
           {partners.logos.map((logo) => (
             <div
               key={logo.name}
-              className="group min-h-[190px] bg-white border-r border-b border-brand-navy/10 p-5 md:p-6 flex flex-col items-center justify-between transition-colors duration-300 hover:bg-brand-light"
+              className="group min-h-[160px] bg-white border-r border-b border-brand-navy/10 p-5 md:p-6 flex items-center justify-center transition-colors duration-300 hover:bg-brand-light"
             >
-              <div className="flex-1 flex items-center justify-center w-full h-24 md:h-28">
+              <div className="flex items-center justify-center w-full h-24 md:h-28">
                 <img
                   src={logo.src}
                   alt={logo.name}
@@ -32,16 +32,6 @@ export default function PartnersCarousel({ partners }) {
                   loading="lazy"
                   decoding="async"
                 />
-              </div>
-              <div className="pt-5 text-center">
-                <p className="text-xs md:text-sm font-display font-extrabold text-brand-navy uppercase tracking-[0.12em]">
-                  {logo.name}
-                </p>
-                {logo.detail && (
-                  <p className="mt-1 text-[11px] leading-snug text-brand-muted">
-                    {logo.detail}
-                  </p>
-                )}
               </div>
             </div>
           ))}
