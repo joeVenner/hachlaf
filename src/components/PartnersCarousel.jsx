@@ -4,7 +4,7 @@
  */
 export default function PartnersCarousel({ partners }) {
   return (
-    <section className="py-20 md:py-28 bg-white">
+    <section className="partners-section py-20 md:py-28 bg-white">
       <div className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-end mb-12 md:mb-16">
           <div>
@@ -22,7 +22,7 @@ export default function PartnersCarousel({ partners }) {
           {partners.logos.map((logo) => (
             <div
               key={logo.name}
-              className="group min-h-[160px] bg-white border-r border-b border-brand-navy/10 p-5 md:p-6 flex items-center justify-center transition-colors duration-300 hover:bg-brand-light"
+              className="partner-logo-tile group min-h-[160px] bg-white border-r border-b border-brand-navy/10 p-5 md:p-6 flex items-center justify-center transition-colors duration-300 hover:bg-brand-light"
             >
               <div className="flex items-center justify-center w-full h-24 md:h-28">
                 <img

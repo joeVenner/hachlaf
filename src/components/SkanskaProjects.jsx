@@ -60,7 +60,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
   return (
     <section
       id="projects"
-      className="bg-white py-16 pb-12 md:py-20 md:pb-16 lg:pt-24 lg:pb-20"
+      className="projects-section bg-white py-16 pb-12 md:py-20 md:pb-16 lg:pt-24 lg:pb-20"
       aria-labelledby="projects-heading"
     >
       <div className="site-container">
@@ -116,7 +116,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                 {/* Featured image */}
                 <button
                   onClick={() => onSelectProject(featured)}
-                  className="group relative w-full h-[320px] md:h-[380px] lg:h-[420px] lg:col-span-2 overflow-hidden rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                  className="project-featured-image group relative w-full h-[320px] md:h-[380px] lg:h-[420px] lg:col-span-2 overflow-hidden rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
                   aria-label={`Voir le projet ${featured.title}`}
                 >
                   <img
@@ -134,7 +134,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-col justify-end h-full lg:min-h-[420px] pt-2 lg:pt-0"
+                  className="project-featured-info flex flex-col justify-end h-full lg:min-h-[420px] pt-2 lg:pt-0"
                 >
                   <span className="text-brand-cyan font-display text-xs font-bold tracking-[0.2em] uppercase mb-3">
                     {featured.type}
@@ -178,20 +178,21 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
           </div>
 
           {/* Supporting projects */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+          <div className="project-supporting-grid grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
             {supportingItems.map((project) => (
               <motion.article
                 key={project.title}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="project-supporting-card"
               >
                 <button
                   onClick={() => onSelectProject(project)}
                   className="group w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-md"
                   aria-label={`Voir le projet ${project.title}`}
                 >
-                  <div className="relative w-full h-[200px] md:h-[170px] lg:h-[190px] overflow-hidden rounded-md mb-4">
+                  <div className="project-supporting-image relative w-full h-[200px] md:h-[170px] lg:h-[190px] overflow-hidden rounded-md mb-4">
                     <img
                       src={project.image}
                       alt={`${project.type} — ${project.title}`}

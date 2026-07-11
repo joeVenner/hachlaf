@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react';
  */
 export default function OffresSection({ offres }) {
   return (
-    <section id="offres" className="py-24 md:py-32 bg-white">
+    <section id="offres" className="offers-section py-24 md:py-32 bg-white">
       <div className="site-container">
         <span className="eyebrow">{offres.eyebrow}</span>
         <h2 className="heading-2 font-display text-brand-navy mb-12 md:mb-16">
@@ -23,16 +23,16 @@ export default function OffresSection({ offres }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group card-sharp bg-brand-light hover:bg-brand-navy transition-colors duration-300"
+              className="offers-card group card-sharp bg-brand-light hover:bg-brand-navy transition-colors duration-300"
             >
-              <div className="aspect-[4/3] overflow-hidden">
+              <div className="offers-card-image aspect-[4/3] overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              <div className="p-5 md:p-6 flex flex-col">
+              <div className="offers-card-body p-5 md:p-6 flex flex-col">
                 <h3 className="font-display text-base font-bold text-brand-navy group-hover:text-white transition-colors duration-300 mb-2 leading-tight">
                   {item.title}
                 </h3>
