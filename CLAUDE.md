@@ -42,8 +42,8 @@ src/
     SkanskaProjects.jsx    # compact editorial project showcase: 1 featured + 3 supporting
     StatsSnapshot.jsx      # animated count-up counters
     PartnersCarousel.jsx   # client logo showcase (grid, not carousel)
-    CTASection.jsx         # bottom call-to-action + contact form
-    Footer.jsx             # 3-column footer
+    CTASection.jsx         # premium contact CTA + glass contact form
+    Footer.jsx             # premium 4-column footer + closing statement
     # Legacy files still present but unused by current homepage:
     # GlassmorphismNav.jsx, StickyServices.jsx, SwiperProjectCarousel.jsx,
     # ServiceCards.jsx, PartnersSection.jsx, ProjectModal.jsx
@@ -185,16 +185,39 @@ src/
 - `content.js` adds `featured`, `supporting`, `status`, and `expertise` fields to project items.
 
 ## CTA / Contact section
-- `CTASection` renders the bottom navy call-to-action and the contact form in a single section (`id="contact"`).
-- It displays the headline, subtitle, primary CTA button, optional subcontractor button, and a white form card below the buttons.
-- The form collects **name**, **company name**, and **message/request**.
-- Two send options:
-  - **WhatsApp** — opens `https://wa.me/<number>?text=<message>` in a new tab.
-  - **Email** — opens a `mailto:` link with a pre-filled subject and body.
-- The contact phone (`05 35 36 03 41`) is stored as `content.contact.whatsappNumber`
-  in international format (`212535360341`) for WhatsApp.
-- The contact email (`h.hamza@stehachlaf.com`) is stored as `content.contact.emailAddress`.
+- `CTASection` renders the premium contact section (`id="contact"`) with a dark
+  navy gradient background (`#163A78` → `#0F2F66` → `#0A244D`), a subtle 3%
+  blueprint grid texture, and a two-column layout inside a `max-w-[1380px]`
+  container.
+- Left column (45%): a small gold eyebrow, large heading, short paragraph and
+  three elegant line-icon contact items (address, phone, email).
+- Right column (55%): a glassmorphism form panel
+  (`rgba(255,255,255,0.05)` + `backdrop-filter: blur(18px)` + thin white
+  border) containing **name**, **company**, **email**, **phone**, **project type**,
+  **budget (optional)**, and **message** fields.
+- Form fields use two columns on desktop, semi-transparent backgrounds,
+  rounded 10px inputs and soft focus/hover transitions.
+- Primary action is a gold pill button (`Request a Quote` / `Demander un devis`);
+  secondary action is an outline-white pill (`Contact via Email`). A small
+  WhatsApp text link sits below the buttons, replacing the previous bright
+  green button.
+- Sends still open WhatsApp click-to-chat or a pre-filled `mailto:` link.
 - The footer no longer carries `id="contact"`; the CTA/contact section owns the anchor.
+
+## Footer
+- `Footer` sits below the main content on a very light warm gray background
+  (`#F8F9FB`) with dark navy text.
+- A full-width closing statement banner (`Building confidence. / Delivering
+  excellence.` and a thin animated gold gradient line) appears above the footer
+  grid.
+- Main grid is a clean 4-column layout on desktop:
+  1. Logo + short description + social icons.
+  2. Company links (About, Services, Projects, Contact).
+  3. Services links (Civil Engineering, Industrial, Energy, Infrastructure).
+  4. Contact details (address, phone, email, working hours).
+- Bottom bar uses a thin divider and shows copyright, Privacy Policy, Terms and
+  `Designed with precision.`
+- Columns animate upward on scroll via Framer Motion stagger.
 
 ## Git Conventions
 - Work on feature branches; do not commit directly to `main`.

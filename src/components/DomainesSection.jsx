@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
@@ -15,25 +15,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
  * Mobile and reduced-motion clients render the cards in normal document flow.
  */
 export default function DomainesSection({ domaines }) {
-  const { eyebrow, title, items } = domaines;
+  const { title, items } = domaines;
   const sectionRef = useRef(null);
   const pinRef = useRef(null);
   const cardRefs = useRef([]);
   const mobileCardRefs = useRef([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const section = sectionRef.current;
     const pin = pinRef.current;
     if (!section || !pin) return;
 
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
-
-    // Reduced motion: normal document flow, all content visible immediately.
-    mm.add('(prefers-reduced-motion: reduce)', () => {
-      gsap.set(cardRefs.current.filter(Boolean), { clearProps: 'all' });
-      return () => {};
-    });
 
     // Mobile: normal document flow with light fade-in per card.
     mm.add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
@@ -61,10 +55,11 @@ export default function DomainesSection({ domaines }) {
     });
 
     // Desktop/Tablet: one pinned composition with a shared stacking stage.
-    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+    mm.add('(min-width: 768px)', () => {
       const ctx = gsap.context(() => {
         const [card1, card2, card3] = cardRefs.current;
         const cards = [card1, card2, card3].filter(Boolean);
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         // Initial states: all cards mounted and visible, only Card 1 in view.
         gsap.set(cards, {
@@ -73,19 +68,21 @@ export default function DomainesSection({ domaines }) {
           scale: 1,
           yPercent: 0,
         });
-        if (card2) gsap.set(card2, { yPercent: 105 });
-        if (card3) gsap.set(card3, { yPercent: 110 });
+        if (card2) gsap.set(card2, { yPercent: 100 });
+        if (card3) gsap.set(card3, { yPercent: 100 });
+
+        if (reduceMotion || !card1 || !card2 || !card3) return;
 
         // Subtle internal image parallax (image only, not the card container).
         cards.forEach((card) => {
-          const image = card.querySelector('.card-image');
+          const image = card.querySelector('.domain-card-image');
           if (!image) return;
           gsap.fromTo(
             image,
-            { scale: 1.05, yPercent: -2 },
+            { scale: 1.06, yPercent: -1.5 },
             {
-              scale: 1,
-              yPercent: 2,
+              scale: 1.03,
+              yPercent: 1.5,
               ease: 'none',
               scrollTrigger: {
                 trigger: section,
@@ -107,9 +104,9 @@ export default function DomainesSection({ domaines }) {
         // 9.0–10.0: release padding (pin ends at timeline end)
         const stackTl = gsap.timeline({
           scrollTrigger: {
-            trigger: section,
+            trigger: pin,
             start: 'top top',
-            end: '+=260%',
+            end: () => `+=${Math.round(window.innerHeight * 2.8)}`,
             pin: pin,
             pinSpacing: true,
             scrub: 0.8,
@@ -118,8 +115,8 @@ export default function DomainesSection({ domaines }) {
             onLeaveBack: () => {
               // Reset card positions when scrolling back to the top.
               gsap.set(card1, { yPercent: 0, scale: 1 });
-              if (card2) gsap.set(card2, { yPercent: 105, scale: 1 });
-              if (card3) gsap.set(card3, { yPercent: 110, scale: 1 });
+              gsap.set(card2, { yPercent: 100, scale: 1 });
+              gsap.set(card3, { yPercent: 100, scale: 1 });
             },
           },
         });
@@ -128,12 +125,12 @@ export default function DomainesSection({ domaines }) {
         stackTl.fromTo(
           card1,
           { yPercent: 0, scale: 1 },
-          { yPercent: -4, scale: 0.975, duration: 2.7, ease: 'none' },
+          { yPercent: 0, scale: 1, duration: 2.7, ease: 'none' },
           1.5
         );
         stackTl.fromTo(
           card2,
-          { yPercent: 105, scale: 1 },
+          { yPercent: 100, scale: 1 },
           { yPercent: 0, scale: 1, duration: 2.7, ease: 'power1.inOut' },
           1.5
         );
@@ -141,19 +138,19 @@ export default function DomainesSection({ domaines }) {
         // Card 3 enters (4.8 → 7.5).
         stackTl.fromTo(
           card1,
-          { yPercent: -4, scale: 0.975 },
-          { yPercent: -8, scale: 0.95, duration: 2.7, ease: 'none' },
+          { yPercent: 0, scale: 1 },
+          { yPercent: 0, scale: 1, duration: 2.7, ease: 'none' },
           4.8
         );
         stackTl.fromTo(
           card2,
           { yPercent: 0, scale: 1 },
-          { yPercent: -4, scale: 0.975, duration: 2.7, ease: 'none' },
+          { yPercent: 0, scale: 1, duration: 2.7, ease: 'none' },
           4.8
         );
         stackTl.fromTo(
           card3,
-          { yPercent: 110, scale: 1 },
+          { yPercent: 100, scale: 1 },
           { yPercent: 0, scale: 1, duration: 2.7, ease: 'power1.inOut' },
           4.8
         );
@@ -204,8 +201,8 @@ export default function DomainesSection({ domaines }) {
       ? 'text-base'
       : 'text-base md:text-lg lg:text-[1.25rem]';
     const tagSize = isMobile
-      ? 'text-[10px] px-3 py-1.5'
-      : 'text-[10px] md:text-[11px] px-3 py-1.5 md:px-4 md:py-2';
+      ? 'text-[11px] sm:text-xs px-3 py-2 min-h-[44px] inline-flex items-center'
+      : 'text-[11px] sm:text-xs px-3 py-2 md:px-4 min-h-[44px] inline-flex items-center';
     const ctaSize = isMobile ? 'text-sm' : 'text-sm md:text-base';
     const detailDisplay = isMobile ? 'inline-block' : 'hidden md:inline-block';
 
@@ -242,7 +239,7 @@ export default function DomainesSection({ domaines }) {
           <div className="flex items-center gap-4 md:gap-6">
             <a
               href="#contact"
-              className={`group inline-flex items-center gap-2 text-white font-display font-bold ${ctaSize} focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
+              className={`group inline-flex min-h-[44px] items-center gap-2 text-white font-display font-bold ${ctaSize} focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
             >
               <span className="relative">
                 {card.cta}
@@ -274,7 +271,6 @@ export default function DomainesSection({ domaines }) {
             viewport={{ once: true, margin: '-5% 0px' }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="domains-eyebrow">{eyebrow}</span>
             <h2 className="domains-title">{title}</h2>
           </motion.div>
         </header>
@@ -288,19 +284,17 @@ export default function DomainesSection({ domaines }) {
               className={`domain-card domain-card-${i + 1}`}
             >
               {/* Full-bleed background image -------------------------------- */}
-              <div className="absolute -inset-[2px] overflow-hidden">
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="card-image absolute inset-0 w-full h-full object-cover will-change-transform"
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                  style={{
-                    objectPosition:
-                      i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
-                  }}
-                />
-              </div>
+              <img
+                src={card.image}
+                alt={card.title}
+                className="domain-card-image will-change-transform"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                style={{
+                  objectPosition:
+                    i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
+                }}
+              />
 
               {/* Cinematic left-to-right gradient overlay ------------------- */}
               <div
@@ -353,7 +347,6 @@ export default function DomainesSection({ domaines }) {
       {/* Mobile normal-flow fallback --------------------------------------- */}
       <div className="md:hidden domaines-mobile-flow">
         <div className="domains-mobile-header">
-          <span className="domains-eyebrow">{eyebrow}</span>
           <h2 className="domains-title">{title}</h2>
         </div>
 
@@ -366,19 +359,17 @@ export default function DomainesSection({ domaines }) {
               marginBottom: i !== items.length - 1 ? '24px' : undefined,
             }}
           >
-            <div className="absolute -inset-[2px] overflow-hidden">
-              <img
-                src={card.image}
-                alt={card.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading={i === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-                style={{
-                  objectPosition:
-                    i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
-                }}
-              />
-            </div>
+            <img
+              src={card.image}
+              alt={card.title}
+              className="domain-card-image"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              style={{
+                objectPosition:
+                  i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
+              }}
+            />
             <div
               className="absolute inset-0"
               style={{
