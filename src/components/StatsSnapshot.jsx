@@ -7,7 +7,7 @@ import { motion, useInView } from 'framer-motion';
  */
 export default function StatsSnapshot({ stats }) {
   return (
-    <section className="py-24 md:py-32 bg-white">
+    <section className="stats-section py-24 md:py-32 bg-white">
       <div className="site-container">
         <div className="stats-wave-card relative rounded-none overflow-hidden shadow-[0_20px_50px_rgba(20,50,117,0.15)] group">
           {/* Animated Background Layers */}
@@ -19,7 +19,7 @@ export default function StatsSnapshot({ stats }) {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/7 via-transparent to-black/20 animate-[pulse_8s_ease-in-out_infinite_alternate] mix-blend-overlay" />
           </div>
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 p-12 md:p-20 xl:p-24 items-start">
+          <div className="stats-content relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 p-12 md:p-20 xl:p-24 items-start">
             {/* Left Text */}
             <div className="lg:pr-10">
               <span className="eyebrow text-brand-cyan mb-3">{stats.eyebrow}</span>
@@ -29,7 +29,7 @@ export default function StatsSnapshot({ stats }) {
             </div>
 
             {/* Right Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-16">
+            <div className="stats-grid grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-16">
               {stats.items.map((stat, index) => (
                 <StatCard key={stat.label} stat={stat} index={index} />
               ))}
@@ -76,7 +76,7 @@ function StatCard({ stat, index }) {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: '-10% 0px' }}
       transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className="text-left"
+      className="stat-card text-left"
     >
       <div className="heading-1 font-display text-white mb-3">
         {displayValue}

@@ -29,31 +29,6 @@ export default function DomainesSection({ domaines }) {
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
 
-    // Mobile: normal document flow with light fade-in per card.
-    mm.add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
-      const ctx = gsap.context(() => {
-        mobileCardRefs.current.forEach((card) => {
-          if (!card) return;
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 24 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-              },
-            }
-          );
-        });
-      }, section);
-      return () => ctx.revert();
-    });
-
     // Desktop/Tablet: one pinned composition with a shared stacking stage.
     mm.add('(min-width: 768px)', () => {
       const ctx = gsap.context(() => {
@@ -187,24 +162,24 @@ export default function DomainesSection({ domaines }) {
   }, [items.length]);
 
   const renderCardContent = (card, isMobile) => {
-    const padding = isMobile ? 'p-6' : 'p-6 md:p-10 lg:p-16 xl:p-20';
+    const padding = isMobile ? 'p-5' : 'p-6 md:p-10 lg:p-16 xl:p-20';
     const numberSize = isMobile
-      ? 'text-[3.5rem]'
+      ? 'text-[2.5rem]'
       : 'text-[3.5rem] md:text-[5rem] lg:text-[6.5rem]';
     const categorySize = isMobile
       ? 'text-[11px]'
       : 'text-[11px] md:text-xs';
     const titleSize = isMobile
-      ? 'text-[2rem]'
+      ? 'text-[1.55rem]'
       : 'text-[2rem] md:text-[3rem] lg:text-[clamp(2.75rem,4.2vw,5.25rem)]';
     const bodySize = isMobile
-      ? 'text-base'
+      ? 'text-sm'
       : 'text-base md:text-lg lg:text-[1.25rem]';
     const tagSize = isMobile
-      ? 'text-[11px] sm:text-xs px-3 py-2 min-h-[44px] inline-flex items-center'
+      ? 'text-[10px] px-2.5 py-1.5 inline-flex items-center'
       : 'text-[11px] sm:text-xs px-3 py-2 md:px-4 min-h-[44px] inline-flex items-center';
     const ctaSize = isMobile ? 'text-sm' : 'text-sm md:text-base';
-    const detailDisplay = isMobile ? 'inline-block' : 'hidden md:inline-block';
+    const detailDisplay = isMobile ? 'hidden' : 'hidden md:inline-block';
 
     return (
       <div className={`absolute inset-0 flex flex-col justify-end ${padding}`}>
