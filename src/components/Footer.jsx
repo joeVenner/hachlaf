@@ -80,7 +80,7 @@ export default function Footer({ footer, logoSrc }) {
     <footer className="relative z-10 bg-[#F8F9FB]">
       {/* Compact closing statement */}
       {footer.tagline && footer.tagline.length > 0 && (
-        <div className="site-container max-w-[1380px] mx-auto py-10 md:py-12 border-b border-black/5">
+        <div className="footer-tagline site-container max-w-[1380px] mx-auto py-10 md:py-12 border-b border-black/5">
           <h2 className="font-display text-brand-navy text-[clamp(2rem,4.4vw,4.25rem)] leading-[1] font-extrabold tracking-[-0.035em]">
             {footer.tagline.map((line, i) => (
               <span key={i} className="block md:inline">
@@ -93,15 +93,15 @@ export default function Footer({ footer, logoSrc }) {
       )}
 
       {/* Main footer grid */}
-      <div className="site-container max-w-[1380px] mx-auto py-10 md:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-9 lg:gap-10">
+      <div className="footer-main site-container max-w-[1380px] mx-auto py-10 md:py-12">
+        <div className="footer-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-9 lg:gap-10">
           {/* Logo + description + social */}
           <motion.div
             variants={footerColumnVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10% 0px' }}
-            className="sm:col-span-2 lg:col-span-1"
+            className="footer-brand sm:col-span-2 lg:col-span-1"
           >
             <motion.a
               variants={footerItemVariants}
@@ -150,6 +150,7 @@ export default function Footer({ footer, logoSrc }) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10% 0px' }}
+            className="footer-link-column"
           >
             <motion.h4
               variants={footerItemVariants}
@@ -181,6 +182,7 @@ export default function Footer({ footer, logoSrc }) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10% 0px' }}
+            className="footer-link-column"
           >
             <motion.h4
               variants={footerItemVariants}
@@ -203,6 +205,7 @@ export default function Footer({ footer, logoSrc }) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10% 0px' }}
+            className="footer-contact-column"
           >
             <motion.h4
               variants={footerItemVariants}
@@ -283,12 +286,12 @@ export default function Footer({ footer, logoSrc }) {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-black/5">
+      <div className="footer-bottom border-t border-black/5">
         <div className="site-container max-w-[1380px] mx-auto py-5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="body-small text-brand-muted text-center md:text-left">
             {footer.legal}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-6">
+          <div className="footer-meta flex flex-wrap items-center justify-center gap-6">
             <a
               href="#"
               className="body-small text-brand-muted hover:text-brand-navy transition-colors duration-300"
