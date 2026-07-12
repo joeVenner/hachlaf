@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -20,6 +20,31 @@ export default function DomainesSection({ domaines }) {
   const pinRef = useRef(null);
   const cardRefs = useRef([]);
   const mobileCardRefs = useRef([]);
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const [mobileDirection, setMobileDirection] = useState(1);
+
+  const goToMobileCard = (nextIndex, direction = 1) => {
+    if (items.length === 0) return;
+    setMobileDirection(direction);
+    setMobileIndex((nextIndex + items.length) % items.length);
+  };
+
+  const stepMobileCard = (direction) => {
+    goToMobileCard(mobileIndex + direction, direction);
+  };
+
+  useEffect(() => {
+    if (items.length <= 1) return undefined;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return undefined;
+
+    const timer = window.setInterval(() => {
+      setMobileDirection(1);
+      setMobileIndex((current) => (current + 1) % items.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [items.length]);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -325,68 +350,100 @@ export default function DomainesSection({ domaines }) {
           <h2 className="domains-title">{title}</h2>
         </div>
 
-        {items.map((card, i) => (
-          <motion.article
-            key={`mobile-${card.number}`}
-            ref={(el) => { mobileCardRefs.current[i] = el; }}
-            className="domain-card-mobile domain-card-mobile-motion"
-            initial={{ opacity: 0, y: 28, scale: 0.98 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.55, delay: Math.min(i * 0.08, 0.2), ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              marginBottom: i !== items.length - 1 ? '24px' : undefined,
-            }}
-          >
-            <motion.img
-              src={card.image}
-              alt={card.title}
-              className="domain-card-image domain-card-image-mobile"
-              loading={i === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-              initial={{ scale: 1.08, y: -12 }}
-              whileInView={{ scale: 1.02, y: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                objectPosition:
-                  i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
-              }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(90deg, rgba(5,15,32,0.82) 0%, rgba(5,15,32,0.56) 38%, rgba(5,15,32,0.14) 72%, rgba(5,15,32,0.05) 100%)',
-              }}
-            />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  'linear-gradient(0deg, rgba(5,15,32,0.35) 0%, rgba(5,15,32,0) 45%)',
-              }}
-            />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(circle at 35% 75%, transparent 0%, rgba(5,15,32,0.24) 100%)',
-              }}
-            />
-            <div
-              className="absolute inset-0 pointer-events-none opacity-[0.035] mix-blend-overlay"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-              }}
-            />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
-            />
-            {renderCardContent(card, true)}
-          </motion.article>
-        ))}
+        <div className="domaines-mobile-carousel" aria-roledescription="carousel">
+          <div className="domaines-mobile-track">
+            <AnimatePresence initial={false} custom={mobileDirection} mode="wait">
+              {items[mobileIndex] && (
+                <motion.article
+                  key={`mobile-${items[mobileIndex].number}`}
+                  ref={(el) => { mobileCardRefs.current[mobileIndex] = el; }}
+                  className="domain-card-mobile domain-card-mobile-motion"
+                  custom={mobileDirection}
+                  initial={{ opacity: 0, x: mobileDirection * 44, scale: 0.985 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: mobileDirection * -44, scale: 0.985 }}
+                  transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.18}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -48) stepMobileCard(1);
+                    if (info.offset.x > 48) stepMobileCard(-1);
+                  }}
+                  aria-label={`${mobileIndex + 1} / ${items.length}`}
+                >
+                  <motion.img
+                    src={items[mobileIndex].image}
+                    alt={items[mobileIndex].title}
+                    className="domain-card-image domain-card-image-mobile"
+                    loading={mobileIndex === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    initial={{ scale: 1.08, y: -12 }}
+                    animate={{ scale: 1.02, y: 0 }}
+                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      objectPosition:
+                        mobileIndex === 0 ? '70% 50%' : mobileIndex === 2 ? '60% 50%' : '50% 50%',
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        'linear-gradient(90deg, rgba(5,15,32,0.82) 0%, rgba(5,15,32,0.56) 38%, rgba(5,15,32,0.14) 72%, rgba(5,15,32,0.05) 100%)',
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        'linear-gradient(0deg, rgba(5,15,32,0.35) 0%, rgba(5,15,32,0) 45%)',
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 35% 75%, transparent 0%, rgba(5,15,32,0.24) 100%)',
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none opacity-[0.035] mix-blend-overlay"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
+                  />
+                  {renderCardContent(items[mobileIndex], true)}
+                </motion.article>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="domaines-mobile-controls" aria-label="Navigation domaines">
+            <button type="button" onClick={() => stepMobileCard(-1)} aria-label="Domaine précédent">
+              ‹
+            </button>
+            <div className="domaines-mobile-dots">
+              {items.map((card, index) => (
+                <button
+                  key={card.number}
+                  type="button"
+                  className={index === mobileIndex ? 'is-active' : undefined}
+                  onClick={() => goToMobileCard(index, index > mobileIndex ? 1 : -1)}
+                  aria-label={`Afficher ${card.title}`}
+                  aria-current={index === mobileIndex ? 'true' : undefined}
+                />
+              ))}
+            </div>
+            <button type="button" onClick={() => stepMobileCard(1)} aria-label="Domaine suivant">
+              ›
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );
