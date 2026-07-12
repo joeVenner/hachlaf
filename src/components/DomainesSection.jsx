@@ -326,20 +326,28 @@ export default function DomainesSection({ domaines }) {
         </div>
 
         {items.map((card, i) => (
-          <article
+          <motion.article
             key={`mobile-${card.number}`}
             ref={(el) => { mobileCardRefs.current[i] = el; }}
-            className="domain-card-mobile"
+            className="domain-card-mobile domain-card-mobile-motion"
+            initial={{ opacity: 0, y: 28, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.55, delay: Math.min(i * 0.08, 0.2), ease: [0.22, 1, 0.36, 1] }}
             style={{
               marginBottom: i !== items.length - 1 ? '24px' : undefined,
             }}
           >
-            <img
+            <motion.img
               src={card.image}
               alt={card.title}
-              className="domain-card-image"
+              className="domain-card-image domain-card-image-mobile"
               loading={i === 0 ? 'eager' : 'lazy'}
               decoding="async"
+              initial={{ scale: 1.08, y: -12 }}
+              whileInView={{ scale: 1.02, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 objectPosition:
                   i === 0 ? '70% 50%' : i === 2 ? '60% 50%' : '50% 50%',
@@ -377,7 +385,7 @@ export default function DomainesSection({ domaines }) {
               style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
             />
             {renderCardContent(card, true)}
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>
