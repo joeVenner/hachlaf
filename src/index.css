@@ -1003,9 +1003,10 @@ html {
 
   .domain-card-mobile {
     width: calc(100% - 2rem);
-    min-height: 400px;
-    max-height: 440px;
-    margin-bottom: 16px !important;
+    min-height: 500px;
+    height: min(560px, calc(100svh - 148px));
+    max-height: 560px;
+    margin-bottom: 0 !important;
     will-change: transform, opacity;
   }
 
@@ -1022,6 +1023,70 @@ html {
   .domain-card-image-mobile {
     transform-origin: center;
     will-change: transform;
+  }
+
+  .domaines-mobile-carousel {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .domaines-mobile-track {
+    position: relative;
+    width: 100%;
+    min-height: min(560px, calc(100svh - 148px));
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    touch-action: pan-y;
+  }
+
+  .domaines-mobile-track .domain-card-mobile {
+    flex: 0 0 auto;
+  }
+
+  .domaines-mobile-controls {
+    width: calc(100% - 2rem);
+    min-height: 44px;
+    margin: 0.9rem auto 0;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .domaines-mobile-controls > button {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 50, 117, 0.15);
+    background: #ffffff;
+    color: var(--color-brand-navy);
+    font-size: 1.65rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(9, 24, 50, 0.06);
+  }
+
+  .domaines-mobile-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+  }
+
+  .domaines-mobile-dots button {
+    width: 2rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: rgba(20, 50, 117, 0.18);
+    transition: width 0.25s ease, background-color 0.25s ease;
+  }
+
+  .domaines-mobile-dots button.is-active {
+    width: 3rem;
+    background: var(--color-brand-navy);
   }
 
   .offers-section,
