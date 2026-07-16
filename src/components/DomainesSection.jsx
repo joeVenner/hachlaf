@@ -54,8 +54,9 @@ export default function DomainesSection({ domaines }) {
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
 
-    // Desktop/Tablet: one pinned composition with a shared stacking stage.
-    mm.add('(min-width: 768px)', () => {
+    // Desktop/tablet with enough vertical room: one pinned shared stacking stage.
+    // Short laptop viewports use the normal-flow carousel to avoid clipped cards.
+    mm.add('(min-width: 768px) and (min-height: 720px)', () => {
       const ctx = gsap.context(() => {
         const [card1, card2, card3] = cardRefs.current;
         const cards = [card1, card2, card3].filter(Boolean);
@@ -344,8 +345,8 @@ export default function DomainesSection({ domaines }) {
         </div>
       </div>
 
-      {/* Mobile normal-flow fallback --------------------------------------- */}
-      <div className="md:hidden domaines-mobile-flow">
+      {/* Normal-flow fallback for mobile and short laptop viewports --------- */}
+      <div className="domaines-mobile-flow">
         <div className="domains-mobile-header">
           <h2 className="domains-title">{title}</h2>
         </div>
