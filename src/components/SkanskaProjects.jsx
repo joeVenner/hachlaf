@@ -116,7 +116,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                 {/* Featured image */}
                 <button
                   onClick={() => onSelectProject(featured)}
-                  className="project-featured-image group relative w-full h-[320px] md:h-[380px] lg:h-[420px] lg:col-span-2 overflow-hidden rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+                  className="project-featured-image group relative w-full lg:col-span-2 overflow-hidden rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
                   aria-label={`Voir le projet ${featured.title}`}
                 >
                   <img
@@ -134,7 +134,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="project-featured-info flex flex-col justify-end h-full lg:min-h-[420px] pt-2 lg:pt-0"
+                  className="project-featured-info flex flex-col justify-end h-full pt-2 lg:pt-0"
                 >
                   <span className="text-brand-cyan font-display text-xs font-bold tracking-[0.2em] uppercase mb-3">
                     {featured.type}
@@ -192,7 +192,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
                   className="group w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 rounded-md"
                   aria-label={`Voir le projet ${project.title}`}
                 >
-                  <div className="project-supporting-image relative w-full h-[200px] md:h-[170px] lg:h-[190px] overflow-hidden rounded-md mb-4">
+                  <div className="project-supporting-image relative w-full overflow-hidden rounded-md mb-4">
                     <img
                       src={project.image}
                       alt={`${project.type} — ${project.title}`}

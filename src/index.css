@@ -36,15 +36,18 @@ html {
 }
 
 .hero-viewport {
-  height: 100vh;
+  min-height: 100vh;
   min-height: -webkit-fill-available;
 }
 
 @supports (height: 100svh) {
   .hero-viewport {
-    height: 100svh;
     min-height: 100svh;
   }
+}
+
+.hero-content {
+  min-height: inherit;
 }
 
 @media (max-width: 767px) {
@@ -53,14 +56,9 @@ html {
     overflow-x: hidden;
   }
 
-  .hero-viewport {
-    height: 100svh;
-    min-height: 100svh;
-  }
 
   .hero-content {
     justify-content: flex-end;
-    min-height: inherit;
     padding-top: 7.25rem;
     padding-bottom: 2.25rem;
   }
@@ -101,6 +99,39 @@ html {
   .hero-actions .btn-gold {
     width: 100%;
     padding: 0.8rem 1.25rem;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 719px) {
+  .hero-content {
+    padding-top: 6rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-content .mb-8,
+  .hero-content .md\:mb-10 {
+    margin-bottom: 1rem;
+  }
+
+  .hero-headline {
+    font-size: clamp(3rem, 7vw, 5rem);
+    line-height: 0.95;
+  }
+
+  .hero-subtitle {
+    max-width: 34rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .hero-actions {
+    margin-bottom: 0;
+  }
+
+  .hero-stats,
+  .hero-scroll-indicator {
+    display: none !important;
   }
 }
 
@@ -152,19 +183,23 @@ html {
   display: none;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100vh - var(--navbar-height));
-  height: calc(100vh - var(--navbar-height));
+  min-height: calc(100svh - var(--navbar-height));
+  height: calc(100svh - var(--navbar-height));
   margin-top: var(--navbar-height);
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding-top: clamp(12px, 3vh, 24px);
+  padding-bottom: clamp(12px, 3vh, 24px);
   overflow: hidden;
   z-index: 10;
   box-sizing: border-box;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 720px) {
   .domains-pin {
     display: flex;
+  }
+
+  .domaines-mobile-flow {
+    display: none;
   }
 }
 
@@ -175,8 +210,8 @@ html {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  padding-top: clamp(40px, 5vh, 56px);
-  padding-bottom: clamp(28px, 3.4vh, 36px);
+  padding-top: clamp(20px, 4vh, 56px);
+  padding-bottom: clamp(18px, 3vh, 36px);
   z-index: 20;
 }
 
@@ -207,13 +242,13 @@ html {
 
 @media (min-width: 768px) {
   .domains-stage {
-    height: clamp(460px, 58vh, 660px);
+    height: clamp(360px, 52svh, 660px);
   }
 }
 
 @media (min-width: 1280px) {
   .domains-stage {
-    height: clamp(500px, 62vh, 700px);
+    height: clamp(420px, 56svh, 700px);
   }
 }
 
@@ -290,7 +325,7 @@ html {
 
   .domain-card-mobile {
     width: calc(100% - 2rem);
-    min-height: 400px;
+    min-height: clamp(24rem, 68svh, 32rem);
     margin-bottom: 16px !important;
     will-change: transform, opacity;
   }
@@ -304,6 +339,7 @@ html {
 
 /* Mobile normal-flow fallback for Domaines */
 .domaines-mobile-flow {
+  display: block;
   padding-bottom: 48px;
 }
 
@@ -318,10 +354,8 @@ html {
 .domain-card-mobile {
   position: relative;
   width: 94vw;
-  height: auto;
-  min-height: 540px;
-  min-height: min(540px, calc(100svh - 96px));
-  max-height: none;
+  min-height: clamp(24rem, 68svh, 34rem);
+  aspect-ratio: 16 / 10;
   margin-left: auto;
   margin-right: auto;
   border-radius: 0;
@@ -329,6 +363,36 @@ html {
   background: transparent;
   box-shadow: 0 10px 30px rgba(9, 24, 50, 0.06);
   border: 1px solid rgba(12, 39, 82, 0.06);
+}
+
+@media (min-width: 768px) and (min-height: 720px) {
+  .domaines-mobile-flow {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 719px) {
+  .domains-mobile-header {
+    width: 90vw;
+    padding-top: clamp(5.5rem, 16svh, 7rem);
+    padding-bottom: clamp(1rem, 3svh, 1.75rem);
+  }
+
+  .domaines-mobile-flow {
+    padding-bottom: clamp(2.5rem, 7svh, 4.5rem);
+  }
+
+  .domaines-mobile-track {
+    min-height: 0;
+    height: clamp(18rem, calc(100svh - 12rem), 24rem);
+  }
+
+  .domain-card-mobile {
+    width: min(90vw, 1200px);
+    min-height: 0;
+    height: clamp(18rem, calc(100svh - 12rem), 24rem);
+    aspect-ratio: 16 / 7;
+  }
 }
 
 .heading-3 {
@@ -1003,9 +1067,9 @@ html {
 
   .domain-card-mobile {
     width: calc(100% - 2rem);
-    min-height: 500px;
-    height: min(560px, calc(100svh - 148px));
-    max-height: 560px;
+    min-height: clamp(24rem, calc(100svh - 9.25rem), 35rem);
+    height: auto;
+    max-height: none;
     margin-bottom: 0 !important;
     will-change: transform, opacity;
   }
@@ -1033,7 +1097,7 @@ html {
   .domaines-mobile-track {
     position: relative;
     width: 100%;
-    min-height: min(560px, calc(100svh - 148px));
+    min-height: clamp(24rem, calc(100svh - 9.25rem), 35rem);
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -1152,7 +1216,8 @@ html {
   }
 
   .project-featured-image {
-    height: 220px;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
   }
 
   .project-featured-info {
@@ -1184,7 +1249,7 @@ html {
   }
 
   .project-supporting-image {
-    height: 88px;
+    aspect-ratio: 6 / 5;
     margin-bottom: 0;
   }
 
