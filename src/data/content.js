@@ -80,7 +80,7 @@ export const site = {
           tags: ['Énergie', 'Eau & Environnement', 'Infrastructures durables'],
           detail: 'Projets à grande échelle',
           cta: 'Découvrir ce domaine',
-          image: '/images/generated/solar_noor_midelt.jpg',
+          image: '/images/generated/energy-earthworks-banner.png',
         },
         {
           number: '02',
@@ -233,7 +233,7 @@ export const site = {
           title: 'La Résidence Royale',
           location: 'Maroc',
           type: 'RÉSIDENTIEL',
-          image: '/images/generated/royal-residence-placeholder.png',
+          image: '/images/generated/royal-residence-blurred.jpg',
           description:
             'Résidence Royale : construction et finitions de haut niveau, charpente métallique et installations électriques aux normes.',
         },
@@ -426,7 +426,7 @@ export const site = {
           tags: ['Energy', 'Water & Environment', 'Sustainable infrastructure'],
           detail: 'Large-scale projects',
           cta: 'Discover this field',
-          image: '/images/generated/solar_noor_midelt.jpg',
+          image: '/images/generated/energy-earthworks-banner.png',
         },
         {
           number: '02',
@@ -568,7 +568,7 @@ export const site = {
           title: 'Royal Residence',
           location: 'Morocco',
           type: 'RESIDENTIAL',
-          image: '/images/generated/royal-residence-placeholder.png',
+          image: '/images/generated/royal-residence-blurred.jpg',
           description: 'Royal Residence: high-end construction and finishes, steel framework and electrical installations to standards.',
         },
       ],
