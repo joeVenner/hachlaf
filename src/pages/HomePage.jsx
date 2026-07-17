@@ -15,7 +15,7 @@ import CTASection from '../components/CTASection';
 import Footer from '../components/Footer';
 
 const heroSlideshowImages = [
-  '/images/generated/solar_noor_midelt.jpg',
+  '/images/generated/energy-earthworks-banner.png',
   '/images/generated/hydro_step.jpg',
   '/images/generated/phosphate_jorf.jpg',
 ];
