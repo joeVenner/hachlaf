@@ -11,7 +11,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
  *   first two supporting cards below.
  * - All four visible project slots rotate together as a window.
  */
-export default function SkanskaProjects({ projects, onSelectProject }) {
+export default function SkanskaProjects({ projects, onSelectProject, onShowAll }) {
   const items = projects.items;
 
   const defaultStartIndex = useMemo(() => {
@@ -66,7 +66,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
       <div className="site-container">
         <div className="max-w-[1500px] mx-auto">
           {/* Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.75fr)] gap-8 lg:gap-14 items-end mb-8 md:mb-10 lg:mb-12">
+          <div className="projects-header grid grid-cols-1 lg:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.75fr)] gap-8 lg:gap-14 items-end mb-8 md:mb-10 lg:mb-12">
             {/* Left: label + title */}
             <div>
               <span className="eyebrow">{projects.eyebrow}</span>
@@ -80,7 +80,14 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
             </div>
 
             {/* Right: controls */}
-            <div className="flex items-end justify-end lg:pb-1">
+            <div className="flex flex-wrap items-center justify-start gap-3 lg:justify-end lg:pb-1">
+              <button
+                onClick={onShowAll}
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-brand-navy/15 px-5 font-display text-sm font-bold text-brand-navy transition-all duration-300 hover:border-brand-orange hover:bg-brand-orange hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2"
+              >
+                {projects.cta}
+              </button>
+
               {hasControls && (
                 <div className="flex items-center gap-2">
                   <button
@@ -103,7 +110,7 @@ export default function SkanskaProjects({ projects, onSelectProject }) {
           </div>
 
           {/* Featured project */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-6 mb-8 md:mb-10 lg:mb-12">
+          <div className="project-featured-grid grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-6 mb-8 md:mb-10 lg:mb-12">
             <AnimatePresence mode="wait">
               <motion.article
                 key={featured.title}

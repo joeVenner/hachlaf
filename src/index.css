@@ -56,7 +56,6 @@ html {
     overflow-x: hidden;
   }
 
-
   .hero-content {
     justify-content: flex-end;
     padding-top: 7.25rem;
@@ -363,6 +362,70 @@ html {
   background: transparent;
   box-shadow: 0 10px 30px rgba(9, 24, 50, 0.06);
   border: 1px solid rgba(12, 39, 82, 0.06);
+}
+
+.domaines-mobile-carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.domaines-mobile-track {
+  position: relative;
+  width: 100%;
+  min-height: clamp(24rem, 68svh, 34rem);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  touch-action: pan-y;
+}
+
+.domaines-mobile-track .domain-card-mobile {
+  flex: 0 0 auto;
+}
+
+.domaines-mobile-controls {
+  width: min(90vw, 1200px);
+  min-height: 44px;
+  margin: 0.9rem auto 0;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.domaines-mobile-controls > button {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 50, 117, 0.15);
+  background: #ffffff;
+  color: var(--color-brand-navy);
+  font-size: 1.65rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 22px rgba(9, 24, 50, 0.06);
+}
+
+.domaines-mobile-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.domaines-mobile-dots button {
+  width: 2rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: rgba(20, 50, 117, 0.18);
+  transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.domaines-mobile-dots button.is-active {
+  width: 3rem;
+  background: var(--color-brand-navy);
 }
 
 @media (min-width: 768px) and (min-height: 720px) {
@@ -1048,6 +1111,113 @@ html {
   border-radius: 4px;
 }
 
+.project-featured-image {
+  aspect-ratio: 16 / 9;
+  min-height: clamp(18rem, 30vw, 26.25rem);
+}
+
+.project-supporting-image {
+  aspect-ratio: 16 / 10;
+}
+
+/* Compact laptop tuning: keeps the projects section legible on 13-inch screens. */
+@media (min-width: 1024px) and (max-width: 1365px), (min-width: 1024px) and (max-height: 850px) {
+  .projects-section {
+    padding-top: 4.5rem;
+    padding-bottom: 4.25rem;
+  }
+
+  .projects-section .site-container {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .projects-header {
+    grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.8fr);
+    gap: 2rem;
+    margin-bottom: 2rem !important;
+  }
+
+  .projects-section h2 {
+    max-width: 640px;
+    font-size: clamp(2.45rem, 4.2vw, 3.45rem) !important;
+    line-height: 1 !important;
+  }
+
+  .project-featured-grid {
+    gap: 1.25rem;
+    margin-bottom: 2rem !important;
+  }
+
+  .project-featured-image {
+    min-height: clamp(17rem, 26vw, 21.5rem);
+    aspect-ratio: 16 / 8.8;
+  }
+
+  .project-featured-info h3 {
+    margin-bottom: 0.5rem;
+    font-size: clamp(1.65rem, 2.6vw, 2.25rem) !important;
+    line-height: 1.05;
+  }
+
+  .project-featured-info .body-large {
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+  }
+
+  .project-featured-info .body-main {
+    margin-bottom: 1rem;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+  }
+
+  .project-featured-info .text-xs {
+    margin-bottom: 1.1rem;
+  }
+
+  .project-supporting-grid {
+    gap: 1.25rem;
+  }
+
+  .project-supporting-image {
+    aspect-ratio: 16 / 8.5;
+    margin-bottom: 0.85rem;
+  }
+
+  .project-supporting-card h4 {
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem) !important;
+    line-height: 1.12;
+  }
+
+  .project-supporting-card p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 760px) {
+  .projects-section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .projects-header {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .project-featured-grid {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .project-featured-image {
+    min-height: clamp(15rem, 23vw, 19rem);
+  }
+
+  .project-supporting-image {
+    aspect-ratio: 16 / 7.5;
+  }
+}
+
 /* Phone-first simplification: keep the content, remove desktop density. */
 @media (max-width: 767px) {
   .heading-2 {
@@ -1089,68 +1259,12 @@ html {
     will-change: transform;
   }
 
-  .domaines-mobile-carousel {
-    width: 100%;
-    overflow: hidden;
-  }
-
   .domaines-mobile-track {
-    position: relative;
-    width: 100%;
     min-height: clamp(24rem, calc(100svh - 9.25rem), 35rem);
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    touch-action: pan-y;
-  }
-
-  .domaines-mobile-track .domain-card-mobile {
-    flex: 0 0 auto;
   }
 
   .domaines-mobile-controls {
     width: calc(100% - 2rem);
-    min-height: 44px;
-    margin: 0.9rem auto 0;
-    display: grid;
-    grid-template-columns: 44px minmax(0, 1fr) 44px;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .domaines-mobile-controls > button {
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    border: 1px solid rgba(20, 50, 117, 0.15);
-    background: #ffffff;
-    color: var(--color-brand-navy);
-    font-size: 1.65rem;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 22px rgba(9, 24, 50, 0.06);
-  }
-
-  .domaines-mobile-dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-  }
-
-  .domaines-mobile-dots button {
-    width: 2rem;
-    height: 0.35rem;
-    border-radius: 999px;
-    background: rgba(20, 50, 117, 0.18);
-    transition: width 0.25s ease, background-color 0.25s ease;
-  }
-
-  .domaines-mobile-dots button.is-active {
-    width: 3rem;
-    background: var(--color-brand-navy);
   }
 
   .offers-section,

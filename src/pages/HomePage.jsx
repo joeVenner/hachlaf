@@ -7,6 +7,7 @@ import HeroBackground from '../components/HeroBackground';
 import DomainesSection from '../components/DomainesSection';
 import OffresSection from '../components/OffresSection';
 import SkanskaProjects from '../components/SkanskaProjects';
+import AllProjectsModal from '../components/AllProjectsModal';
 import ProjectModal from '../components/ProjectModal';
 import StatsSnapshot from '../components/StatsSnapshot';
 import PartnersCarousel from '../components/PartnersCarousel';
@@ -34,6 +35,7 @@ const heroSlideshowImages = [
  */
 export default function HomePage({ lang, setLang }) {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [allProjectsOpen, setAllProjectsOpen] = useState(false);
   const t = site[lang];
 
   return (
@@ -59,6 +61,7 @@ export default function HomePage({ lang, setLang }) {
         <SkanskaProjects
           projects={t.projects}
           onSelectProject={setSelectedProject}
+          onShowAll={() => setAllProjectsOpen(true)}
         />
 
         {/* 6. Stats snapshot */}
@@ -75,6 +78,13 @@ export default function HomePage({ lang, setLang }) {
       <Footer footer={t.footer} logoSrc={logoSrc} />
 
       {/* Project modal */}
+      <AllProjectsModal
+        open={allProjectsOpen}
+        projects={t.projects}
+        onClose={() => setAllProjectsOpen(false)}
+        onSelectProject={setSelectedProject}
+      />
+
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
