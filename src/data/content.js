@@ -158,7 +158,6 @@ export const site = {
       allProjectsTitle: 'Toutes nos références',
       viewDetails: 'Découvrir le projet',
       closeLabel: 'Fermer',
-      scopeLabel: 'Périmètre d\'intervention',
       items: [
         {
           title: 'Le complexe solaire NOOR',
@@ -167,7 +166,6 @@ export const site = {
           image: '/images/generated/solar_noor_midelt.jpg',
           description:
             'Contribution au complexe solaire NOOR Midelt — terrassement, infrastructures et raccordements électriques sur un site énergétique stratégique.',
-          scope: ['Préparation des sols', 'Ouvrages civils', 'Réseaux électriques', 'Support logistique'],
           supporting: true,
         },
         {
@@ -177,7 +175,6 @@ export const site = {
           image: '/images/generated/wind_boujdour.jpg',
           description:
             'Parc éolien à Boujdour : terrassement, fondations et installation électrique dans un environnement côtier exigeant.',
-          scope: ['Terrassement côtier', 'Fondations spéciales', 'Réseaux électriques', 'Logistique marine'],
           supporting: true,
         },
         {
@@ -187,7 +184,6 @@ export const site = {
           image: '/images/generated/thermal_safi.jpg',
           description:
             'Centrale thermique de Safi : génie civil, terrassement et installations électriques pour une infrastructure de production d\'énergie.',
-          scope: ['Génie civil', 'Terrassement', 'Installations électriques', 'HSE'],
           supporting: true,
         },
         {
@@ -197,7 +193,6 @@ export const site = {
           image: '/images/generated/hydro_step.jpg',
           description:
             'Station de Transfert d\'Énergie Potentielle (STEP) Abdelmoumen près d\'Agadir : ouvrages civils, terrassement et réseaux électriques.',
-          scope: ['Ouvrages civils', 'Terrassement', 'Réseaux électriques', 'Sécurité chantier'],
         },
         {
           title: 'Le projet phosphate',
@@ -206,7 +201,6 @@ export const site = {
           image: '/images/generated/phosphate_jorf.jpg',
           description:
             'Projet phosphate à Jorf El Asfar : infrastructures industrielles, génie civil et tuyauterie pour le complexe d\'engrais.',
-          scope: ['Infrastructures industrielles', 'Génie civil', 'Tuyauterie HP', 'Logistique'],
         },
         {
           title: 'Station de dessalement',
@@ -215,7 +209,6 @@ export const site = {
           image: '/images/generated/desalination_casa.jpg',
           description:
             'Une infrastructure hydraulique majeure intégrant génie civil, terrassement et raccordements techniques pour répondre durablement aux besoins en eau de la région.',
-          scope: ['Génie civil', 'Terrassement', 'Raccordements', 'Sécurité'],
           featured: true,
           status: 'Projet majeur',
           expertise: 'Eau & Infrastructure',
@@ -227,7 +220,6 @@ export const site = {
           image: '/images/generated/metallurgy_mibladen.jpg',
           description:
             'Usine métallurgique de Mibladen : fabrication, soudure et montage de structures métalliques et de tuyauteries industrielles.',
-          scope: ['Structures métalliques', 'Tuyauterie haute pression', 'Soudure et montage', 'Maintenance'],
         },
         {
           title: 'L\'Université Polytechnique',
@@ -236,7 +228,6 @@ export const site = {
           image: '/images/generated/university_rabat.jpg',
           description:
             'Université Polytechnique de Rabat : construction de bâtiments techniques et tertiaires, réseaux électriques et aménagements.',
-          scope: ['Bâtiments techniques', 'Réseaux électriques', 'Aménagement', 'Coordination de chantier'],
         },
         {
           title: 'La Résidence Royale',
@@ -245,7 +236,6 @@ export const site = {
           image: '/images/generated/royal-residence-placeholder.png',
           description:
             'Résidence Royale : construction et finitions de haut niveau, charpente métallique et installations électriques aux normes.',
-          scope: ['Gros œuvre et génie civil', 'Charpente métallique', 'Électricité et raccordements', 'Finitions premium'],
         },
         {
           title: 'Borj Attijariwafa Bank CFC',
@@ -254,7 +244,6 @@ export const site = {
           image: '/images/generated/borj-attijariwafa-cfc.png',
           description:
             'Projet Borj Attijariwafa Bank à Casablanca Finance City : intervention sur un chantier de grande hauteur en environnement urbain, avec coordination technique, moyens de levage et exigences élevées de sécurité.',
-          scope: ['Génie civil', 'Coordination chantier', 'Travaux en hauteur', 'Sécurité et logistique urbaine'],
         },
         {
           title: 'Mines et carrière de Gourrama',
@@ -263,7 +252,6 @@ export const site = {
           image: '/images/generated/mines-carriere-gourrama-midelt.png',
           description:
             'Projet mines et carrière à Gourrama, province de Midelt : travaux d\'extraction, chargement, terrassement et gestion des matériaux en milieu rocheux exigeant.',
-          scope: ['Extraction et chargement', 'Terrassement rocheux', 'Transport de matériaux', 'Exploitation de carrière'],
         },
       ],
     },
@@ -513,7 +501,6 @@ export const site = {
       cta: 'Discover all our references',
       viewDetails: 'Discover the project',
       closeLabel: 'Close',
-      scopeLabel: 'Scope of work',
       items: [
         {
           title: 'NOOR Solar Complex',
@@ -521,7 +508,6 @@ export const site = {
           type: 'SOLAR',
           image: '/images/generated/solar_noor_midelt.jpg',
           description: 'Contribution to the NOOR Midelt solar complex — earthworks, infrastructure and electrical connections on a strategic energy site.',
-          scope: ['Soil preparation', 'Civil works', 'Electrical networks', 'Logistics support'],
           supporting: true,
         },
         {
@@ -530,7 +516,6 @@ export const site = {
           type: 'WIND',
           image: '/images/generated/wind_boujdour.jpg',
           description: 'Boujdour wind farm: earthworks, foundations and electrical installation in a demanding coastal environment.',
-          scope: ['Coastal earthworks', 'Special foundations', 'Electrical networks', 'Marine logistics'],
           supporting: true,
         },
         {
@@ -539,7 +524,6 @@ export const site = {
           type: 'THERMAL',
           image: '/images/generated/thermal_safi.jpg',
           description: 'Safi thermal power plant: civil engineering, earthworks and electrical installations for energy production infrastructure.',
-          scope: ['Civil engineering', 'Earthworks', 'Electrical installations', 'HSE'],
           supporting: true,
         },
         {
@@ -548,7 +532,6 @@ export const site = {
           type: 'HYDRO',
           image: '/images/generated/hydro_step.jpg',
           description: 'Pumped Storage Power Station Abdelmoumen near Agadir: civil works, earthworks and electrical networks.',
-          scope: ['Civil works', 'Earthworks', 'Electrical networks', 'Site safety'],
         },
         {
           title: 'Phosphate Project',
@@ -556,7 +539,6 @@ export const site = {
           type: 'INDUSTRIAL',
           image: '/images/generated/phosphate_jorf.jpg',
           description: 'Phosphate project at Jorf El Asfar: industrial infrastructure, civil engineering and piping for the fertilizer complex.',
-          scope: ['Industrial infrastructure', 'Civil engineering', 'HP piping', 'Logistics'],
         },
         {
           title: 'Desalination Station',
@@ -564,7 +546,6 @@ export const site = {
           type: 'DESALINATION',
           image: '/images/generated/desalination_casa.jpg',
           description: 'A major hydraulic infrastructure integrating civil engineering, earthworks and technical connections to sustainably meet the region\'s water needs.',
-          scope: ['Civil engineering', 'Earthworks', 'Connections', 'Safety'],
           featured: true,
           status: 'Major project',
           expertise: 'Water & Infrastructure',
@@ -575,7 +556,6 @@ export const site = {
           type: 'METALLURGY',
           image: '/images/generated/metallurgy_mibladen.jpg',
           description: 'Mibladen metallurgical plant: fabrication, welding and assembly of steel structures and industrial piping.',
-          scope: ['Steel structures', 'HP piping', 'Welding & assembly', 'Maintenance'],
         },
         {
           title: 'Polytechnic University',
@@ -583,7 +563,6 @@ export const site = {
           type: 'EDUCATION',
           image: '/images/generated/university_rabat.jpg',
           description: 'Rabat Polytechnic University: construction of technical and tertiary buildings, electrical networks and site development.',
-          scope: ['Technical buildings', 'Electrical networks', 'Development', 'Site coordination'],
         },
         {
           title: 'Royal Residence',
@@ -591,7 +570,6 @@ export const site = {
           type: 'RESIDENTIAL',
           image: '/images/generated/royal-residence-placeholder.png',
           description: 'Royal Residence: high-end construction and finishes, steel framework and electrical installations to standards.',
-          scope: ['Structural works', 'Steel framework', 'Electricity', 'Premium finishes'],
         },
       ],
     },
