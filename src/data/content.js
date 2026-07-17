@@ -155,6 +155,7 @@ export const site = {
       title: 'Des projets d\'envergure à travers le Maroc',
       subtitle: 'Découvrez une sélection de projets industriels, énergétiques et d\'infrastructure réalisés à travers le Royaume.',
       cta: 'Découvrir toutes nos références',
+      allProjectsTitle: 'Toutes nos références',
       viewDetails: 'Découvrir le projet',
       closeLabel: 'Fermer',
       scopeLabel: 'Périmètre d\'intervention',
@@ -245,6 +246,24 @@ export const site = {
           description:
             'Résidence Royale : construction et finitions de haut niveau, charpente métallique et installations électriques aux normes.',
           scope: ['Gros œuvre et génie civil', 'Charpente métallique', 'Électricité et raccordements', 'Finitions premium'],
+        },
+        {
+          title: 'Borj Attijariwafa Bank CFC',
+          location: 'Casablanca',
+          type: 'BÂTIMENT GRANDE HAUTEUR',
+          image: '/images/generated/borj-attijariwafa-cfc.png',
+          description:
+            'Projet Borj Attijariwafa Bank à Casablanca Finance City : intervention sur un chantier de grande hauteur en environnement urbain, avec coordination technique, moyens de levage et exigences élevées de sécurité.',
+          scope: ['Génie civil', 'Coordination chantier', 'Travaux en hauteur', 'Sécurité et logistique urbaine'],
+        },
+        {
+          title: 'Mines et carrière de Gourrama',
+          location: 'Province de Midelt',
+          type: 'MINES & CARRIÈRES',
+          image: '/images/generated/mines-carriere-gourrama-midelt.png',
+          description:
+            'Projet mines et carrière à Gourrama, province de Midelt : travaux d\'extraction, chargement, terrassement et gestion des matériaux en milieu rocheux exigeant.',
+          scope: ['Extraction et chargement', 'Terrassement rocheux', 'Transport de matériaux', 'Exploitation de carrière'],
         },
       ],
     },
