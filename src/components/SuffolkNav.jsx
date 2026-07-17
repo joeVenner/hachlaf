@@ -24,7 +24,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
   const hoverColor = 'hover:text-brand-cyan';
   const shellClass = isSubcontractorPage
     ? 'border border-brand-navy/10 bg-white/95 shadow-lg md:backdrop-blur-[18px]'
-    : 'border border-white/10 bg-transparent';
+    : 'border-0 bg-transparent';
   const langInactiveClass = isSubcontractorPage ? 'text-brand-navy/60' : 'text-white/70';
   const langWrapClass = isSubcontractorPage
     ? 'border-brand-navy/20 bg-brand-navy/5'
