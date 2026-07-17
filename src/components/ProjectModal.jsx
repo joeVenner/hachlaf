@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Check } from 'lucide-react';
+import { X, MapPin } from 'lucide-react';
 
 /**
  * Project detail modal.
@@ -9,7 +9,7 @@ import { X, MapPin, Check } from 'lucide-react';
  * - fade-in overlay + scale-up modal
  * - overlay click, × button, or Escape closes
  * - body scroll locked while open
- * - shows full image, name, location, description, scope
+ * - shows full image, name, location, and description
  */
 export default function ProjectModal({ project, onClose, labels }) {
   useEffect(() => {
@@ -83,22 +83,7 @@ export default function ProjectModal({ project, onClose, labels }) {
                 {project.description}
               </p>
 
-              <h4 className="font-display text-sm font-bold uppercase tracking-[0.15em] text-brand-navy mb-4">
-                {labels.scopeLabel}
-              </h4>
-
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {project.scope.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="w-5 h-5 flex-shrink-0 flex items-center justify-center rounded-full bg-brand-navy/10 mt-0.5">
-                      <Check className="w-3 h-3 text-brand-navy" />
-                    </span>
-                    <span className="body-main text-brand-dark">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-10 pt-6 border-t border-black/5 flex justify-end">
+              <div className="pt-6 border-t border-black/5 flex justify-end">
                 <button
                   onClick={onClose}
                   className="btn-primary"

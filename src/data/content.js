@@ -242,7 +242,7 @@ export const site = {
           title: 'La Résidence Royale',
           location: 'Maroc',
           type: 'RÉSIDENTIEL',
-          image: '/images/generated/royal_residence.jpg',
+          image: '/images/generated/royal-residence-placeholder.png',
           description:
             'Résidence Royale : construction et finitions de haut niveau, charpente métallique et installations électriques aux normes.',
           scope: ['Gros œuvre et génie civil', 'Charpente métallique', 'Électricité et raccordements', 'Finitions premium'],
@@ -589,7 +589,7 @@ export const site = {
           title: 'Royal Residence',
           location: 'Morocco',
           type: 'RESIDENTIAL',
-          image: '/images/generated/royal_residence.jpg',
+          image: '/images/generated/royal-residence-placeholder.png',
           description: 'Royal Residence: high-end construction and finishes, steel framework and electrical installations to standards.',
           scope: ['Structural works', 'Steel framework', 'Electricity', 'Premium finishes'],
         },

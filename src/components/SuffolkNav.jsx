@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
  * Fixed at top with backdrop-blur, full-width dropdown submenus on hover,
  * split logo-center layout with uppercase nav items.
  */
-export default function SuffolkNav({ nav, lang, setLang }) {
+export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -58,10 +58,12 @@ export default function SuffolkNav({ nav, lang, setLang }) {
 
         {/* CENTER LOGO */}
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
-          <Link to="/" className="pointer-events-auto">
-            <span className="font-display font-extrabold text-xl md:text-2xl tracking-wider uppercase transition-colors whitespace-nowrap text-white">
-              HACHLAF.
-            </span>
+          <Link to="/" className="pointer-events-auto flex items-center justify-center" aria-label="Hachlaf Akhawayne">
+            <img
+              src={logoSrc}
+              alt="Hachlaf Akhawayne"
+              className="h-10 md:h-12 w-auto max-w-[9.5rem] object-contain"
+            />
           </Link>
         </div>
 

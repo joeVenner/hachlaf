@@ -56,7 +56,7 @@ export default function DomainesSection({ domaines }) {
 
     // Desktop/tablet with enough vertical room: one pinned shared stacking stage.
     // Short laptop viewports use the normal-flow carousel to avoid clipped cards.
-    mm.add('(min-width: 768px) and (min-height: 720px)', () => {
+    mm.add('(min-width: 768px) and (min-height: 861px)', () => {
       const ctx = gsap.context(() => {
         const [card1, card2, card3] = cardRefs.current;
         const cards = [card1, card2, card3].filter(Boolean);

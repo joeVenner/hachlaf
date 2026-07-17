@@ -44,6 +44,7 @@ export default function HomePage({ lang, setLang }) {
         nav={t.nav}
         lang={lang}
         setLang={setLang}
+        logoSrc={logoSrc}
       />
 
       {/* 1. Fixed hero background (z-0) and scrollable hero content (z-[1]) */}
