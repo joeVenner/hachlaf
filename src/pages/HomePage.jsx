@@ -91,7 +91,6 @@ export default function HomePage({ lang, setLang }) {
         onClose={() => setSelectedProject(null)}
         labels={{
           closeLabel: t.projects.closeLabel,
-          scopeLabel: t.projects.scopeLabel,
         }}
       />
     </div>
