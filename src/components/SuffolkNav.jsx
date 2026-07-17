@@ -28,16 +28,16 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
   const leftLinks = nav.links.slice(0, half);
   const rightLinks = nav.links.slice(half);
 
-  const textColor = 'text-white';
+  const textColor = 'text-brand-navy';
   const hoverColor = 'hover:text-brand-cyan';
 
   return (
     <header className="fixed top-3 md:top-4 left-0 right-0 z-50 site-container">
       <div
-        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-none border border-white/[0.08] md:backdrop-blur-[18px] ${
+        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-none border border-brand-navy/10 md:backdrop-blur-[18px] ${
           solid
-            ? 'bg-[rgba(20,20,20,0.55)] shadow-lg'
-            : 'bg-[rgba(20,20,20,0.35)]'
+            ? 'bg-white/95 shadow-lg'
+            : 'bg-white/88 shadow-[0_14px_38px_rgba(9,24,50,0.12)]'
         }`}
       >
         {/* LEFT NAV */}
@@ -85,11 +85,11 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
           </nav>
 
           {/* Lang switcher */}
-          <div className="flex items-center ml-3 mr-3 rounded-full p-0.5 border border-white/30">
+          <div className="flex items-center ml-3 mr-3 rounded-full p-0.5 border border-brand-navy/20 bg-brand-navy/5">
             <button
               onClick={() => setLang('en')}
               className={`px-2 py-0.5 text-[10px] font-bold rounded-full transition-colors ${
-                lang === 'en' ? 'bg-white text-brand-navy' : 'text-white/70'
+                lang === 'en' ? 'bg-brand-navy text-white' : 'text-brand-navy/60'
               }`}
             >
               EN
@@ -97,7 +97,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
             <button
               onClick={() => setLang('fr')}
               className={`px-2 py-0.5 text-[10px] font-bold rounded-full transition-colors ${
-                lang === 'fr' ? 'bg-white text-brand-navy' : 'text-white/70'
+                lang === 'fr' ? 'bg-brand-navy text-white' : 'text-brand-navy/60'
               }`}
             >
               FR
@@ -107,7 +107,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
 
         {/* MOBILE HAMBURGER */}
         <button
-          className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-white"
+          className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-brand-navy"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >
@@ -128,22 +128,22 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div className="lg:hidden mt-2 bg-[rgba(20,20,20,0.92)] md:backdrop-blur-xl border border-white/10 rounded-none shadow-xl p-6">
+        <div className="lg:hidden mt-2 bg-white/95 md:backdrop-blur-xl border border-brand-navy/10 rounded-none shadow-xl p-6">
           <nav className="flex flex-col gap-3">
             {nav.links.map((link) => (
               <NavLink
                 key={link.id || link.to}
                 link={link}
-                className="font-display text-sm font-semibold uppercase text-white hover:text-brand-cyan transition-colors min-h-[44px] flex items-center py-2"
+                className="font-display text-sm font-semibold uppercase text-brand-navy hover:text-brand-cyan transition-colors min-h-[44px] flex items-center py-2"
                 onClick={() => setMobileOpen(false)}
               />
             ))}
           </nav>
-          <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/20">
+          <div className="flex items-center gap-2 mt-4 pt-4 border-t border-brand-navy/10">
             <button
               onClick={() => setLang('en')}
               className={`px-3 py-1 text-xs font-bold rounded-full ${
-                lang === 'en' ? 'bg-white text-brand-navy' : 'text-white/70'
+                lang === 'en' ? 'bg-brand-navy text-white' : 'text-brand-navy/60'
               }`}
             >
               EN
@@ -151,7 +151,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
             <button
               onClick={() => setLang('fr')}
               className={`px-3 py-1 text-xs font-bold rounded-full ${
-                lang === 'fr' ? 'bg-white text-brand-navy' : 'text-white/70'
+                lang === 'fr' ? 'bg-brand-navy text-white' : 'text-brand-navy/60'
               }`}
             >
               FR

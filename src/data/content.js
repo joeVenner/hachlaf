@@ -163,7 +163,7 @@ export const site = {
           title: 'Le complexe solaire NOOR',
           location: 'Midelt',
           type: 'SOLAIRE',
-          image: '/images/generated/solar_noor_midelt.jpg',
+          image: '/images/generated/energy-earthworks-banner.png',
           description:
             'Contribution au complexe solaire NOOR Midelt — terrassement, infrastructures et raccordements électriques sur un site énergétique stratégique.',
           supporting: true,
@@ -506,7 +506,7 @@ export const site = {
           title: 'NOOR Solar Complex',
           location: 'Midelt',
           type: 'SOLAR',
-          image: '/images/generated/solar_noor_midelt.jpg',
+          image: '/images/generated/energy-earthworks-banner.png',
           description: 'Contribution to the NOOR Midelt solar complex — earthworks, infrastructure and electrical connections on a strategic energy site.',
           supporting: true,
         },
