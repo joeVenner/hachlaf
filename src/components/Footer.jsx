@@ -106,16 +106,14 @@ export default function Footer({ footer, logoSrc }) {
             <motion.a
               variants={footerItemVariants}
               href="#top"
-              className="flex items-center gap-3 mb-6"
+              className="inline-flex items-center mb-6"
+              aria-label="Hachlaf Akhawayne"
             >
               <img
                 src={logoSrc}
                 alt="Hachlaf Akhawayne"
-                className="h-12 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
-              <span className="font-display font-bold text-xl text-brand-navy">
-                Hachlaf.
-              </span>
             </motion.a>
             <motion.p
               variants={footerItemVariants}
