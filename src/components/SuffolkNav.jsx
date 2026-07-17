@@ -1,44 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 
 /**
  * Suffolk-style navigation bar.
  *
- * Fixed at top with backdrop-blur, full-width dropdown submenus on hover,
+ * Embedded over the hero with full-width dropdown submenus on hover,
  * split logo-center layout with uppercase nav items.
  */
 export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const isSubcontractorPage = location.pathname === '/sous-traitant';
-  const solid = isScrolled || isSubcontractorPage;
 
   // Split links into left and right halves
   const half = Math.ceil(nav.links.length / 2);
   const leftLinks = nav.links.slice(0, half);
   const rightLinks = nav.links.slice(half);
 
-  const textColor = 'text-brand-navy';
+  const textColor = isSubcontractorPage ? 'text-brand-navy' : 'text-white';
   const hoverColor = 'hover:text-brand-cyan';
+  const shellClass = isSubcontractorPage
+    ? 'border border-brand-navy/10 bg-white/95 shadow-lg md:backdrop-blur-[18px]'
+    : 'border-0 bg-transparent';
+  const langInactiveClass = isSubcontractorPage ? 'text-brand-navy/60' : 'text-white/70';
+  const langWrapClass = isSubcontractorPage
+    ? 'border-brand-navy/20 bg-brand-navy/5'
+    : 'border-white/35 bg-white/5';
+  const mobileButtonColor = isSubcontractorPage ? 'text-brand-navy' : 'text-white';
 
   return (
-    <header className="fixed top-3 md:top-4 left-0 right-0 z-50 site-container">
+    <header className="absolute top-3 md:top-4 left-0 right-0 z-50 site-container">
       <div
-        className={`h-[3.5rem] lg:h-16 relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-none border border-brand-navy/10 md:backdrop-blur-[18px] ${
-          solid
-            ? 'bg-white/95 shadow-lg'
-            : 'bg-white/88 shadow-[0_14px_38px_rgba(9,24,50,0.12)]'
-        }`}
+        className={`h-[4rem] lg:h-[4.75rem] relative z-20 transition-all duration-300 ease-in-out flex items-center justify-between rounded-none ${shellClass}`}
       >
         {/* LEFT NAV */}
         <nav className="hidden lg:flex items-center gap-0 flex-1">
@@ -62,7 +58,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
             <img
               src={logoSrc}
               alt="Hachlaf Akhawayne"
-              className="h-10 md:h-12 w-auto max-w-[9.5rem] object-contain"
+              className="h-12 md:h-16 w-auto max-w-[11rem] object-contain"
             />
           </Link>
         </div>
@@ -85,11 +81,11 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
           </nav>
 
           {/* Lang switcher */}
-          <div className="flex items-center ml-3 mr-3 rounded-full p-0.5 border border-brand-navy/20 bg-brand-navy/5">
+          <div className={`flex items-center ml-3 mr-3 rounded-full p-0.5 border ${langWrapClass}`}>
             <button
               onClick={() => setLang('en')}
               className={`px-2 py-0.5 text-[10px] font-bold rounded-full transition-colors ${
-                lang === 'en' ? 'bg-brand-navy text-white' : 'text-brand-navy/60'
+                lang === 'en' ? 'bg-white text-brand-navy' : langInactiveClass
               }`}
             >
               EN
@@ -97,7 +93,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
             <button
               onClick={() => setLang('fr')}
               className={`px-2 py-0.5 text-[10px] font-bold rounded-full transition-colors ${
-                lang === 'fr' ? 'bg-brand-navy text-white' : 'text-brand-navy/60'
+                lang === 'fr' ? 'bg-white text-brand-navy' : langInactiveClass
               }`}
             >
               FR
@@ -107,7 +103,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
 
         {/* MOBILE HAMBURGER */}
         <button
-          className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-brand-navy"
+          className={`lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 ${mobileButtonColor}`}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >
