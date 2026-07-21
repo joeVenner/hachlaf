@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { site, logoSrc } from './data/content';
 
@@ -16,23 +17,26 @@ function App() {
   const [lang, setLang] = useState('fr');
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<HomePage lang={lang} setLang={setLang} />}
-        />
-        <Route
-          path="/sous-traitant"
-          element={
-            <SubcontractorPage
-              content={site[lang]}
-              logoSrc={logoSrc}
-            />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={<HomePage lang={lang} setLang={setLang} />}
+          />
+          <Route
+            path="/sous-traitant"
+            element={
+              <SubcontractorPage
+                content={site[lang]}
+                logoSrc={logoSrc}
+              />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+      <Analytics />
+    </>
   );
 }
 
