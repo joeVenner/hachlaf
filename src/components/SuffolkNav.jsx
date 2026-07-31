@@ -58,7 +58,7 @@ export default function SuffolkNav({ nav, lang, setLang, logoSrc }) {
             <img
               src={logoSrc}
               alt="Hachlaf Akhawayne"
-              className="h-12 md:h-16 w-auto max-w-[11rem] object-contain"
+              className="h-16 md:h-20 lg:h-24 w-auto max-w-[13rem] md:max-w-[15rem] object-contain"
             />
           </Link>
         </div>
