@@ -25,7 +25,6 @@ const clientLogos = [
     detail: 'Laboratoire Public d\'Essais et d\'Études',
     src: '/images/lpee-laboratoire-public-dessais-et-detudes.jpg',
   },
-  { name: 'ACCIONA', src: '/images/acciona.png' },
   { name: 'EPME', src: '/images/epme.webp' },
   { name: 'Group 16103', src: '/images/Group-16103.png' },
   { name: 'NSM', src: '/images/nsm.webp' },
@@ -193,6 +192,9 @@ export const site = {
           image: '/images/generated/hydro_step.jpg',
           description:
             'Station de Transfert d\'Énergie Potentielle (STEP) Abdelmoumen près d\'Agadir : ouvrages civils, terrassement et réseaux électriques.',
+          featured: true,
+          status: 'Projet majeur',
+          expertise: 'Énergie & Hydraulique',
         },
         {
           title: 'Le projet phosphate',
@@ -201,17 +203,6 @@ export const site = {
           image: '/images/generated/phosphate_jorf.jpg',
           description:
             'Projet phosphate à Jorf El Asfar : infrastructures industrielles, génie civil et tuyauterie pour le complexe d\'engrais.',
-        },
-        {
-          title: 'Station de dessalement',
-          location: 'Casablanca',
-          type: 'DESSALEMENT',
-          image: '/images/generated/desalination_casa.jpg',
-          description:
-            'Une infrastructure hydraulique majeure intégrant génie civil, terrassement et raccordements techniques pour répondre durablement aux besoins en eau de la région.',
-          featured: true,
-          status: 'Projet majeur',
-          expertise: 'Eau & Infrastructure',
         },
         {
           title: 'Une usine métallurgique',
@@ -532,6 +523,9 @@ export const site = {
           type: 'HYDRO',
           image: '/images/generated/hydro_step.jpg',
           description: 'Pumped Storage Power Station Abdelmoumen near Agadir: civil works, earthworks and electrical networks.',
+          featured: true,
+          status: 'Major project',
+          expertise: 'Energy & Hydraulics',
         },
         {
           title: 'Phosphate Project',
@@ -539,16 +533,6 @@ export const site = {
           type: 'INDUSTRIAL',
           image: '/images/generated/phosphate_jorf.jpg',
           description: 'Phosphate project at Jorf El Asfar: industrial infrastructure, civil engineering and piping for the fertilizer complex.',
-        },
-        {
-          title: 'Desalination Station',
-          location: 'Casablanca',
-          type: 'DESALINATION',
-          image: '/images/generated/desalination_casa.jpg',
-          description: 'A major hydraulic infrastructure integrating civil engineering, earthworks and technical connections to sustainably meet the region\'s water needs.',
-          featured: true,
-          status: 'Major project',
-          expertise: 'Water & Infrastructure',
         },
         {
           title: 'Metallurgical Plant',

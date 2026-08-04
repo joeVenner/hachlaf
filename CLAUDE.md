@@ -175,7 +175,7 @@ src/
 - **Featured project** sits in a `2.1fr + 0.9fr` row: a moderately sized image
   (`h-[320–420px]`) on the left and project information bottom-aligned on the right.
 - **Three supporting project cards** are shown directly underneath in a single `1fr × 3` row.
-- The default featured project is the **Casablanca desalination station** (`featured: true`).
+- The default featured project is the **STEP Abdelmoumen station** near Agadir (`featured: true`).
 - The three static supporting cards are **NOOR solar**, **Boujdour wind**, and **Safi thermal**
   (`supporting: true`).
 - Optional prev/next controls rotate only the featured project through the non-supporting pool;
