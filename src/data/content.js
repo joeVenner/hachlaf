@@ -75,7 +75,7 @@ export const site = {
           category: 'ÉNERGIE & ENVIRONNEMENT',
           title: 'Construire une énergie plus durable.',
           description:
-            'Nous réalisons des infrastructures énergétiques et environnementales à grande échelle, des centrales et parcs solaires aux stations de dessalement, réseaux hydrauliques et ouvrages de retenue.',
+            'Nous réalisons des infrastructures énergétiques et environnementales à grande échelle, des centrales et parcs solaires aux réseaux hydrauliques et ouvrages de retenue.',
           tags: ['Énergie', 'Eau & Environnement', 'Infrastructures durables'],
           detail: 'Projets à grande échelle',
           cta: 'Découvrir ce domaine',
@@ -413,7 +413,7 @@ export const site = {
           category: 'ENERGY & ENVIRONMENT',
           title: 'Building more sustainable energy.',
           description:
-            'We deliver large-scale energy and environmental infrastructure, from power and solar plants to desalination stations, hydraulic networks and retention structures.',
+            'We deliver large-scale energy and environmental infrastructure, from power and solar plants to hydraulic networks and retention structures.',
           tags: ['Energy', 'Water & Environment', 'Sustainable infrastructure'],
           detail: 'Large-scale projects',
           cta: 'Discover this field',
